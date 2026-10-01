@@ -309,10 +309,17 @@ Licensed under **[Creative Commons Attribution-NonCommercial 4.0 International (
 
 ---
 
-## 👤 Author & Support
+## 👤 Connect with the Creator
 
 Engineered with passion by **Pranay Gandlewar**.
 
-* 🌟 **Star the Repository**: Support the ongoing development of MARK 20!
-* 📷 **Instagram**: [@Pranay](https://www.instagram.com/mr.pranay_1101/?hl=en)
-* 📬 **Contact**: `pranay.tech.ai@gmail.com`
+<p align="left">
+  <a href="https://pranay-portfoliio.vercel.app/"><img src="https://img.shields.io/badge/Portfolio-Personal%20Website-00f2fe?style=for-the-badge&logo=globe&logoColor=black" alt="Portfolio"></a>
+  <a href="https://www.instagram.com/mr.pranay_1101/?hl=en"><img src="https://img.shields.io/badge/Instagram-@mr.pranay__1101-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"></a>
+  <a href="mailto:pranay.tech.ai@gmail.com"><img src="https://img.shields.io/badge/Email-pranay.tech.ai@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
+</p>
+
+* 🌟 **Star the Repository**: Support the ongoing development of MARK 20 F.R.I.D.A.Y!
+* 🌐 **Portfolio**: [https://pranay-portfoliio.vercel.app/](https://pranay-portfoliio.vercel.app/)
+* 📸 **Instagram**: [@mr.pranay_1101](https://www.instagram.com/mr.pranay_1101/?hl=en)
+* 📬 **Contact**: [pranay.tech.ai@gmail.com](mailto:pranay.tech.ai@gmail.com)
