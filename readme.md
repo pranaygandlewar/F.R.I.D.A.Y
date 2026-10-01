@@ -255,7 +255,7 @@ It is held in memory only, deliberately: writing it to disk would make a fresh l
 
 ---
 
-## 🗺️ Mark Roadmap
+<!-- ## 🗺️ Mark Roadmap
 
 | Mark | Focus |
 |---|---|
@@ -267,7 +267,7 @@ It is held in memory only, deliberately: writing it to disk would make a fresh l
 | **LIV** | Holographic avatar · viseme lip-sync · facial acting · face-as-status · push-to-talk · self-echo guard · runtime self-knowledge & limits |
 | **LV** | Video on the HUD · model ladder with measured fallback · split settings drawers · trimmed bundled skill list |
 | *shared* | The last five above also shipped to LIII, LIV and LV at the same time — moving up a Mark never loses them |
-| **LVI+** | Interrupt by voice · conversation history · Telegram remote · full file access · security camera · Obsidian |
+| **LVI+** | Interrupt by voice · conversation history · Telegram remote · full file access · security camera · Obsidian | -->
 
 ---
 
