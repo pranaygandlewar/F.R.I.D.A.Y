@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/Pranay/Mark-20">
-    <img src="assets/header_banner.svg" alt="MARK 20 - FRIDAY Header Banner" width="100%">
+    <img src="assets/header_banner.svg" alt="MARK 20 - F.R.I.D.A.Y Header Banner" width="100%">
   </a>
 </p>
 
@@ -15,9 +15,10 @@
 
 ---
 
-## ⚙️ Executive Overview
+# ⚙️ MARK 20 — F.R.I.D.A.Y
+### The Ultimate Cross-Platform Personal Voice AI Assistant — By Pranay
 
-**MARK 20** is the pinnacle of cross-platform personal artificial intelligence. Designed to replicate the seamless autonomy, intelligence, and presence of Marvel's **F.R.I.D.A.Y.**, MARK 20 gives your AI assistant **a face, a screen, deep OS control, and total digital autonomy**.
+**MARK 20 (F.R.I.D.A.Y)** is the pinnacle of cross-platform personal artificial intelligence. Designed to replicate the seamless autonomy, intelligence, and presence of Marvel's **F.R.I.D.A.Y.**, MARK 20 gives your AI assistant **a face, a screen, deep OS control, and total digital autonomy**.
 
 Operating natively on **Windows, macOS, and Linux**, MARK 20 streams ultra-low latency audio via the **Gemini Live API**, renders a **software-drawn 3D Holographic Avatar** without needing a GPU, defends system integrity via the **EDITH Security Engine**, and builds software independently using an **Autonomous Developer Agent**.
 
