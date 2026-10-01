@@ -1,7 +1,7 @@
 # ⚙️ MARK 20 (55)
 ### The Ultimate Cross-Platform Personal AI Assistant — By Pranay
 
-> 📺 **[Watch the full setup video on YouTube]**
+
 
 A real-time voice AI that can hear, see, speak, and control your computer — on any OS. Supports Windows, macOS, and Linux. Built on the Gemini Live API for native audio streaming, delivering zero subscriptions and total digital autonomy.
 
