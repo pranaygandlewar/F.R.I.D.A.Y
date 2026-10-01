@@ -1,0 +1,158 @@
+[2026-10-01 00:21:51] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Mark-LV', 'action': 'bring_to_front'}
+[2026-10-01 00:22:09] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Antigravity', 'action': 'bring_to_front'}
+[2026-10-01 00:26:10] Action: browser_control, Level: 0, Reason: Information access, Params: {'incognito': True, 'action': 'new_tab'}
+[2026-10-01 00:26:40] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'browser': 'chrome', 'action': 'type', 'selector': '#identifierId', 'text': 'pranay', 'clear_first': True}
+[2026-10-01 00:26:48] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'press', 'browser': 'chrome', 'key': 'Enter'}
+[2026-10-01 00:26:48] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'action': 'click', 'description': 'Sign in or profile icon', 'browser': 'chrome'}
+[2026-10-01 00:27:34] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab', 'browser': 'edge', 'incognito': True}
+[2026-10-01 00:28:00] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'edge', 'incognito': True, 'action': 'new_tab'}
+[2026-10-01 00:28:37] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab', 'browser': 'edge', 'incognito': True}
+[2026-10-01 00:28:52] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'text': 'waha eproner', 'browser': 'edge', 'action': 'type', 'clear_first': True}
+[2026-10-01 00:29:01] Action: browser_control, Level: 0, Reason: Information access, Params: {'key': 'Enter', 'action': 'press', 'browser': 'edge'}
+[2026-10-01 16:22:48] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'press', 'key': 'k'}
+[2026-10-01 16:23:29] Action: browser_control, Level: 0, Reason: Information access, Params: {'key': 'k', 'action': 'press', 'browser': 'chrome'}
+[2026-10-01 16:23:42] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'switch'}
+[2026-10-01 16:23:42] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'get_url', 'browser': 'chrome'}
+[2026-10-01 16:23:43] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'switch'}
+[2026-10-01 16:23:44] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'press', 'browser': 'chrome', 'key': 'k'}
+[2026-10-01 16:24:17] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'list_browsers'}
+[2026-10-01 16:24:18] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'key': 'k', 'action': 'press'}
+[2026-10-01 16:24:19] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'key': 'Space', 'action': 'press'}
+[2026-10-01 16:24:31] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'playpause'}
+[2026-10-01 16:24:47] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'playpause'}
+[2026-10-01 16:25:05] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'right', 'action': 'hotkey'}
+[2026-10-01 16:25:31] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'youtube.com', 'action': 'switch'}
+[2026-10-01 16:25:33] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'key': 'ArrowRight', 'action': 'press'}
+[2026-10-01 16:25:57] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+tab'}
+[2026-10-01 16:26:14] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'list_browsers'}
+[2026-10-01 16:26:17] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'youtube.com/watch', 'action': 'switch', 'browser': 'chrome'}
+[2026-10-01 16:26:44] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'right'}
+[2026-10-01 16:27:09] Action: browser_control, Level: 0, Reason: Information access, Params: {'key': 'ArrowRight', 'browser': 'chrome', 'action': 'press'}
+[2026-10-01 16:27:31] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Skip forward button on YouTube, typically to the right of the play button.'}
+[2026-10-01 16:27:52] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'l'}
+[2026-10-01 16:28:05] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.google.com', 'browser': 'chrome', 'action': 'go_to'}
+[2026-10-01 16:28:26] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'l', 'action': 'hotkey'}
+[2026-10-01 16:29:28] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'switch', 'browser': 'chrome'}
+[2026-10-01 16:29:29] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'press', 'browser': 'chrome', 'key': 'l'}
+[2026-10-01 16:34:24] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Om', 'message_text': 'क्या कर रहा है?', 'platform': 'WhatsApp'}
+[2026-10-01 16:35:48] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'WhatsApp Search bar', 'y': 127, 'action': 'screen_click', 'x': 158}
+[2026-10-01 16:35:57] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'text': 'Om', 'action': 'type_text'}
+[2026-10-01 16:35:59] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Om', 'action': 'type'}
+[2026-10-01 16:36:02] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'enter'}
+[2026-10-01 16:36:04] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'enter'}
+[2026-10-01 16:36:05] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'क्या कर रहा है?', 'receiver': 'Om', 'platform': 'WhatsApp'}
+[2026-10-01 16:36:42] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Om', 'platform': 'whatsapp', 'message_text': 'kya kar rha hai?'}
+[2026-10-01 16:38:12] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'WhatsApp', 'receiver': 'Aryan', 'message_text': 'kya kar rha hai?'}
+[2026-10-01 16:38:21] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'WhatsApp', 'message_text': 'kya kar rha hai?', 'receiver': 'Krishna'}
+[2026-10-01 16:38:30] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'WhatsApp', 'message_text': 'kya kar rha hai?', 'receiver': 'Dinu'}
+[2026-10-01 16:42:27] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'open_settings'}
+[2026-10-01 16:42:44] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Time & Language section in Settings screen', 'action': 'click'}
+[2026-10-01 16:43:19] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'open_settings'}
+[2026-10-01 16:43:19] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Time & Language button in Settings', 'action': 'screen_find'}
+[2026-10-01 16:43:28] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Time & Language button in Settings', 'action': 'screen_click'}
+[2026-10-01 16:43:35] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Speech button in Time & Language settings', 'action': 'screen_click'}
+[2026-10-01 16:44:01] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Speech section in Time & Language settings'}
+[2026-10-01 16:44:14] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Speech button in Time & Language settings', 'action': 'screen_find'}
+[2026-10-01 16:44:21] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'win+i'}
+[2026-10-01 16:44:22] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'x': 37, 'action': 'move', 'y': 532}
+[2026-10-01 16:44:23] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click'}
+[2026-10-01 16:44:24] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Speech button', 'action': 'screen_find'}
+[2026-10-01 16:44:31] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click', 'y': 176, 'x': 102}
+[2026-10-01 16:46:11] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Time & Language button in Settings'}
+[2026-10-01 16:46:34] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'ms-settings:speech'}
+[2026-10-01 16:47:36] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'press', 'key': 'MediaPlayPause'}
+[2026-10-01 16:47:46] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'mediaplaypause', 'action': 'press'}
+[2026-10-01 16:48:11] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'chrome'}
+[2026-10-01 16:50:56] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'latest hindi song', 'action': 'play'}
+[2026-10-01 16:52:55] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-01 16:53:31] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'win+s', 'action': 'hotkey'}
+[2026-10-01 16:53:31] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:53:32] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'WhatsApp', 'action': 'type'}
+[2026-10-01 16:53:33] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:53:34] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:53:34] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 5}
+[2026-10-01 16:53:39] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+f'}
+[2026-10-01 16:53:39] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Om', 'action': 'type'}
+[2026-10-01 16:53:39] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:53:40] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-01 16:53:40] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:53:41] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+shift+v'}
+[2026-10-01 16:53:41] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 5, 'action': 'wait'}
+[2026-10-01 16:53:46] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-01 16:53:48] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+v'}
+[2026-10-01 16:53:49] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:53:51] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:53:53] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:54:12] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Om'}
+[2026-10-01 16:54:12] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:54:13] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'WhatsApp'}
+[2026-10-01 16:54:14] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'win+s', 'action': 'hotkey'}
+[2026-10-01 16:54:14] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:54:15] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 5}
+[2026-10-01 16:54:20] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:54:20] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+f', 'action': 'hotkey'}
+[2026-10-01 16:54:20] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:54:21] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-01 16:54:21] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+shift+v'}
+[2026-10-01 16:54:21] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 5, 'action': 'wait'}
+[2026-10-01 16:54:26] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:54:26] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 1, 'action': 'wait'}
+[2026-10-01 16:54:27] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+v', 'action': 'hotkey'}
+[2026-10-01 16:54:28] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:54:28] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 1, 'action': 'wait'}
+[2026-10-01 16:54:29] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:54:48] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'pause_video'}
+[2026-10-01 16:55:18] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'win+s', 'action': 'hotkey'}
+[2026-10-01 16:55:18] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'WhatsApp'}
+[2026-10-01 16:55:18] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-01 16:55:19] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:55:20] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 3}
+[2026-10-01 16:55:23] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+f', 'action': 'hotkey'}
+[2026-10-01 16:55:23] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Chushabh', 'action': 'type'}
+[2026-10-01 16:55:23] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 1, 'action': 'wait'}
+[2026-10-01 16:55:24] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:55:24] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+shift+v', 'action': 'hotkey'}
+[2026-10-01 16:55:25] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-01 16:55:26] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:55:27] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 1, 'action': 'wait'}
+[2026-10-01 16:55:28] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-01 16:55:29] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+v'}
+[2026-10-01 16:55:31] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 5, 'action': 'wait'}
+[2026-10-01 16:56:01] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'video call button, located to the right of the contact name in the header of the main chat area', 'action': 'screen_click'}
+[2026-10-01 16:56:57] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'WhatsApp video call button, camera icon in the chat header to the right of the contact name'}
+[2026-10-01 16:57:25] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'WhatsApp video call button, camera icon in the chat header to the right of the contact name', 'action': 'screen_click'}
+[2026-10-01 16:57:47] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'WhatsApp video call button, camera icon in the chat header to the right of the contact name', 'action': 'screen_click'}
+[2026-10-01 16:58:26] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-01 16:58:44] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'video call button icon in the chat header to the right of the contact name', 'action': 'screen_click'}
+[2026-10-01 16:59:38] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'message': 'Play Kal Ho Na Ho song', 'time': '17:00', 'date': '2026-10-01'}
+[2026-10-01 17:00:48] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'remainder song', 'action': 'play'}
+[2026-10-01 17:01:45] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'message': "Play 'Kal Ho Naa Ho' song", 'time': '17:02', 'date': '2026-10-02'}
+[2026-10-01 17:02:06] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'message': "Play 'Kal Ho Naa Ho' song", 'time': '17:02', 'date': '2026-10-01'}
+[2026-10-01 17:02:30] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'action': 'run', 'code': "for i in range(1, 51):\n    print(i, end=' ')", 'language': 'python'}
+[2026-10-01 17:02:32] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'code': "for i in range(1, 51):\n    print(i, end=' ')", 'action': 'write', 'output_path': 'count.py', 'language': 'python'}
+[2026-10-01 17:02:33] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'output_path': 'count.py', 'action': 'write', 'code': "for i in range(1, 51):\n        print(i, end=' ')", 'description': 'write a script to count from 1 to 50', 'language': 'python'}
+[2026-10-01 17:02:38] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'file_path': 'count.py', 'action': 'run'}
+[2026-10-01 17:02:39] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50', 'action': 'type'}
+[2026-10-01 17:04:22] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'WhatsApp', 'action': 'focus_window'}
+[2026-10-01 17:04:23] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'path': 'downloads', 'action': 'list'}
+[2026-10-01 17:04:46] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-01 17:05:46] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'x': 156, 'y': 478, 'action': 'click'}
+[2026-10-01 17:06:26] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click', 'y': 640, 'x': 156}
+[2026-10-01 17:06:50] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'scroll_down', 'amount': 3}
+[2026-10-01 17:06:52] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'scroll', 'direction': 'down', 'amount': 3}
+[2026-10-01 17:07:23] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'WhatsApp'}
+[2026-10-01 17:08:46] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-01 17:09:18] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-01 17:10:10] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'open_settings', 'value': 'Energy saver'}
+[2026-10-01 17:12:55] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://github.com/new'}
+[2026-10-01 17:12:56] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'text': 'FRIDAY', 'selector': '#repository_name', 'action': 'type'}
+[2026-10-01 17:13:02] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://github.com/new', 'action': 'go_to'}
+[2026-10-01 17:13:47] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://github.com/new'}
+[2026-10-01 17:14:02] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'FRIDAY'}
+[2026-10-01 17:14:03] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'direction': 'down', 'action': 'scroll'}
+[2026-10-01 17:14:03] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Create repository button'}
+[2026-10-01 17:14:15] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Repository name text field', 'y': 409, 'x': 571, 'action': 'click'}
+[2026-10-01 17:14:15] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'FRIDAY', 'action': 'type'}
+[2026-10-01 17:14:16] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'scroll', 'amount': 5, 'direction': 'down'}
+[2026-10-01 17:14:16] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click', 'y': 913, 'description': 'Create repository button', 'x': 790}
+[2026-10-01 17:14:17] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Create repository button', 'action': 'click', 'x': 790, 'y': 913}
