@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgEdith" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050814"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <filter id="glowShield" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .bg-edith { fill: url(#bgEdith); }
+    .head-edith { font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 800; font-size: 24px; fill: #f59e0b; }
+    .sub-edith { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; fill: #94a3b8; }
+    
+    @keyframes scanBeam {
+      0% { transform: translateY(0px); opacity: 0.2; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(280px); opacity: 0.2; }
+    }
+    .scanner { animation: scanBeam 3s ease-in-out infinite; }
+  </style>
+
+  <rect width="1100" height="380" rx="14" class="bg-edith" stroke="#334155" stroke-width="2"/>
+
+  <!-- Title -->
+  <g transform="translate(40, 45)">
+    <text x="0" y="0" class="head-edith">🛡️ EDITH SECURITY POLICY ENGINE (E.D.I.T.H.)</text>
+    <text x="0" y="24" class="sub-edith">Evaluation of Dangerous Operations, Intent &amp; Risk Levels (Levels 0 to 4)</text>
+  </g>
+
+  <!-- Laser Scanning Line -->
+  <line x1="40" y1="80" x2="1060" y2="80" stroke="#f59e0b" stroke-width="2" class="scanner" opacity="0.6"/>
+
+  <!-- 5 Security Levels Grid -->
+  <g transform="translate(40, 100)">
+    <!-- Level 0 -->
+    <g transform="translate(0, 0)">
+      <rect width="190" height="240" rx="10" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
+      <rect x="0" y="0" width="190" height="36" rx="10" fill="#1e3a8a"/>
+      <text x="15" y="23" font-family="monospace" font-weight="700" font-size="13" fill="#60a5fa">LEVEL 0 • INFO</text>
+      <text x="15" y="60" font-family="Segoe UI" font-weight="600" font-size="13" fill="#cbd5e1">Read-Only Operations</text>
+      <text x="15" y="85" font-family="monospace" font-size="11" fill="#94a3b8">• File Reading</text>
+      <text x="15" y="105" font-family="monospace" font-size="11" fill="#94a3b8">• Web Search</text>
+      <text x="15" y="125" font-family="monospace" font-size="11" fill="#94a3b8">• System Status</text>
+      <text x="15" y="145" font-family="monospace" font-size="11" fill="#94a3b8">• Screenshots</text>
+      <rect x="15" y="195" width="160" height="26" rx="6" fill="#1e293b"/>
+      <text x="25" y="212" font-family="monospace" font-size="11" fill="#34d399">✅ Auto-Approved</text>
+    </g>
+
+    <!-- Level 1 -->
+    <g transform="translate(205, 0)">
+      <rect width="190" height="240" rx="10" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+      <rect x="0" y="0" width="190" height="36" rx="10" fill="#064e3b"/>
+      <text x="15" y="23" font-family="monospace" font-weight="700" font-size="13" fill="#34d399">LEVEL 1 • REVERSIBLE</text>
+      <text x="15" y="60" font-family="Segoe UI" font-weight="600" font-size="13" fill="#cbd5e1">Journaled Actions</text>
+      <text x="15" y="85" font-family="monospace" font-size="11" fill="#94a3b8">• File Write/Move</text>
+      <text x="15" y="105" font-family="monospace" font-size="11" fill="#94a3b8">• Volume / Brightness</text>
+      <text x="15" y="125" font-family="monospace" font-size="11" fill="#94a3b8">• Mouse / Keyboard</text>
+      <text x="15" y="145" font-family="monospace" font-size="11" fill="#94a3b8">• App Launching</text>
+      <rect x="15" y="195" width="160" height="26" rx="6" fill="#1e293b"/>
+      <text x="25" y="212" font-family="monospace" font-size="11" fill="#a7f3d0">↩️ Undo Journaled</text>
+    </g>
+
+    <!-- Level 2 -->
+    <g transform="translate(410, 0)">
+      <rect width="190" height="240" rx="10" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
+      <rect x="0" y="0" width="190" height="36" rx="10" fill="#4c1d95"/>
+      <text x="15" y="23" font-family="monospace" font-weight="700" font-size="13" fill="#c084fc">LEVEL 2 • SENSITIVE</text>
+      <text x="15" y="60" font-family="Segoe UI" font-weight="600" font-size="13" fill="#cbd5e1">Active User Context</text>
+      <text x="15" y="85" font-family="monospace" font-size="11" fill="#94a3b8">• Send Messages</text>
+      <text x="15" y="105" font-family="monospace" font-size="11" fill="#94a3b8">• Browser Clicks</text>
+      <text x="15" y="125" font-family="monospace" font-size="11" fill="#94a3b8">• User Profile Data</text>
+      <text x="15" y="145" font-family="monospace" font-size="11" fill="#94a3b8">• Process Control</text>
+      <rect x="15" y="195" width="160" height="26" rx="6" fill="#1e293b"/>
+      <text x="25" y="212" font-family="monospace" font-size="11" fill="#e9d5ff">👁️ Activity Logged</text>
+    </g>
+
+    <!-- Level 3 -->
+    <g transform="translate(615, 0)">
+      <rect width="190" height="240" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+      <rect x="0" y="0" width="190" height="36" rx="10" fill="#78350f"/>
+      <text x="15" y="23" font-family="monospace" font-weight="700" font-size="13" fill="#fcd34d">LEVEL 3 • HIGH RISK</text>
+      <text x="15" y="60" font-family="Segoe UI" font-weight="600" font-size="13" fill="#cbd5e1">Irreversible System</text>
+      <text x="15" y="85" font-family="monospace" font-size="11" fill="#94a3b8">• Restart / Shutdown</text>
+      <text x="15" y="105" font-family="monospace" font-size="11" fill="#94a3b8">• Wi-Fi / Bluetooth</text>
+      <text x="15" y="125" font-family="monospace" font-size="11" fill="#94a3b8">• File Deletion</text>
+      <text x="15" y="145" font-family="monospace" font-size="11" fill="#94a3b8">• Service Stop</text>
+      <rect x="15" y="195" width="160" height="26" rx="6" fill="#451a03"/>
+      <text x="23" y="212" font-family="monospace" font-size="11" fill="#fef3c7">⚠️ Hardware Gate</text>
+    </g>
+
+    <!-- Level 4 -->
+    <g transform="translate(820, 0)">
+      <rect width="190" height="240" rx="10" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+      <rect x="0" y="0" width="190" height="36" rx="10" fill="#7f1d1d"/>
+      <text x="15" y="23" font-family="monospace" font-weight="700" font-size="13" fill="#fca5a5">LEVEL 4 • BLOCKED</text>
+      <text x="15" y="60" font-family="Segoe UI" font-weight="600" font-size="13" fill="#cbd5e1">Forbidden Actions</text>
+      <text x="15" y="85" font-family="monospace" font-size="11" fill="#94a3b8">• System File Wipe</text>
+      <text x="15" y="105" font-family="monospace" font-size="11" fill="#94a3b8">• Unverified Prompt</text>
+      <text x="15" y="125" font-family="monospace" font-size="11" fill="#94a3b8">• Credential Export</text>
+      <text x="15" y="145" font-family="monospace" font-size="11" fill="#94a3b8">• Silent Confirmation</text>
+      <rect x="15" y="195" width="160" height="26" rx="6" fill="#450a0a"/>
+      <text x="25" y="212" font-family="monospace" font-size="11" fill="#fecdd3">🚫 Hard Blocked</text>
+    </g>
+  </g>
+</svg>
