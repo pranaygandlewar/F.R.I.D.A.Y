@@ -394,5 +394,5 @@ Engineered by a developer building a real-world FRIDAY-style assistant.
 
 | Platform | Link |
 | --- | --- |
-| YouTube | [@Pranay](https://www.youtube.com/@Pranay) |
-| Instagram | [@Pranay](https://www.instagram.com/Pranay) |
+| Instagram | [@Pranay](https://www.instagram.com/mr.pranay_1101/?hl=en) |
+<!-- | Instagram | [@Pranay](https://www.instagram.com/) | -->
