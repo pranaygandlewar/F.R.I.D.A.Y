@@ -321,5 +321,5 @@ Engineered with passion by **Pranay Gandlewar**.
 
 * 🌟 **Star the Repository**: Support the ongoing development of MARK 20 F.R.I.D.A.Y!
 * 🌐 **Portfolio**: [https://pranay-portfoliio.vercel.app/](https://pranay-portfoliio.vercel.app/)
-* 📸 **Instagram**: [@mr.pranay_1101](https://www.instagram.com/mr.pranay_1101/?hl=en)
+* <a href="https://www.instagram.com/mr.pranay_1101/?hl=en"><img src="assets/instagram.svg" width="18" height="18" align="center" alt="Instagram Logo"></a> **Instagram**: [@mr.pranay_1101](https://www.instagram.com/mr.pranay_1101/?hl=en)
 * 📬 **Contact**: [pranay.tech.ai@gmail.com](mailto:pranay.tech.ai@gmail.com)
