@@ -5548,7 +5548,11 @@ class MainWindow(QMainWindow):
             threading.Thread(target=self.on_text_command, args=(txt,), daemon=True).start()
 
     def _apply_state(self, state: str):
-        self.hud.state    = state
+        self.hud.state = state
+        # Lip sync (mouth animation) only runs while actually speaking.
+        # INTERRUPTED, EXECUTING, THINKING, ERROR, LISTENING, SLEEPING all
+        # keep speaking=False so the mouth stays closed and the viseme
+        # scheduler is not driven.
         self.hud.speaking = (state == "SPEAKING")
 
     def _check_config(self) -> bool:

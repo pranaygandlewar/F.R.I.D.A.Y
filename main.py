@@ -551,6 +551,7 @@ class FridayLive:
         self._vision_last_time     = 0.0     # monotonic time of last screen_process call (cooldown guard)
         self._vision_busy          = False   # True while a vision capture/inject cycle is in flight
         self._interrupted          = False   # True while draining audio after user interrupt
+        self._barge_in_blocks     = 0       # consecutive mic frames classified as user speech while FRIDAY talks
         # Transcript-driven mouth shapes for the avatar. Fed from the receive
         # loop as words arrive, drained by the playback loop against the audio.
         self._visemes              = VisemeStream()
@@ -921,6 +922,7 @@ class FridayLive:
     def interrupt(self) -> None:
         """Stop FRIDAY mid-speech: drain queued audio and open mic immediately."""
         self._interrupted = True
+        self._barge_in_blocks = 0
         q = self.audio_in_queue
         if q:
             drained = 0
@@ -932,12 +934,20 @@ class FridayLive:
                     break
             if drained:
                 print(f"[FRIDAY] ✋ Interrupted — {drained} audio chunks discarded")
-        self.set_speaking(False)
-        # The words we were about to mouth are never going to be spoken now.
-        self._visemes.reset()
+        # Signal INTERRUPTED state immediately so HUD/avatar react at once.
+        self.ui.set_state("INTERRUPTED")
+        self._visemes.reset()       # stop lip sync immediately
         self._play_cursor = 0.0     # next batch starts a fresh timeline
+        with self._speaking_lock:
+            self._is_speaking = False
+        self._out_level = 0.0
+        self._tail_until = time.monotonic() + self._out_latency + _TAIL_MARGIN
         if self._turn_done_event:
             self._turn_done_event.clear()
+        # Transition to LISTENING after a very short hold so the INTERRUPTED
+        # flash is visible (~150 ms) without blocking the mic.
+        if not self.ui.muted:
+            self.ui.set_state("LISTENING")
         self.ui.write_log("SYS: Interrupted — listening...")
 
     def speak(self, text: str):
@@ -996,6 +1006,7 @@ class FridayLive:
             f"[IDENTITY]\n"
             f"Your name is {self._asst_name}. "
             f"Always refer to yourself as {self._asst_name}.\n"
+            f"GENDER & PERSONA: You are a female AI assistant with a natural female voice. In languages with grammatical gender agreement (such as Hindi, Hinglish, Spanish, French, etc.), ALWAYS use feminine grammatical forms for yourself (for example in Hindi/Hinglish: use 'main kar sakti hoon', 'samajh gayi', 'bata sakti hoon', 'karungi', NEVER masculine forms like 'kar sakta hu' or 'samajh gaya').\n"
             f"{_addr}\n\n"
         )
 
@@ -1127,7 +1138,13 @@ class FridayLive:
         args = dict(fc.args or {})
 
         print(f"[FRIDAY] 🔧 {name}  {args}")
-        self.ui.set_state("THINKING")
+        # Fast local tools stay in THINKING; slow or world-touching tools show EXECUTING.
+        _EXECUTING_TOOLS = {
+            "screen_process", "system_status", "manage_monitor",
+            "web_search", "browser_control", "file_processor",
+            "open_app", "close_app",
+        }
+        self.ui.set_state("EXECUTING" if name in _EXECUTING_TOOLS else "THINKING")
 
 
         if name == "save_memory":
@@ -1335,14 +1352,28 @@ class FridayLive:
             # the echo of what we are playing right now", sustained long enough
             # that a cough or a keystroke cannot trigger it.
             if friday_speaking:
-                # Nothing is streamed while FRIDAY talks.
-                #
-                # Interrupting by voice used to live here: `EchoGuard` can pick a
-                # user out from under our own echo, and `core/echo.py` still does
-                # that for the tail below. Re-enabling is small — classify each
-                # block here and call interrupt() after `required_blocks` of
-                # agreement — but it depends on the listener's room, so it stays
-                # out until it can be tried on real hardware.
+                # ── Voice barge-in ───────────────────────────────────────────
+                # EchoGuard subtracts what we are currently playing from the
+                # microphone and classifies what is left. If enough consecutive
+                # blocks clear the threshold, the user is speaking over us —
+                # interrupt immediately, just as a person would stop talking
+                # when interrupted.
+                try:
+                    lvl = _pcm_level(indata)
+                    is_speech = self._echo.is_user_speech(
+                        indata, SEND_SAMPLE_RATE, lvl
+                    )
+                    if is_speech:
+                        self._barge_in_blocks += 1
+                        if self._barge_in_blocks >= self._echo.required_blocks:
+                            self._barge_in_blocks = 0
+                            print("[FRIDAY] 🎙 Barge-in detected — interrupting")
+                            # interrupt() is thread-safe (no asyncio calls inside).
+                            self.interrupt()
+                    else:
+                        self._barge_in_blocks = 0
+                except Exception:
+                    self._barge_in_blocks = 0
                 return
 
             # ── Echo tail ────────────────────────────────────────────────────
@@ -1422,8 +1453,26 @@ class FridayLive:
                 while True:
                     await asyncio.sleep(0.1)
         except Exception as e:
-            print(f"[FRIDAY] ❌ Mic: {e}")
-            raise
+            # A mic failure (device removed, exclusive-mode clash) must not
+            # crash the TaskGroup and disconnect the session. Log it, notify
+            # the user, and spin in a wait loop so the session stays alive.
+            # The user can still type commands; the device may come back.
+            print(f"[FRIDAY] ❌ Mic error: {e}")
+            self.ui.write_log(
+                f"SYS: Microphone failed ({type(e).__name__}) — voice input unavailable. "
+                "Check your mic or restart FRIDAY."
+            )
+            self.ui.set_state("ERROR")
+            try:
+                await asyncio.sleep(2.0)
+                if not self.ui.muted:
+                    self.ui.set_state("LISTENING")
+            except Exception:
+                pass
+            # Hold here indefinitely so the TaskGroup doesn't die — the session
+            # and all other tasks continue working normally.
+            while True:
+                await asyncio.sleep(5.0)
 
     async def _flush_pending_vision(self) -> bool:
         """Send a captured frame immediately after its tool response.

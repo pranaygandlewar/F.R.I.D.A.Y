@@ -338,7 +338,7 @@ class HoloAvatar:
 
         # ── what the state does to the face ─────────────────────────────────
         st = (state or "").upper()
-        thinking = st in ("THINKING", "PROCESSING")
+        thinking = st in ("THINKING", "PROCESSING", "EXECUTING")
         asleep = st in ("SLEEPING", "STANDBY", "OFFLINE")
 
         if thinking:

@@ -129,38 +129,27 @@ LIVE = "live"
 # cooldown after one attempt instead of being paid for on every call.
 _LADDERS = {
     FAST: (LIVE,
-           "gemini-2.5-flash-lite", "gemini-3.5-flash-lite",
+           "gemini-3.8-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite",
            "gemini-3.1-flash-lite", "gemini-flash-lite-latest",
-           "gemini-2.5-flash", "gemini-3.5-flash",
+           "gemini-2.5-flash-lite", "gemini-2.5-flash",
            "gemini-3.6-flash", "gemini-3-flash-preview"),
     SMART: (LIVE,
-            "gemini-2.5-flash", "gemini-3.5-flash",
-            "gemini-2.5-flash-lite", "gemini-3.5-flash-lite",
-            "gemini-3.1-flash-lite",
-            "gemini-3.6-flash", "gemini-3-flash-preview", "gemini-flash-latest"),
+            "gemini-3.8-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite",
+            "gemini-3.1-flash-lite", "gemini-flash-latest",
+            "gemini-2.5-flash", "gemini-2.5-flash-lite",
+            "gemini-3.6-flash", "gemini-3-flash-preview"),
     # Grounded search needs response.candidates[...].grounding_metadata, which a
     # Live turn does not produce. REST only, and it says so rather than silently
     # returning an answer with no sources behind it.
-    SEARCH: ("gemini-2.5-flash", "gemini-3.5-flash", "gemini-2.5-flash-lite",
-             "gemini-flash-latest"),
+    SEARCH: ("gemini-3.8-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite",
+             "gemini-flash-latest", "gemini-2.5-flash"),
 }
 
-# The conversation's own model, and ONE careful fallback behind it.
-#
-# Deliberately not a long ladder. The Live quota is not the one that runs out —
-# the text models are — and Live models are not interchangeable the way text
-# models are: they differ in which config fields they accept and in what they
-# can do, so falling through a list of them risks connecting to something that
-# behaves like a different assistant. The key also offers transcribe-live,
-# live-translate and a robotics streaming model, none of which are assistants
-# at all.
-#
-# So there are two: the current one, and the native-audio model this assistant
-# used before it, which is known to work here. A mismatch in config is already
-# survivable — the connect loop drops the tuning and proactive-audio fields and
-# reconnects when the server rejects them.
+# The conversation's own model, and careful fallbacks behind it.
 LIVE_MODELS = (
     "models/gemini-3.1-flash-live-preview",
+    "models/gemini-3.8-live",
+    "models/gemini-2.5-flash-native-audio-latest",
     "models/gemini-2.5-flash-native-audio-preview-12-2025",
 )
 
@@ -237,16 +226,17 @@ def is_quota_error(err: str) -> bool:
 
 
 def is_unavailable_error(err: str) -> bool:
-    """The model is up but not answering — overloaded, or a deadline expired.
+    """The model is up but not answering — overloaded, no capacity, or a deadline expired.
 
-    Worth its own case because of what it costs: a 504 from one of these took
+    Worth its own case because of what it costs: a 504/503 from one of these took
     fourteen seconds to arrive. Retrying that on every call puts the wait in
     front of everything the assistant does, so a rung that times out is rested
     like an exhausted one — for less long, since it is usually passing.
     """
     low = err.lower()
     return ("503" in err or "504" in err
-            or "unavailable" in low or "deadline_exceeded" in low)
+            or "unavailable" in low or "deadline_exceeded" in low
+            or "capacity" in low or "overloaded" in low)
 
 
 def is_gone_error(err: str) -> bool:
@@ -269,14 +259,19 @@ def live_model() -> str:
 def note_live_failure(model: str, err: str) -> bool:
     """Record why a Live model failed. True when it is worth trying the next.
 
-    Only quota and availability move the ladder along. A bad API key or a
-    dropped network is not the model's fault, and stepping down the ladder for
+    Quota, capacity limits, and unavailability move the ladder along. A bad API key
+    or a dropped network is not the model's fault, and stepping down the ladder for
     those would work through every model and reach the same wall four times.
     """
     if is_quota_error(err):
         _cool(model, _COOLDOWN_SECONDS)
         print(f"[Gemini] Live model {model} is out of quota — "
               f"switching for {_COOLDOWN_SECONDS // 60} minutes.")
+        return True
+    if is_unavailable_error(err):
+        _cool(model, _UNAVAILABLE_SECONDS)
+        print(f"[Gemini] Live model {model} has no capacity / 503 unavailable — "
+              f"switching for {_UNAVAILABLE_SECONDS // 60} minutes.")
         return True
     if is_gone_error(err):
         _cool(model, _GONE_SECONDS)

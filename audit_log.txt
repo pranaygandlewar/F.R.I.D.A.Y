@@ -169,3 +169,168 @@
 [2026-10-02 14:25:54] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Command Prompt'}
 [2026-10-02 14:26:07] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
 [2026-10-02 14:26:18] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'helicóptero', 'action': 'type'}
+[2026-10-02 16:21:13] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'aankhe khuli ho ya ho bnd song', 'action': 'play'}
+[2026-10-02 16:21:28] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-02 16:21:45] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'mute'}
+[2026-10-02 16:21:56] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-02 16:23:22] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'brightness_set', 'value': '50'}
+[2026-10-02 16:23:43] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'brightness_up'}
+[2026-10-02 16:23:55] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'brightness_up'}
+[2026-10-02 16:23:57] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'brightness_up'}
+[2026-10-02 16:23:59] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'brightness_up'}
+[2026-10-02 16:24:01] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'brightness_up'}
+[2026-10-02 16:24:03] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'brightness_up'}
+[2026-10-02 16:24:42] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-02 16:29:10] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'query': 'prado'}
+[2026-10-02 16:29:25] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'bluetooth_status'}
+[2026-10-02 16:29:35] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'wifi_status'}
+[2026-10-02 16:29:58] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'how to check connected wifi network name windows', 'action': 'search'}
+[2026-10-02 16:31:43] Action: file_controller, Level: 2, Reason: File operation, Params: {'path': 'desktop/pranay.py', 'action': 'create_file'}
+[2026-10-02 16:31:52] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Visual Studio Code'}
+[2026-10-02 16:31:54] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 3, 'action': 'wait'}
+[2026-10-02 16:31:57] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+o', 'action': 'hotkey'}
+[2026-10-02 16:31:57] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-02 16:31:58] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'type_text', 'text': 'Desktop\\pranay.py'}
+[2026-10-02 16:31:58] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-02 16:31:59] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'key': 'enter', 'action': 'key'}
+[2026-10-02 16:32:00] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 1, 'action': 'wait'}
+[2026-10-02 16:32:02] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'enter', 'action': 'hotkey'}
+[2026-10-02 16:32:15] Action: file_controller, Level: 2, Reason: File operation, Params: {'action': 'create_file', 'path': 'desktop/p2.pypy'}
+[2026-10-02 16:32:28] Action: file_controller, Level: 2, Reason: File operation, Params: {'path': 'desktop/p2.py', 'action': 'create_file'}
+[2026-10-02 16:32:41] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+o', 'action': 'hotkey'}
+[2026-10-02 16:32:42] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 1, 'action': 'wait'}
+[2026-10-02 16:32:44] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'paste', 'text': 'Desktop\\p2.py'}
+[2026-10-02 16:32:45] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'seconds': 1, 'action': 'wait'}
+[2026-10-02 16:32:47] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'enter', 'action': 'hotkey'}
+[2026-10-02 16:32:49] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'enter'}
+[2026-10-02 16:33:16] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'enter'}
+[2026-10-02 16:34:06] Action: file_controller, Level: 2, Reason: File operation, Params: {'action': 'create_file', 'path': 'desktop/Pranay/p1.py'}
+[2026-10-02 16:35:20] Action: file_controller, Level: 1, Reason: Reversible file modification, Params: {'action': 'write', 'content': 'print("Hello World")', 'path': 'desktop/Pranay/p1.py'}
+[2026-10-02 16:35:50] Action: file_controller, Level: 2, Reason: File operation, Params: {'path': 'desktop/Pranay/p2.py', 'action': 'create_file'}
+[2026-10-02 16:36:26] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'action': 'write', 'description': 'Multiplication table of 5', 'output_path': 'desktop/Pranay/p2.py', 'code': '\nnum = 5\n\n# To take input from the user\n# num = int(input("Display multiplication table of? "))\n\n# Iterate 10 times from 1 to 10\nfor i in range(1, 11):\n   print(num, \'x\', i, \'=\', num*i)\n'}
+[2026-10-02 16:37:52] Action: file_controller, Level: 1, Reason: Reversible file modification, Params: {'action': 'write', 'content': '\nnum = 5\n\n# To take input from the user\n# num = int(input("Display multiplication table of? "))\n\n# Iterate 10 times from 1 to 10\nfor i in range(1, 11):\n   print(num, \'x\', i, \'=\', num*i)\n', 'path': 'desktop/Pranay/p2.py'}
+[2026-10-02 16:38:06] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'file_path': 'desktop/Pranay/p2.py', 'action': 'run', 'language': 'python'}
+[2026-10-02 16:38:07] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'file_path': 'desktop\\Pranay\\p2.py', 'language': 'python', 'action': 'run'}
+[2026-10-02 16:38:08] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'file_path': 'C:\\Users\\m\\Desktop\\Pranay\\p2.py', 'language': 'python', 'action': 'run'}
+[2026-10-02 16:38:27] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'f5'}
+[2026-10-02 16:38:37] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'type_text', 'text': 'python desktop\\Pranay\\p2.py'}
+[2026-10-02 16:38:38] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'python desktop\\Pranay\\p2.py', 'action': 'paste'}
+[2026-10-02 16:38:39] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'wait', 'seconds': 1}
+[2026-10-02 16:38:41] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'enter', 'action': 'hotkey'}
+[2026-10-02 16:38:42] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'enter', 'action': 'hotkey'}
+[2026-10-02 16:39:07] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'title': 'Visual Studio Code', 'action': 'focus_window'}
+[2026-10-02 16:39:09] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'python desktop\\Pranay\\p2.py', 'action': 'paste'}
+[2026-10-02 16:39:10] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-02 16:39:33] Action: file_controller, Level: 1, Reason: Reversible file modification, Params: {'action': 'write', 'content': '\nnum = 5\n\n# To take input from the user\n# num = int(input("Display multiplication table of? "))\n\n# Iterate 10 times from 1 to 10\nfor i in range(1, 11):\n   print(num, \'x\', i, \'=\', num*i)\n', 'path': 'desktop/Pranay/p2.py'}
+[2026-10-02 16:40:03] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'focus_window', 'title': 'Visual Studio Code'}
+[2026-10-02 16:40:04] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'python desktop\\Pranay\\p2.py', 'action': 'paste'}
+[2026-10-02 16:40:04] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-02 16:40:26] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'focus_window', 'title': 'Visual Studio Code'}
+[2026-10-02 16:40:29] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'python desktop\\Pranay\\p2.py', 'action': 'paste'}
+[2026-10-02 16:40:30] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-02 16:40:57] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'focus_window', 'title': 'Visual Studio Code'}
+[2026-10-02 16:40:59] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+z', 'action': 'hotkey'}
+[2026-10-02 16:41:00] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+z'}
+[2026-10-02 16:41:01] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Terminal panel in VS Code', 'x': 250, 'y': 850, 'action': 'screen_click'}
+[2026-10-02 16:41:10] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'paste', 'text': 'python desktop\\Pranay\\p2.py'}
+[2026-10-02 16:41:11] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-02 16:41:44] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'focus_window', 'title': 'Visual Studio Code'}
+[2026-10-02 16:41:45] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+f5'}
+[2026-10-02 16:42:43] Action: file_controller, Level: 1, Reason: Reversible file modification, Params: {'content': '\ntry:\n    num = int(input("Display multiplication table of? "))\n\n    # Iterate 10 times from 1 to 10\n    for i in range(1, 11):\n       print(f"{num} x {i} = {num*i}")\nexcept ValueError:\n    print("Please enter a valid number.")\n', 'path': 'desktop/Pranay/p2.py', 'action': 'write'}
+[2026-10-02 16:42:59] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'title': 'Visual Studio Code', 'action': 'focus_window'}
+[2026-10-02 16:43:00] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Terminal panel in VS Code', 'y': 850, 'x': 250}
+[2026-10-02 16:43:07] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'python desktop\\Pranay\\p2.py', 'action': 'paste'}
+[2026-10-02 16:43:07] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-02 16:44:17] Action: file_controller, Level: 1, Reason: Reversible file modification, Params: {'path': 'desktop/Pranay/p2.py', 'action': 'write', 'content': '\nimport time\n\ntry:\n    num = int(input("Display multiplication table of? "))\n\n    # Iterate 10 times from 1 to 10\n    for i in range(1, 11):\n       print(f"{num} x {i} = {num*i}")\n       time.sleep(0.5) # Wait for 0.5 seconds between lines\nexcept ValueError:\n    print("Please enter a valid number.")\n'}
+[2026-10-02 16:45:02] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'language': 'python', 'description': 'Build a simple command-line calculator that takes two numbers and an operator (+, -, *, /) as input and displays the result.', 'project_name': 'calculator_project'}
+[2026-10-02 16:46:10] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'action': 'list', 'path': 'desktop/FridayProjects/calculator_project'}
+[2026-10-02 16:46:11] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'C:\\Users\\m\\Desktop\\FridayProjects\\calculator_project\\main.py'}
+[2026-10-02 16:46:38] Action: file_controller, Level: 1, Reason: Reversible file modification, Params: {'action': 'write', 'content': 'import math\n\ndef add(x, y):\n    return x + y\n\ndef subtract(x, y):\n    return x - y\n\ndef multiply(x, y):\n    return x * y\n\ndef divide(x, y):\n    if y == 0:\n        return "Error! Division by zero."\n    return x / y\n\ndef power(x, y):\n    return math.pow(x, y)\n\ndef square_root(x):\n    if x < 0:\n        return "Error! Input cannot be negative."\n    return math.sqrt(x)\n\ndef sin(x):\n    return math.sin(math.radians(x))\n\ndef cos(x):\n    return math.cos(math.radians(x))\n\ndef tan(x):\n    return math.tan(math.radians(x))\n\nprint("Select operation:")\nprint("1.Add (+)")\nprint("2.Subtract (-)")\nprint("3.Multiply (*)")\nprint("4.Divide (/)")\nprint("5.Power (^)")\nprint("6.Square Root (sqrt)")\nprint("7.Sin")\nprint("8.Cos")\nprint("9.Tan")\n\nwhile True:\n    choice = input("Enter choice(1/2/3/4/5/6/7/8/9): ")\n\n    if choice in (\'1\', \'2\', \'3\', \'4\', \'5\'):\n        num1 = float(input("Enter first number: "))\n        num2 = float(input("Enter second number: "))\n\n        if choice == \'1\':\n            print(num1, "+", num2, "=", add(num1, num2))\n        elif choice == \'2\':\n            print(num1, "-", num2, "=", subtract(num1, num2))\n        elif choice == \'3\':\n            print(num1, "*", num2, "=", multiply(num1, num2))\n        elif choice == \'4\':\n            print(num1, "/", num2, "=", divide(num1, num2))\n        elif choice == \'5\':\n            print(num1, "^", num2, "=", power(num1, num2))\n\n    elif choice in (\'6\', \'7\', \'8\', \'9\'):\n        num = float(input("Enter number: "))\n\n        if choice == \'6\':\n            print("sqrt(", num, ") =", square_root(num))\n        elif choice == \'7\':\n            print("sin(", num, ") =", sin(num))\n        elif choice == \'8\':\n            print("cos(", num, ") =", cos(num))\n        elif choice == \'9\':\n            print("tan(", num, ") =", tan(num))\n    \n    else:\n        print("Invalid Input")\n\n    next_calculation = input("Let\'s do another calculation? (yes/no): ")\n    if next_calculation.lower() == "no":\n        break\n', 'path': 'desktop/FridayProjects/calculator_project/main.py'}
+[2026-10-02 16:46:50] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'C:\\Users\\m\\Desktop\\FridayProjects\\calculator_project\\main.py'}
+[2026-10-02 16:48:10] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'path': 'desktop', 'action': 'list'}
+[2026-10-02 16:50:00] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'project_name': 'PhoneControlBT', 'description': 'Build an application that allows control of a phone from a desktop computer via Bluetooth.'}
+[2026-10-02 16:54:17] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'trending', 'region': 'IN'}
+[2026-10-02 16:54:44] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'latest instagram trending songs', 'action': 'play'}
+[2026-10-02 16:55:44] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-02 16:55:55] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'pause_video'}
+[2026-10-02 16:56:04] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'pause_video'}
+[2026-10-02 18:55:56] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'hindi sad songs', 'action': 'search'}
+[2026-10-02 18:57:03] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Pal Pal Dil Ke Paas song'}
+[2026-10-02 18:57:19] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-02 19:01:35] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'mute'}
+[2026-10-02 19:01:42] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'mute'}
+[2026-10-02 19:02:27] Action: computer_settings, Level: 3, Reason: Irreversible action: restart, Params: {'action': 'restart'}
+[2026-10-02 19:02:54] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'FRIDAY'}
+[2026-10-02 19:45:06] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'pal pal dil ke paas'}
+[2026-10-02 19:45:24] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-02 19:46:26] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'mute'}
+[2026-10-02 19:46:34] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-02 19:46:43] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'pal pal dil ke paas', 'action': 'play'}
+[2026-10-02 19:47:12] Action: browser_control, Level: 0, Reason: Information access, Params: {'key': 'k', 'action': 'press'}
+[2026-10-02 19:53:12] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Microsoft Edge', 'action': 'close_app'}
+[2026-10-02 20:40:03] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'volume_up'}
+[2026-10-02 20:40:15] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'bluetooth_status'}
+[2026-10-02 20:40:35] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Hi', 'receiver': 'Chuchup', 'platform': 'WhatsApp'}
+[2026-10-02 20:41:10] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Hi', 'receiver': 'Choo Saab', 'platform': 'WhatsApp'}
+[2026-10-02 20:41:37] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Shah Rukh Khan songs', 'action': 'play'}
+[2026-10-02 20:41:49] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-02 20:42:31] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-02 20:42:45] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'is Omegle shutting down'}
+[2026-10-02 20:43:00] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'wifi_status'}
+[2026-10-02 20:43:16] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Armature'}
+[2026-10-02 20:46:01] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'current time in India'}
+[2026-10-02 20:46:36] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'current time in India', 'action': 'search'}
+[2026-10-02 20:47:36] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'WhatsApp', 'message_text': 'Hi', 'receiver': 'Aryan'}
+[2026-10-02 20:48:12] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Kabhi Khushi Kabhie Gham', 'action': 'play'}
+[2026-10-02 20:48:27] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-02 20:48:46] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-02 20:48:54] Action: laptop_control, Level: 2, Reason: System control: system_info, Params: {'action': 'system_info'}
+[2026-10-02 20:50:51] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'VS Code'}
+[2026-10-02 20:51:00] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-10-02 20:52:33] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'meaning of 5201314'}
+[2026-10-02 20:54:20] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Amitabh Bachchan famous dialogues', 'action': 'play'}
+[2026-10-02 20:54:20] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'query': 'Amitabh Bachchan famous dialogues'}
+[2026-10-02 20:58:06] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Calculator'}
+[2026-10-02 20:58:19] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': '-45', 'action': 'type'}
+[2026-10-02 20:58:25] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': '45', 'action': 'type'}
+[2026-10-02 20:58:32] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': '0'}
+[2026-10-02 20:58:39] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'esc', 'action': 'hotkey'}
+[2026-10-02 20:58:49] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': '010'}
+[2026-10-02 20:59:02] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': '/0='}
+[2026-10-02 20:59:14] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'esc'}
+[2026-10-02 20:59:49] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://github.com/pranay-dev'}
+[2026-10-02 21:00:10] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'action': 'read', 'name': 'pdf.pdf'}
+[2026-10-02 21:00:23] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'name': 'resume.pdf', 'action': 'read'}
+[2026-10-02 21:03:37] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'description': 'A romantic and interactive proposal website using HTML, CSS, and animation JavaScript. The page should ask "Pranay, will you go out with me?" with stylized "Yes" and "No" buttons. The "No" button should shrink or move away when hovered over, making it difficult to click, while the "Yes" button remains stable. On clicking "Yes", the page should display a celebratory message with virtual confetti.', 'project_name': 'proposal_site', 'language': 'html'}
+[2026-10-02 21:04:00] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'C:\\Users\\m\\Desktop\\FridayProjects\\proposal_site\\index.html'}
+[2026-10-02 21:08:43] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'project_name': 'tic_tac_toe_game', 'description': 'A simple Tic Tac Toe game application for PC with a graphical user interface.', 'language': 'python'}
+[2026-10-02 21:09:39] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'C:\\Users\\m\\Desktop\\FridayProjects\\tic_tac_toe_game\\index.html'}
+[2026-10-02 21:10:54] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'project_name': 'tic_tac_toe_game', 'language': 'html', 'description': 'Update the existing Tic Tac Toe game to have a modern look and cover approximately half of the screen. Enhance the UI with elegant typography, smooth animations for moves, and a visually appealing color theme (perhaps dark mode with accent colors). The design should occupy a substantial vertical or horizontal half of the screen, moving away from a small, centered board. Use flexible formatting like grid or flexbox to achieve this half-screen layout.'}
+[2026-10-02 21:11:23] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'C:\\Users\\m\\Desktop\\FridayProjects\\tic_tac_toe_game\\index.html'}
+[2026-10-02 21:12:25] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'language': 'html', 'project_name': 'tic_tac_toe_game', 'description': 'Correct the Tic-Tac-Toe game so that the game grid and controls are visible. The UI should have a modern, clean design with dark mode styling, and the entire game area should be significantly larger, occupying about half the screen area, vertically and horizontally centered. Ensure the JavaScript properly updates the visible turn indicator and game state.'}
+[2026-10-02 21:12:50] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'language': 'html', 'description': 'The user is seeing a black screen instead of the Tic Tac Toe game. Fix the code to ensure the game board, player indicators, and control buttons are styled correctly using CSS and rendered properly by Javascript. The design should be modern, centered, and visually clear.', 'action': 'edit', 'file_path': 'C:\\Users\\m\\Desktop\\FridayProjects\\tic_tac_toe_game\\index.html'}
+[2026-10-02 21:13:58] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'C:\\Users\\m\\Desktop\\FridayProjects\\tic_tac_toe_game\\index.html'}
+[2026-10-02 21:15:09] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click', 'description': "Click on the top-left cell of the Tic Tac Toe board to place an 'O'.", 'y': 453, 'x': 411}
+[2026-10-02 21:15:32] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': "Click on the top-right cell of the Tic Tac Toe board to place an 'O'.", 'x': 572, 'y': 453, 'action': 'click'}
+[2026-10-02 21:15:55] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'Ferrari Roma information'}
+[2026-10-02 21:16:11] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab'}
+[2026-10-02 21:16:11] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'interesting python code snippets', 'action': 'search'}
+[2026-10-02 21:16:54] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'scroll', 'direction': 'down'}
+[2026-10-02 21:17:01] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'scroll', 'direction': 'down'}
+[2026-10-02 21:21:51] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'Anti gravity ID'}
+[2026-10-02 21:22:08] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'AntiGravityID'}
+[2026-10-02 21:22:25] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'anti gravity click'}
+[2026-10-02 21:24:12] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-02 21:24:22] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-02 21:24:42] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'WhatsApp', 'action': 'maximize_window'}
+[2026-10-02 21:24:54] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'chat containing 969964', 'action': 'screen_find'}
+[2026-10-02 23:09:30] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Notepad'}
+[2026-10-02 23:09:40] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'minimize_window', 'title': 'Notepad'}
+[2026-10-02 23:09:48] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'bring_to_front', 'title': 'Notepad'}
+[2026-10-02 23:09:55] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_window', 'value': 'Notepad'}
+[2026-10-02 23:10:35] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_window', 'value': 'Notepad*'}
+[2026-10-02 23:11:15] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_window', 'value': 'Notepad'}
+[2026-10-02 23:11:33] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_window', 'value': 'Notepad'}
+[2026-10-02 23:11:42] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_window', 'value': 'Notepad'}
+[2026-10-02 23:13:21] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'bluetooth_status'}
+[2026-10-02 23:13:31] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}

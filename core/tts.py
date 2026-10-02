@@ -105,7 +105,7 @@ def _play_audio_bytes(audio_bytes: bytes) -> None:
 class EdgeTTSEngine:
     """Microsoft EdgeTTS – free, requires internet."""
 
-    def __init__(self, voice: str = "en-US-GuyNeural"):
+    def __init__(self, voice: str = "en-US-AvaNeural"):
         self.voice = voice
 
     def speak(self, text: str) -> None:
@@ -353,7 +353,7 @@ class KokoroTTSEngine:
 class ElevenLabsTTSEngine:
     """ElevenLabs cloud TTS – API key required."""
 
-    def __init__(self, api_key: str, voice_id: str = "pNInz6obpgDQGcFmaJgB"):
+    def __init__(self, api_key: str, voice_id: str = "21m00Tcm4TlvDq8ikWAM"):
         self.api_key  = api_key
         self.voice_id = voice_id
 
@@ -428,15 +428,16 @@ class TTSPlayer:
 
 def create_tts_player(config: dict) -> TTSPlayer:
     engine_name = config.get("tts_engine", "edgetts").lower()
+    env_voice = os.environ.get("FRIDAY_VOICE") or os.environ.get("TTS_VOICE")
     if engine_name == "kokoro":
-        voice  = config.get("tts_voice", "af_heart")
+        voice  = config.get("tts_voice") or env_voice or "af_heart"
         speed  = float(config.get("tts_speed", 1.0))
         engine = KokoroTTSEngine(voice=voice, speed=speed)
     elif engine_name == "elevenlabs":
         api_key  = config.get("elevenlabs_api_key", "")
-        voice_id = config.get("tts_voice", "pNInz6obpgDQGcFmaJgB")
+        voice_id = config.get("tts_voice") or env_voice or "21m00Tcm4TlvDq8ikWAM"
         engine   = ElevenLabsTTSEngine(api_key=api_key, voice_id=voice_id)
     else:   # edgetts (default)
-        voice  = config.get("tts_voice", "en-US-GuyNeural")
+        voice  = config.get("tts_voice") or env_voice or "en-US-AvaNeural"
         engine = EdgeTTSEngine(voice=voice)
     return TTSPlayer(engine)

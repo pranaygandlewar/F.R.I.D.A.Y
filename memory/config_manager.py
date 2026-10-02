@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -78,14 +79,17 @@ def save_assistant_config(assistant_name: str, user_name: str) -> None:
 # ── Assistant voice ──────────────────────────────────────────────────────────
 # Gemini Live prebuilt voices. Names are proper nouns — identical in every
 # language, so this list is safe to show verbatim in any locale.
-AVAILABLE_VOICES = ["Charon", "Puck", "Kore", "Fenrir", "Aoede"]
-DEFAULT_VOICE    = "Charon"
+AVAILABLE_VOICES = ["Aoede", "Kore", "Charon", "Puck", "Fenrir"]
+DEFAULT_VOICE    = "Aoede"
 
 
 def get_voice() -> str:
-    """Return the configured Live voice, falling back to the default if unset
-    or if the stored value is not a voice we recognise."""
-    v = load_api_keys().get("voice_name", DEFAULT_VOICE) or DEFAULT_VOICE
+    """Return the configured Live voice, falling back to FRIDAY_VOICE env var
+    or the default female voice ('Aoede') if unset or unrecognised."""
+    env_v = os.environ.get("FRIDAY_VOICE") or os.environ.get("TTS_VOICE")
+    if env_v and env_v in AVAILABLE_VOICES:
+        return env_v
+    v = load_api_keys().get("voice_name", env_v or DEFAULT_VOICE) or DEFAULT_VOICE
     return v if v in AVAILABLE_VOICES else DEFAULT_VOICE
 
 
