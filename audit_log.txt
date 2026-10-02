@@ -156,3 +156,16 @@
 [2026-10-01 17:14:16] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'scroll', 'amount': 5, 'direction': 'down'}
 [2026-10-01 17:14:16] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click', 'y': 913, 'description': 'Create repository button', 'x': 790}
 [2026-10-01 17:14:17] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Create repository button', 'action': 'click', 'x': 790, 'y': 913}
+[2026-10-01 18:09:12] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'hindi songs', 'action': 'play'}
+[2026-10-01 18:09:43] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'get_info'}
+[2026-10-01 18:10:57] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'Jo Tum Mere Ho song', 'action': 'play'}
+[2026-10-01 18:11:15] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'mute'}
+[2026-10-01 18:11:16] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'play'}
+[2026-10-01 18:11:40] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'mute'}
+[2026-10-01 18:12:51] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'undo'}
+[2026-10-01 23:38:32] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'wifi_status'}
+[2026-10-02 14:25:29] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'File Explorer'}
+[2026-10-02 14:25:45] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'show_desktop'}
+[2026-10-02 14:25:54] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Command Prompt'}
+[2026-10-02 14:26:07] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-10-02 14:26:18] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'helicóptero', 'action': 'type'}

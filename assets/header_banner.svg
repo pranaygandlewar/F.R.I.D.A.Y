@@ -128,25 +128,25 @@
 
     <!-- Feature Pill Badges -->
     <g transform="translate(0, 222)">
-      <!-- Badge 1: Gemini Live -->
-      <g transform="translate(0, 0)">
-        <rect width="145" height="32" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
-        <text x="14" y="21" font-family="Segoe UI, sans-serif" font-size="13" fill="#e0f2fe" font-weight="600">🎙️ Gemini Live API</text>
-      </g>
       <!-- Badge 2: EDITH Shield -->
-      <g transform="translate(155, 0)">
+      <g transform="translate(0, 0)">
         <rect width="155" height="32" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
         <text x="14" y="21" font-family="Segoe UI, sans-serif" font-size="13" fill="#fef3c7" font-weight="600">🛡️ EDITH Security L4</text>
       </g>
       <!-- Badge 3: Dev Agent -->
-      <g transform="translate(320, 0)">
+      <g transform="translate(165, 0)">
         <rect width="155" height="32" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
         <text x="14" y="21" font-family="Segoe UI, sans-serif" font-size="13" fill="#d1fae5" font-weight="600">🤖 Dev Agent Engine</text>
       </g>
       <!-- Badge 4: Encrypted HUD -->
-      <g transform="translate(485, 0)">
+      <g transform="translate(330, 0)">
         <rect width="155" height="32" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
         <text x="14" y="21" font-family="Segoe UI, sans-serif" font-size="13" fill="#ede9fe" font-weight="600">📱 Mobile Web HUD</text>
+      </g>
+      <!-- Badge 5: 3D HUD Avatar -->
+      <g transform="translate(495, 0)">
+        <rect width="160" height="32" rx="8" fill="#1e293b" stroke="#00f2fe" stroke-width="1"/>
+        <text x="14" y="21" font-family="Segoe UI, sans-serif" font-size="13" fill="#e0f9ff" font-weight="600">🧑‍🎤 3D HUD Avatar</text>
       </g>
     </g>
   </g>

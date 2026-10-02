@@ -199,13 +199,13 @@ Information        Reversible        Sensitive         High Risk          Blocke
 ### 1. Clone & Setup
 ```bash
 # Clone the repository
-git clone https://github.com/Pranay/Mark-20.git
-cd Mark-20
+git clone https://github.com/Pranay/Mark-20.git "MARK 20/F.R.I.D.A.Y"
+cd "MARK 20/F.R.I.D.A.Y"
 
 # Run the OS-Aware setup installer
 python setup.py
 
-# Launch MARK 20 FRIDAY
+# Launch MARK 20 — F.R.I.D.A.Y
 python main.py
 ```
 
@@ -234,61 +234,63 @@ python main.py
 
 ```
 MARK 20/
-├── main.py                   # Main loop — Gemini Live session, Viseme audio sync, Tool router
-├── ui.py                     # PyQt6 HUD — 3D Avatar canvas, waveform, drawers, video overlay
-├── setup.py                  # OS-aware installer & dependency validator
-├── README.md                 # Project documentation & capability manifesto
-├── requirements.txt          # Python dependencies
-├── assets/                   # Vector graphic diagrams & banners
-│   ├── header_banner.svg     # Animated HUD Arc Reactor header banner
-│   ├── model_ladder.svg      # 9-Tier Gemini Model Ladder diagram
-│   ├── edith_security.svg    # EDITH Security Policy diagram
-│   └── dev_agent.svg         # Dev Agent interactive terminal diagram
-├── core/                     # Core Engine Architecture
-│   ├── edith.py              # EDITH Security Policy (Levels 0 to 4 risk evaluator)
-│   ├── gemini.py             # 9-Model Ladder, timeouts (10s), exponential cooldown circuit breaker
-│   ├── avatar.py             # 3D Avatar QPainter engine (MediaPipe 468-vertex mesh renderer)
-│   ├── avatar_mesh.py        # Canonical 3D head geometry & facial feature rigs
-│   ├── viseme.py             # Audio formant & transcript viseme extractor (~50 visemes/sec)
-│   ├── audio_devices.py      # Audio device deduplicator & signal probe (DirectSound/MME)
-│   ├── action_loader.py      # Bundled action discovery engine (Self-describing TOOL declarations)
-│   ├── plugin_loader.py      # Lazy plugin discovery (`find_spec` zero-cost verification)
-│   ├── undo.py               # Action reversibility journal & instant restoration stack
-│   ├── confirm.py            # Hardware-issued confirmation token gate
-│   ├── echo.py               # Adaptive self-echo cancellation filter
-│   ├── wake_word.py          # Local "Hey Friday" detector (openwakeword thread)
-│   ├── hotkey.py             # Push-to-Talk hotkey hook (Global on Windows)
-│   └── llm_client.py         # Multi-tier LLM invocation client
-├── actions/                  # Bundled System Actions
-│   ├── dev_agent.py          # Autonomous Dev Agent (Build, test, auto-heal multi-file projects)
-│   ├── planner.py            # Mission Planner (Decomposes tasks into atomic verified steps)
-│   ├── laptop_control.py     # Hardware telemetry, Wi-Fi/Bluetooth adapters, window geometry
-│   ├── game_updater.py       # Game update/launch engine for Steam, Epic, GOG, Bnet, EA
-│   ├── flight_finder.py      # Natural language flight & travel finder
-│   ├── computer_settings.py  # System volume, brightness, power, dark mode controls
-│   ├── computer_control.py   # Keyboard/mouse macros, window focus, optical screen click
-│   ├── browser_control.py    # Playwright multi-tab web browser automation
-│   ├── file_controller.py    # Reversible file system operations (Move, create, write, delete)
-│   ├── file_processor.py     # Document reading, PDF summarization & analysis
-│   ├── video_player.py       # HUD Video Player overlay widget
-│   ├── youtube_video.py      # YouTube search, stream extractor & dub track resolver
-│   ├── code_helper.py        # Quick code compilation & execution sandbox
-│   ├── desktop.py            # Desktop & taskbar control, window layout organization
-│   ├── background_monitor.py # Background topic monitoring & daily alerts
-│   ├── proactive.py          # Time & context-aware check-in agent
-│   ├── send_message.py       # WhatsApp / Telegram messaging integration
-│   ├── system_monitor.py     # Real-time CPU, RAM, GPU, temperature telemetry
-│   ├── weather_report.py     # Weather API integration
-│   └── web_search.py         # Multi-mode search (News, research, price, DDG fallback)
-├── dashboard/                # Encrypted Remote Web Dashboard & Mobile Control
-│   ├── server.py             # FastAPI HTTP/WebSocket server (Port 8000, AES-256-CBC)
-│   └── static/               # Web UI app (app.html, login.html, crypto-js)
-├── memory/                   # Long-Term Memory Engine
-│   ├── memory_manager.py     # Persistent memory load/save, indexing, prompt budgeting
-│   ├── config_manager.py     # Configuration, API keys, voice selection, UI themes
-│   └── long_term.json        # Persistent JSON store
-└── plugins/                  # User Plugins
-    └── _template.py          # One-file plugin template for custom skills
+└── F.R.I.D.A.Y/              # All project files live here
+    ├── main.py               # Main loop — Gemini Live session, Viseme audio sync, Tool router
+    ├── ui.py                 # PyQt6 HUD — 3D Avatar canvas, waveform, drawers, video overlay
+    ├── setup.py              # OS-aware installer & dependency validator
+    ├── README.md             # Project documentation & capability manifesto
+    ├── requirements.txt      # Python dependencies
+    ├── assets/               # Vector graphic diagrams & banners
+    │   ├── header_banner.svg     # Animated HUD Arc Reactor header banner
+    │   ├── model_ladder.svg      # 9-Tier Gemini Model Ladder diagram
+    │   ├── edith_security.svg    # EDITH Security Policy diagram
+    │   ├── dev_agent.svg         # Dev Agent interactive terminal diagram
+    │   └── instagram.svg         # Instagram logo asset
+    ├── core/                 # Core Engine Architecture
+    │   ├── edith.py              # EDITH Security Policy (Levels 0 to 4 risk evaluator)
+    │   ├── gemini.py             # 9-Model Ladder, timeouts (10s), exponential cooldown circuit breaker
+    │   ├── avatar.py             # 3D Avatar QPainter engine (MediaPipe 468-vertex mesh renderer)
+    │   ├── avatar_mesh.py        # Canonical 3D head geometry & facial feature rigs
+    │   ├── viseme.py             # Audio formant & transcript viseme extractor (~50 visemes/sec)
+    │   ├── audio_devices.py      # Audio device deduplicator & signal probe (DirectSound/MME)
+    │   ├── action_loader.py      # Bundled action discovery engine (Self-describing TOOL declarations)
+    │   ├── plugin_loader.py      # Lazy plugin discovery (`find_spec` zero-cost verification)
+    │   ├── undo.py               # Action reversibility journal & instant restoration stack
+    │   ├── confirm.py            # Hardware-issued confirmation token gate
+    │   ├── echo.py               # Adaptive self-echo cancellation filter
+    │   ├── wake_word.py          # Local "Hey Friday" detector (openwakeword thread)
+    │   ├── hotkey.py             # Push-to-Talk hotkey hook (Global on Windows)
+    │   └── llm_client.py         # Multi-tier LLM invocation client
+    ├── actions/              # Bundled System Actions
+    │   ├── dev_agent.py          # Autonomous Dev Agent (Build, test, auto-heal multi-file projects)
+    │   ├── planner.py            # Mission Planner (Decomposes tasks into atomic verified steps)
+    │   ├── laptop_control.py     # Hardware telemetry, Wi-Fi/Bluetooth adapters, window geometry
+    │   ├── game_updater.py       # Game update/launch engine for Steam, Epic, GOG, Bnet, EA
+    │   ├── flight_finder.py      # Natural language flight & travel finder
+    │   ├── computer_settings.py  # System volume, brightness, power, dark mode controls
+    │   ├── computer_control.py   # Keyboard/mouse macros, window focus, optical screen click
+    │   ├── browser_control.py    # Playwright multi-tab web browser automation
+    │   ├── file_controller.py    # Reversible file system operations (Move, create, write, delete)
+    │   ├── file_processor.py     # Document reading, PDF summarization & analysis
+    │   ├── video_player.py       # HUD Video Player overlay widget
+    │   ├── youtube_video.py      # YouTube search, stream extractor & dub track resolver
+    │   ├── code_helper.py        # Quick code compilation & execution sandbox
+    │   ├── desktop.py            # Desktop & taskbar control, window layout organization
+    │   ├── background_monitor.py # Background topic monitoring & daily alerts
+    │   ├── proactive.py          # Time & context-aware check-in agent
+    │   ├── send_message.py       # WhatsApp / Telegram messaging integration
+    │   ├── system_monitor.py     # Real-time CPU, RAM, GPU, temperature telemetry
+    │   ├── weather_report.py     # Weather API integration
+    │   └── web_search.py         # Multi-mode search (News, research, price, DDG fallback)
+    ├── dashboard/            # Encrypted Remote Web Dashboard & Mobile Control
+    │   ├── server.py             # FastAPI HTTP/WebSocket server (Port 8000, AES-256-CBC)
+    │   └── static/               # Web UI app (app.html, login.html, crypto-js)
+    ├── memory/               # Long-Term Memory Engine
+    │   ├── memory_manager.py     # Persistent memory load/save, indexing, prompt budgeting
+    │   ├── config_manager.py     # Configuration, API keys, voice selection, UI themes
+    │   └── long_term.json        # Persistent JSON store
+    └── plugins/              # User Plugins
+        └── _template.py          # One-file plugin template for custom skills
 ```
 
 ---
