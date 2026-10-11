@@ -334,3 +334,152 @@
 [2026-10-02 23:11:42] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_window', 'value': 'Notepad'}
 [2026-10-02 23:13:21] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'bluetooth_status'}
 [2026-10-02 23:13:31] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-03 01:40:44] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'AI related jobs recruitment in Nagpur', 'mode': 'search'}
+[2026-10-03 01:41:23] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'AI Engineer and ML Engineer jobs in Nagpur'}
+[2026-10-03 01:41:47] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'companies hiring AI/ML engineers in Nagpur'}
+[2026-10-03 01:44:37] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'news', 'query': 'latest news India'}
+[2026-10-03 01:47:04] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'compare development statistics India BJP vs Congress', 'mode': 'compare'}
+[2026-10-03 14:16:29] Action: file_processor, Level: 1, Reason: File processing, Params: {'action': 'describe', 'file_path': 'C:/Users/m/Downloads/JARVIS ui.jpg'}
+[2026-10-03 14:21:20] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'new trending laptops'}
+[2026-10-03 14:22:44] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'action': 'click', 'selector': 'a[href*="qualcomm.com"]', 'text': 'qualcomm.com'}
+[2026-10-03 14:23:20] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'smart_click', 'description': 'qualcomm.com Sponsored Result'}
+[2026-10-03 14:23:51] Action: browser_control, Level: 0, Reason: Information access, Params: {'description': 'popularmechanics.com', 'action': 'smart_click'}
+[2026-10-03 14:30:42] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'description': 'A website for creating and managing wedding proposals. Users can build customized proposal pages with photos, messages, and RSVPs.', 'language': 'python', 'project_name': 'proposal_website'}
+[2026-10-04 19:10:57] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'open'}
+[2026-10-04 19:11:30] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'browser': 'chrome', 'query': 'AI internships'}
+[2026-10-04 19:11:36] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Chrome', 'action': 'maximize_window'}
+[2026-10-04 19:18:43] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'about:blank', 'action': 'new_tab', 'browser': 'chrome'}
+[2026-10-04 19:18:43] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'AI internships', 'browser': 'chrome'}
+[2026-10-04 19:18:43] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Chrome', 'action': 'maximize_window'}
+[2026-10-04 19:19:05] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-04 19:19:10] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'AI internships', 'browser': 'chrome'}
+[2026-10-04 19:19:10] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'maximize_window', 'title': 'Chrome'}
+[2026-10-04 19:58:09] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'latest trending topics in AI'}
+[2026-10-04 19:58:37] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'latest trending topics in AI', 'browser': 'chrome'}
+[2026-10-04 19:58:50] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'scroll', 'browser': 'chrome', 'direction': 'down'}
+[2026-10-04 19:59:17] Action: browser_control, Level: 1, Reason: Reversible browser action, Params: {'action': 'close_tab', 'browser': 'chrome'}
+[2026-10-04 19:59:27] Action: browser_control, Level: 1, Reason: Reversible browser action, Params: {'action': 'close_tab'}
+[2026-10-04 19:59:53] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'close'}
+[2026-10-04 20:00:09] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'chrome', 'action': 'close_app'}
+[2026-10-04 20:00:31] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'sleep_display'}
+[2026-10-04 20:01:01] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'lock_screen'}
+[2026-10-04 20:01:30] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'lock_screen'}
+[2026-10-04 20:01:42] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'lock_screen'}
+[2026-10-04 20:05:05] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'AI internships'}
+[2026-10-04 20:05:33] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-04 20:05:50] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'query': 'AI internships', 'action': 'search'}
+[2026-10-04 20:06:10] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'Python developer jobs'}
+[2026-10-04 20:07:06] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'पुराने हिंदी गाने प्लेलिस्ट', 'action': 'play'}
+[2026-10-04 20:07:42] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-04 20:08:01] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-04 20:08:17] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'close'}
+[2026-10-04 20:08:27] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'close', 'browser': 'chrome'}
+[2026-10-04 20:08:52] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'chrome', 'action': 'close_app'}
+[2026-10-04 20:47:42] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Kavya Radio'}
+[2026-10-04 22:22:01] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'youtube.com', 'action': 'go_to'}
+[2026-10-04 22:22:01] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'latest songs on YouTube', 'action': 'search', 'engine': 'google', 'browser': 'chrome'}
+[2026-10-04 22:22:02] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'youtube.com', 'action': 'go_to'}
+[2026-10-04 22:22:02] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'search', 'engine': 'google', 'query': 'latest hindi songs'}
+[2026-10-04 22:22:28] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'selector': '#search-input > #search', 'text': 'latest hindi songs', 'action': 'type'}
+[2026-10-04 22:22:45] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'selector': '#search-icon-legacy', 'action': 'click'}
+[2026-10-04 22:22:58] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'latest hindi song'}
+[2026-10-04 22:23:12] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-04 22:24:19] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-04 22:24:40] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Instagram'}
+[2026-10-04 22:26:34] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'instagram.com', 'browser': 'chrome'}
+[2026-10-04 22:26:44] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'instagram.com'}
+[2026-10-04 22:26:57] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'open'}
+[2026-10-04 22:27:05] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab', 'url': 'https://www.instagram.com', 'browser': 'chrome'}
+[2026-10-04 22:29:18] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'description': 'Create a simple Snake game in Python.', 'project_name': 'snake_game', 'language': 'python'}
+[2026-10-04 22:33:32] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'args': 'install setuptools', 'language': 'bash', 'action': 'run'}
+[2026-10-04 22:33:33] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'pip install setuptools'}
+[2026-10-04 22:33:34] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'key', 'key': 'enter'}
+[2026-10-04 22:33:35] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-04 22:33:35] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'enter'}
+[2026-10-04 22:35:01] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'pip install setuptools', 'action': 'type'}
+[2026-10-04 22:35:02] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-04 22:35:03] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-04 22:36:09] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'pip install setuptools --upgrade'}
+[2026-10-04 22:36:11] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-05 00:16:01] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'python tutorials on youtube', 'engine': 'google', 'action': 'search'}
+[2026-10-05 00:16:38] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'query': 'python tutorials'}
+[2026-10-05 00:17:28] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://www.youtube.com/results?search_query=python+tutorials'}
+[2026-10-05 00:17:47] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.youtube.com/results?search_query=Python+tutorials', 'action': 'go_to'}
+[2026-10-05 00:20:04] Action: laptop_control, Level: 3, Reason: Power change: hibernate, Params: {'action': 'hibernate'}
+[2026-10-05 12:32:38] Action: planner, Level: 0, Reason: Planner operation, Params: {'steps': [{'description': 'Open Google Chrome browser', 'tool': 'open_app', 'params': {'app_name': 'Chrome'}}, {'tool': 'browser_control', 'description': 'Search for AI internships', 'params': {'action': 'search', 'query': 'AI internships', 'browser': 'chrome'}}, {'description': 'Maximize Chrome window', 'params': {'title': 'Google Chrome', 'action': 'maximize_window'}, 'tool': 'laptop_control'}], 'action': 'start', 'mission': 'Open Chrome, search for AI internships, and maximize the browser window.'}
+[2026-10-05 12:32:39] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 12:32:39] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-05 12:32:44] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_windows'}
+[2026-10-05 12:32:51] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 12:32:51] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'AI internships', 'browser': 'chrome'}
+[2026-10-05 12:32:56] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 12:32:56] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Google Chrome', 'action': 'maximize_window'}
+[2026-10-05 12:32:56] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_windows'}
+[2026-10-05 12:32:59] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'status'}
+[2026-10-05 12:33:28] Action: planner, Level: 0, Reason: Planner operation, Params: {'mission': 'Turn on Bluetooth, set volume to 50%, and open Notepad.', 'steps': [{'tool': 'laptop_control', 'description': 'Turn on Bluetooth', 'params': {'action': 'bluetooth_on'}}, {'params': {'value': '50', 'action': 'volume_set'}, 'tool': 'computer_settings', 'description': 'Set volume to 50%'}, {'description': 'Open Notepad', 'tool': 'open_app', 'params': {'app_name': 'Notepad'}}], 'action': 'start'}
+[2026-10-05 12:33:29] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 12:33:29] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-05 12:34:01] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'clear'}
+[2026-10-05 12:34:01] Action: planner, Level: 0, Reason: Planner operation, Params: {'mission': 'Turn on Bluetooth, set volume to 10%, and open Notepad.', 'action': 'start', 'steps': [{'params': {'action': 'bluetooth_on'}, 'description': 'Turn on Bluetooth', 'tool': 'laptop_control'}, {'tool': 'computer_settings', 'params': {'value': '10', 'action': 'volume_set'}, 'description': 'Set volume to 10%'}, {'params': {'app_name': 'Notepad'}, 'description': 'Open Notepad', 'tool': 'open_app'}]}
+[2026-10-05 12:34:02] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 12:34:02] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-05 12:34:21] Action: planner, Level: 0, Reason: Planner operation, Params: {'steps': [{'params': {'action': 'bluetooth_on'}, 'description': 'Turn on Bluetooth', 'tool': 'laptop_control'}, {'description': 'Set volume to 50%', 'params': {'value': '50', 'action': 'volume_set'}, 'tool': 'computer_settings'}, {'tool': 'open_app', 'description': 'Open Notepad', 'params': {'app_name': 'Notepad'}}], 'mission': 'Turn on Bluetooth, set volume to 50%, and open Notepad.', 'action': 'start'}
+[2026-10-05 12:34:21] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'clear'}
+[2026-10-05 12:34:25] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'start', 'mission': 'Turn on Bluetooth, set volume to 50%, and open Notepad.', 'steps': [{'params': {'action': 'bluetooth_on'}, 'tool': 'laptop_control', 'description': 'Turn on Bluetooth'}, {'params': {'action': 'volume_set', 'value': '50'}, 'description': 'Set volume to 50%', 'tool': 'computer_settings'}, {'params': {'app_name': 'Notepad'}, 'description': 'Open Notepad', 'tool': 'open_app'}]}
+[2026-10-05 12:34:25] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 12:34:25] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-05 12:34:52] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-05 12:35:32] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-05 12:35:46] Action: laptop_control, Level: 2, Reason: System control: snap_left, Params: {'title': 'Chrome', 'action': 'snap_left'}
+[2026-10-05 12:35:48] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Chrome', 'y': 0, 'x': 0, 'action': 'move_window'}
+[2026-10-05 12:36:04] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'snap_left'}
+[2026-10-05 12:36:27] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-10-05 12:36:42] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Chrome', 'action': 'maximize_window'}
+[2026-10-05 12:36:55] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'chrome', 'action': 'focus_window'}
+[2026-10-05 12:37:11] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-10-05 15:51:06] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'start', 'steps': [{'tool': 'browser_control', 'description': 'Open Microsoft Edge and search for PUBG', 'params': {'browser': 'edge', 'action': 'search', 'query': 'PUBG'}}, {'description': 'Open Microsoft Edge and search for FitGirl repacks PUBG', 'params': {'action': 'search', 'query': 'FitGirl repacks PUBG', 'browser': 'edge'}, 'tool': 'browser_control'}], 'mission': 'Search for PUBG and FitGirl repacks in Microsoft Edge'}
+[2026-10-05 15:51:08] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 15:51:08] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'edge', 'action': 'search', 'query': 'PUBG'}
+[2026-10-05 15:51:10] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-05 15:51:10] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'FitGirl repacks PUBG', 'browser': 'edge'}
+[2026-10-05 15:51:11] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'status'}
+[2026-10-05 15:56:45] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Armory Crate'}
+[2026-10-07 17:14:11] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'research', 'query': 'AI engineer job market outlook 2027 and average salary India'}
+[2026-10-07 17:16:30] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'top skills required for fresher AI engineer roles 2027', 'mode': 'search'}
+[2026-10-10 22:56:56] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'Abhijit Dipke'}
+[2026-10-10 23:00:10] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'pal pal dil ke pass song', 'action': 'play'}
+[2026-10-10 23:02:27] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'pal pal dil ke pass gana'}
+[2026-10-10 23:03:16] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-10 23:12:24] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Mummy and Me Doll'}
+[2026-10-10 23:12:54] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'hindi songs', 'action': 'play'}
+[2026-10-10 23:13:09] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-10 23:13:27] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-11 14:12:18] Action: weather_report, Level: 1, Reason: Default reversible action, Params: {'city': 'Mool'}
+[2026-10-11 14:14:27] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'YouTube', 'browser': 'chrome', 'action': 'search'}
+[2026-10-11 14:14:29] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'YouTube'}
+[2026-10-11 14:14:37] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'mute'}
+[2026-10-11 14:15:09] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'volume_up'}
+[2026-10-11 14:16:57] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'start', 'steps': [{'params': {}, 'description': 'Open WhatsApp', 'tool': 'open_app'}, {'description': "Find Divya's chat and type text", 'tool': 'send_message', 'params': {'receiver': 'Divya', 'platform': 'WhatsApp', 'message_text': 'I love you'}}], 'mission': "Send 'I love you' message to Divya via WhatsApp"}
+[2026-10-11 14:17:48] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'news', 'query': 'top world news today'}
+[2026-10-11 14:18:11] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Divya', 'platform': 'WhatsApp', 'message_text': 'I love you'}
+[2026-10-11 14:18:42] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'WhatsApp', 'action': 'close_app'}
+[2026-10-11 14:18:48] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Pal Pal Dil Ke Paas song'}
+[2026-10-11 14:18:54] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-11 14:19:00] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Pal Pal Dil Ke Paas song', 'action': 'play'}
+[2026-10-11 14:19:09] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-11 14:20:19] Action: laptop_control, Level: 2, Reason: System control: system_info, Params: {'action': 'system_info'}
+[2026-10-11 14:20:22] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'battery_status'}
+[2026-10-11 14:20:22] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'wifi_status'}
+[2026-10-11 15:24:13] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'picture boundary', 'action': 'play'}
+[2026-10-11 15:24:23] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-11 15:24:45] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-11 15:24:50] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'incognito': True, 'action': 'go_to'}
+[2026-10-11 15:24:58] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'Praneet Khandlewar ID'}
+[2026-10-11 15:25:46] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'description': 'A simple frontend website with some form of backend integration.'}
+[2026-10-11 15:26:30] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'description': 'A multi-page website for proposing marriage, with photo galleries, a timeline of the relationship, and an RSVP section.', 'project_name': 'proposal_website', 'language': 'html'}
+[2026-10-11 15:27:21] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'file_path': 'C:\\Users\\m\\Desktop\\FridayProjects\\proposal_website\\index.html', 'action': 'run'}
+[2026-10-11 15:27:31] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'file:///C:/Users/m\\Desktop/FridayProjects/proposal_website/index.html', 'action': 'go_to'}
+[2026-10-11 15:27:40] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-11 15:27:45] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'query': 'cafe nearby', 'action': 'search'}
+[2026-10-11 15:28:05] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'action': 'run', 'file_path': 'C:\\Users\\m\\Desktop\\FridayProjects\\Snake Game\\SnakeGame.py'}
+[2026-10-11 15:28:22] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}

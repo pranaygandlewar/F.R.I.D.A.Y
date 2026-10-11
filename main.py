@@ -622,6 +622,15 @@ class FridayLive:
             logger=lambda msg: print(f"[Actions] {msg}"),
         )
 
+        # Wire the action registry into the planner so it can execute steps
+        # during multi-step mission execution (does nothing if planner isn't loaded).
+        try:
+            from actions.planner import bind_action_runner as _bind_planner
+            _bind_planner(self._action_registry)
+            print("[Actions] Planner bound to action registry.")
+        except Exception as _e:
+            print(f"[Actions] Planner bind skipped: {_e}")
+
         # Plugins must not collide with either an inline tool or a discovered action.
         _core_names = _inline_names | self._action_registry.names()
         self._plugin_registry = discover_plugins(
@@ -1310,17 +1319,24 @@ class FridayLive:
     async def _send_realtime(self):
         while True:
             msg = await self.out_queue.get()
-            # Gemini 3.x Live rejects the old realtime_input.media_chunks field
-            # (what `media=...` maps to) and closes the socket with a 1007. Send
-            # mic / phone PCM through the new `audio` field instead. Queue items
-            # are {"data": <bytes>, "mime_type": <str>} from _listen_audio and
-            # the phone relay.
-            await self.session.send_realtime_input(
-                audio=types.Blob(
-                    data=msg["data"],
-                    mime_type=msg.get("mime_type", "audio/pcm"),
+            # Gemini Live needs the sample rate in the mime_type, e.g.
+            # 'audio/pcm;rate=16000'. Without it the server may silently
+            # mis-process or drop the audio. Ensure the rate suffix is present.
+            raw_mime = msg.get("mime_type", "audio/pcm")
+            if raw_mime == "audio/pcm" or ("rate" not in raw_mime):
+                raw_mime = f"audio/pcm;rate={SEND_SAMPLE_RATE}"
+            try:
+                await self.session.send_realtime_input(
+                    audio=types.Blob(
+                        data=msg["data"],
+                        mime_type=raw_mime,
+                    )
                 )
-            )
+            except Exception as _sri_err:
+                # A transient error (brief network hiccup, server-side rate
+                # limit) must not crash this task and permanently silence the
+                # microphone. Log it and keep going — the next frame will retry.
+                print(f"[FRIDAY] ⚠️  send_realtime_input failed: {_sri_err}")
 
     async def _listen_audio(self):
         print("[FRIDAY] 🎤 Mic started")
@@ -1402,10 +1418,14 @@ class FridayLive:
             
             if not self.ui.muted and not self._phone_active:
                 data = indata.tobytes()
-                loop.call_soon_threadsafe(
-                    self.out_queue.put_nowait,
-                    {"data": data, "mime_type": "audio/pcm"}
-                )
+
+                def _try_put(item):
+                    try:
+                        self.out_queue.put_nowait(item)
+                    except asyncio.QueueFull:
+                        pass  # queue full during reconnect — drop frame silently
+
+                loop.call_soon_threadsafe(_try_put, {"data": data, "mime_type": "audio/pcm"})
                 # Feed the live mic level to the HUD so the waveform reacts to
                 # the user's actual voice while listening. Purely cosmetic — any
                 # failure here must never disturb the mic.

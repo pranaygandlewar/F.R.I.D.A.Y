@@ -21,6 +21,36 @@ from playwright.async_api import (
 )
 _OS = platform.system()   # "Windows" | "Darwin" | "Linux"
 
+# ── CAPTCHA / block detection ─────────────────────────────────────────────────
+# Patterns found in Google's "unusual traffic" / reCAPTCHA pages.
+_CAPTCHA_URL_PATTERNS = (
+    "google.com/sorry",
+    "accounts.google.com/v3/signin/challenge",
+)
+_CAPTCHA_TEXT_PATTERNS = (
+    "unusual traffic",
+    "our systems have detected",
+    "recaptcha",
+    "i'm not a robot",
+    "please verify you are a human",
+    "detected unusual traffic",
+    "sorry/index",
+)
+
+
+def _is_captcha_or_blocked(url: str, page_text: str = "") -> bool:
+    """Return True when the current page is a CAPTCHA / bot-challenge page."""
+    url_lower  = (url  or "").lower()
+    text_lower = (page_text or "").lower()
+    for pat in _CAPTCHA_URL_PATTERNS:
+        if pat in url_lower:
+            return True
+    for pat in _CAPTCHA_TEXT_PATTERNS:
+        if pat in text_lower:
+            return True
+    return False
+
+
 def _normalize_url(url: str) -> str:
     """
     Bare words like "instagram" → "https://instagram.com"
@@ -651,22 +681,50 @@ class _BrowserSession:
 
         result_url = await _do_goto(page)
 
-        if result_url in ("about:blank", "", None, prev_url) and prev_url in ("about:blank", "", None):
-            print(f"[Browser] Still blank after goto — retrying on new tab: {url}")
+        # Only open a new tab when the current page is genuinely unnavigable
+        # (starts as about:blank AND stays blank after goto). This avoids the
+        # spurious "blank tab appears then search tab opens" sequence that was
+        # previously produced on every fresh browser launch.
+        if result_url in ("about:blank", "", None) and prev_url in ("about:blank", "", None):
+            # Check whether the page actually loaded content despite the blank URL
             try:
-                new_page   = await self._context.new_page()
-                self._page = new_page
-                result_url = await _do_goto(new_page)
-            except Exception as e:
-                print(f"[Browser] New-tab retry failed: {e}")
+                body_text = await page.inner_text("body")
+            except Exception:
+                body_text = ""
+            if not body_text.strip():
+                print(f"[Browser] Still blank after goto — retrying on new tab: {url}")
+                try:
+                    new_page   = await self._context.new_page()
+                    self._page = new_page
+                    result_url = await _do_goto(new_page)
+                except Exception as e:
+                    print(f"[Browser] New-tab retry failed: {e}")
 
+        # ── CAPTCHA / bot-challenge detection ────────────────────────────────
         if result_url and result_url not in ("about:blank", "", None):
+            try:
+                page_text = await self._page.inner_text("body")
+            except Exception:
+                page_text = ""
+            if _is_captcha_or_blocked(result_url, page_text):
+                msg = (
+                    "[SEARCH_BLOCKED] Google is showing a verification / CAPTCHA page "
+                    "(unusual traffic detected). The automated browser search was stopped. "
+                    "Use web_search instead for information lookups, or ask the user to "
+                    "complete the verification manually."
+                )
+                print(f"[Browser] ⚠️  CAPTCHA detected at {result_url}")
+                return msg
             return f"Opened: {result_url}"
         return f"Could not open: {url}"
 
     async def search(self, query: str, engine: str = "google") -> str:
-        base = _SEARCH_ENGINES.get(engine.lower(), _SEARCH_ENGINES["google"])
-        return await self.go_to(base + query.replace(" ", "+"))
+        base   = _SEARCH_ENGINES.get(engine.lower(), _SEARCH_ENGINES["google"])
+        result = await self.go_to(base + query.replace(" ", "+"))
+        # Propagate CAPTCHA signals unchanged so the model can report them clearly.
+        if result.startswith("[SEARCH_BLOCKED]"):
+            return result
+        return result
 
     async def click(self, selector: str = None, text: str = None) -> str:
         page = await self._get_page()
@@ -1063,7 +1121,20 @@ def _log(player, text: str):
 # ── Tool declaration (auto-discovered by core/action_loader.py) ──────────────
 TOOL = {
     "name": "browser_control",
-    "description": "Controls any web browser. Use for: opening websites, searching the web, clicking elements, filling forms, scrolling, screenshots, navigation, any web-based task. Simple open/search requests launch the user's own browser normally (their real profile and logged-in accounts); interactive actions (click, type, fill_form...) attach an automation browser. Always pass the 'browser' parameter when the user specifies a browser (e.g. 'open in Edge', 'use Firefox', 'open Chrome'). Multiple browsers can run simultaneously.",
+    "description": (
+        "Controls a web browser for NAVIGATION and INTERACTION tasks — opening specific "
+        "websites, clicking elements, filling forms, scrolling, screenshots, back/forward, "
+        "and multi-step browser automation. "
+        "USE THIS TOOL when the user explicitly mentions a browser ('open Chrome', 'go to "
+        "youtube.com', 'open Edge', 'navigate to ...', 'click the button', 'fill the form'). "
+        "DO NOT use this tool for plain information searches like 'search for X', "
+        "'look up X', 'find information about X' — use web_search for those instead. "
+        "The 'search' action is only appropriate when the user explicitly asks to open "
+        "Google/Bing/DuckDuckGo in a browser window. "
+        "Simple go_to/search requests open the user's own browser natively (real profile "
+        "and logged-in accounts). Interactive actions (click, type, fill_form...) attach "
+        "a controllable automation browser. Always pass 'browser' when the user names one."
+    ),
     "parameters": {
         "type": "OBJECT",
         "properties": {
