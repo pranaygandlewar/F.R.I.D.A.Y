@@ -483,3 +483,125 @@
 [2026-10-11 15:27:45] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'query': 'cafe nearby', 'action': 'search'}
 [2026-10-11 15:28:05] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'action': 'run', 'file_path': 'C:\\Users\\m\\Desktop\\FridayProjects\\Snake Game\\SnakeGame.py'}
 [2026-10-11 15:28:22] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-12 12:52:25] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'romantic hindi songs', 'action': 'play'}
+[2026-10-12 12:52:28] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'latest hindi songs', 'action': 'play'}
+[2026-10-12 13:04:48] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-12 13:05:03] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-12 13:05:29] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-12 13:05:40] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-13 15:59:44] Action: planner, Level: 0, Reason: Planner operation, Params: {'steps': [{'params': {'app_name': 'Chrome'}, 'tool': 'open_app', 'description': 'Open Chrome browser'}, {'description': 'Navigate to Google and search for AI internships', 'params': {'action': 'search', 'browser': 'chrome', 'query': 'AI internships'}, 'tool': 'browser_control'}, {'params': {'title': 'Chrome', 'action': 'maximize_window'}, 'description': 'Maximize Chrome window', 'tool': 'laptop_control'}], 'action': 'start', 'mission': 'Open Chrome, search for AI internships, and maximize the browser window.'}
+[2026-10-13 15:59:47] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-13 15:59:47] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-13 15:59:52] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_windows'}
+[2026-10-13 15:59:53] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-13 15:59:53] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'browser': 'chrome', 'query': 'AI internships'}
+[2026-10-13 15:59:56] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-13 15:59:56] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'Chrome', 'action': 'maximize_window'}
+[2026-10-13 15:59:56] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_windows'}
+[2026-10-13 15:59:58] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'status'}
+[2026-10-13 16:00:57] Action: planner, Level: 0, Reason: Planner operation, Params: {'mission': 'Turn Bluetooth on, set volume to 50%, and open Notepad.', 'action': 'start', 'steps': [{'tool': 'laptop_control', 'description': 'Turn on Bluetooth', 'params': {'action': 'bluetooth_on'}}, {'tool': 'computer_settings', 'params': {'value': '50', 'action': 'volume_set'}, 'description': 'Set volume to 50%'}, {'tool': 'open_app', 'description': 'Open Notepad application', 'params': {'app_name': 'Notepad'}}]}
+[2026-10-13 16:00:58] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-13 16:00:58] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-13 16:01:28] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'step_confirmed'}
+[2026-10-13 16:01:29] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-13 16:01:29] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'value': '50', 'action': 'volume_set'}
+[2026-10-13 16:01:32] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-10-13 16:01:32] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Notepad'}
+[2026-10-13 16:01:34] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_windows'}
+[2026-10-13 16:01:36] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'status'}
+[2026-10-13 16:02:03] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'volume_set', 'value': '70'}
+[2026-10-13 16:02:17] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'volume_set', 'value': '50'}
+[2026-10-15 03:28:52] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'action': 'list', 'path': '.'}
+[2026-10-15 03:28:57] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'project_name': 'forever-proposal', 'description': 'Create a production-quality romantic proposal website using React, TypeScript, Vite, Tailwind CSS, and Motion for React. It should feature a cinematic introduction, an interactive story timeline, a memories gallery, an interactive love letter, a questionnaire, and a grand proposal with celebration. Organize with a central configuration data file for personalization. ensure it is responsive, accessible, and performant.', 'language': 'typescript'}
+[2026-10-15 03:32:30] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'C:\\Users\\m\\Desktop\\FridayProjects\\forever-proposal'}
+[2026-10-15 03:32:46] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Visual Studio Code'}
+[2026-10-15 03:32:47] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+o', 'action': 'hotkey'}
+[2026-10-15 03:32:47] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'C:\\Users\\m\\Desktop\\FridayProjects\\forever-proposal', 'action': 'type'}
+[2026-10-15 03:32:49] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'action': 'key', 'key': 'enter'}
+[2026-10-15 03:32:50] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-15 03:33:22] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+`'}
+[2026-10-15 03:33:23] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'npm install && npm run dev'}
+[2026-10-15 03:33:25] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-15 03:33:25] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-15 03:34:01] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'npm install', 'action': 'type'}
+[2026-10-15 03:34:01] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-15 03:34:01] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'npm run dev'}
+[2026-10-15 03:34:02] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-15 03:34:02] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'npm install'}
+[2026-10-15 03:34:03] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-15 03:34:03] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'npm install; npm run dev'}
+[2026-10-15 03:34:04] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'npm install; npm run dev', 'action': 'type'}
+[2026-10-15 03:34:06] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-15 03:34:07] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-15 14:05:28] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-15 14:07:05] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Shruti', 'message_text': 'hi', 'platform': 'WhatsApp'}
+[2026-10-15 14:07:26] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'WhatsApp'}
+[2026-10-15 14:07:33] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'पल पल दिल के पास गाना'}
+[2026-10-15 14:07:55] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-15 14:08:09] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-10-15 14:08:35] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-15 14:09:13] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'file_path': 'friday.py', 'action': 'explain'}
+[2026-10-15 14:09:34] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'file_path': 'D:\\Friday\\friday.py', 'action': 'explain'}
+[2026-10-16 11:05:50] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-16 11:06:08] Action: browser_control, Level: 0, Reason: Information access, Params: {'engine': 'google', 'action': 'search'}
+[2026-10-16 11:06:10] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.google.com', 'action': 'go_to'}
+[2026-10-16 11:06:19] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'show_desktop'}
+[2026-10-16 11:06:24] Action: browser_control, Level: 1, Reason: Reversible browser action, Params: {'action': 'close_tab'}
+[2026-10-16 11:06:32] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'close_all'}
+[2026-10-16 11:09:25] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'number of planets in milky way galaxy', 'mode': 'search'}
+[2026-10-16 11:09:56] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'planets in our solar system'}
+[2026-10-16 11:12:24] Action: dev_agent, Level: 1, Reason: Default reversible action, Params: {'description': 'Create a classic Snake game using Python and pygame, then run it. The game should have arrow key controls for the snake and a red food element. The game window should be clearly visible.', 'project_name': 'classic_snake_game', 'language': 'python'}
+[2026-10-16 11:16:37] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'game'}
+[2026-10-16 11:17:28] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Twinkle Twinkle Little Star video', 'action': 'play'}
+[2026-10-16 11:17:34] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://www.youtube.com/watch?v=hqzvHfy-Ij0'}
+[2026-10-16 11:18:12] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Dhurandhar movie', 'action': 'play'}
+[2026-10-16 11:18:28] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-16 11:19:25] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Toxic movie', 'action': 'play'}
+[2026-10-16 11:19:41] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-16 11:21:19] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-16 11:21:33] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Ramayan naya trailer'}
+[2026-10-16 11:21:48] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-16 11:22:23] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-16 11:22:38] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'bluetooth_status'}
+[2026-10-16 11:22:46] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_off, Params: {'action': 'bluetooth_off'}
+[2026-10-16 11:22:55] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_off, Params: {'action': 'bluetooth_off'}
+[2026-10-16 11:23:05] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_off, Params: {'action': 'bluetooth_off'}
+[2026-10-16 11:23:22] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'bluetooth_status'}
+[2026-10-16 11:23:42] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'cmd.exe'}
+[2026-10-16 11:23:43] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Notepad'}
+[2026-10-16 11:23:45] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'output_path': 'ascii_anim.py', 'code': 'import os\nimport time\n\ndef animate_ascii():\n    frames = [\n        "  (o_o)  ",\n        "  (o_O)  ",\n        "  (O_o)  ",\n        "  (O_O)  "\n    ]\n    \n    print("\\033[H\\033[J") # Clear screen\n    \n    for _ in range(10): # Run for a bit\n        for frame in frames:\n            print(f"\\r{frame}", end="")\n            time.sleep(0.2)\n\nif __name__ == "__main__":\n    # ASCII animation relies heavily on terminal capabilities.\n    # This just prints frames in sequence.\n    print("Simple ASCII animation starting...")\n    time.sleep(1)\n    animate_ascii()\n    print("\\nDone.")\n', 'action': 'write', 'language': 'python', 'description': 'Simple ASCII facial animation loop.'}
+[2026-10-16 11:24:02] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'action': 'run', 'file_path': 'C:\\Users\\m\\Desktop\\ascii_anim.py'}
+[2026-10-16 11:24:32] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'action': 'run', 'file_path': 'C:\\Users\\m\\Desktop\\ascii_anim.py'}
+[2026-10-16 11:25:58] Action: file_controller, Level: 2, Reason: File operation, Params: {'content': 'shutdown /s /t 0', 'action': 'create_file', 'path': 'desktop/Shutdown.bat'}
+[2026-10-16 11:26:10] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Shutdown.bat file on desktop', 'action': 'right_click'}
+[2026-10-16 11:26:10] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Properties option in context menu'}
+[2026-10-16 11:26:15] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click', 'description': 'Shortcut key field'}
+[2026-10-16 11:26:15] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+alt+s', 'action': 'hotkey'}
+[2026-10-16 11:26:15] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-16 11:26:15] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'right_click', 'description': 'Shutdown.bat file on desktop'}
+[2026-10-16 11:26:15] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Properties option in context menu'}
+[2026-10-16 11:26:21] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Shortcut key field in Properties window', 'action': 'screen_click'}
+[2026-10-16 11:26:26] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+shift+s', 'action': 'hotkey'}
+[2026-10-16 11:26:26] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_click', 'description': 'Apply or OK button'}
+[2026-10-16 11:26:31] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'win+d', 'action': 'hotkey'}
+[2026-10-16 11:26:31] Action: computer_control, Level: 0, Reason: Information access, Params: {'path': 'desktop_screenshot.png', 'action': 'screenshot'}
+[2026-10-16 11:28:09] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Camera'}
+[2026-10-16 11:31:58] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'India vs West Indies 4th T20 highlights', 'action': 'play'}
+[2026-10-19 19:01:41] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'WhatsApp', 'action': 'close_app'}
+[2026-10-19 19:09:22] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-19 19:09:26] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-19 19:18:51] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'download Tum Hi Ho song song', 'mode': 'search'}
+[2026-10-19 19:19:12] Action: file_controller, Level: 2, Reason: File operation, Params: {'extension': '.mp3', 'action': 'find', 'path': 'documents'}
+[2026-10-19 19:19:27] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'download Senorita song mp3', 'mode': 'search'}
+[2026-10-19 19:19:52] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'download Senorita Zindagi Na Milegi Dobara mp3'}
+[2026-10-19 19:20:12] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'scroll', 'direction': 'down'}
+[2026-10-19 19:20:30] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Edge'}
+[2026-10-22 23:55:36] Action: planner, Level: 0, Reason: Planner operation, Params: {'steps': [{'description': 'Open WhatsApp', 'tool': 'open_app', 'params': {'app_name': 'WhatsApp'}}, {'tool': 'send_message', 'description': 'Send "Hi" to Aryan on WhatsApp', 'params': {'receiver': 'Aryan', 'platform': 'WhatsApp', 'message_text': 'Hi'}}], 'mission': 'Open WhatsApp and send "Hi" to Aryan.', 'action': 'start'}
+[2026-10-22 23:56:44] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'WhatsApp', 'message_text': 'हाय', 'receiver': 'आर्यन'}
+[2026-10-22 23:57:23] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'hi', 'platform': 'WhatsApp', 'receiver': 'Aryan'}
+[2026-10-23 00:00:22] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': "Hindi translation for 'I cannot provide financial advice, predicting stock performance is risky'", 'mode': 'search'}
+[2026-10-23 00:01:33] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'Paras Defence and Space Technologies recent performance and future outlook', 'mode': 'search'}
+[2026-10-23 00:03:18] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Ramaiya Vastavaiya movie 1080p', 'action': 'play'}
+[2026-10-23 00:03:53] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-23 00:04:13] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': '1:00:00', 'action': 'play'}
+[2026-10-23 00:04:57] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}

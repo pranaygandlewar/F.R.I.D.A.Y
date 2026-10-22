@@ -851,7 +851,10 @@ class DashboardServer:
             ssl_keyfile=str(ssl_key), ssl_certfile=str(ssl_cert),
         )
         print(f"[Dashboard] Manual entry:  {self._ip}:{PORT + 1}  (type in browser, accept cert once)")
-        await uvicorn.Server(cfg).serve()
+        try:
+            await uvicorn.Server(cfg).serve()
+        except (OSError, SystemExit) as e:
+            print(f"[Dashboard] Alias server on port {PORT + 1} failed to start: {e}")
 
     async def serve(self) -> None:
         if not _DEPS_OK:
@@ -881,4 +884,11 @@ class DashboardServer:
         proto = "https" if use_ssl else "http"
         print(f"[Dashboard] {proto}://{self._ip}:{PORT}")
         print("[Dashboard] Press 'Remote Control' in FRIDAY UI to get the QR code.")
-        await uvicorn.Server(cfg).serve()
+        try:
+            await uvicorn.Server(cfg).serve()
+        except (OSError, SystemExit) as e:
+            print(
+                f"[Dashboard] ⚠ Could not bind port {PORT} ({e}). "
+                "Dashboard is unavailable — another FRIDAY instance may already be running. "
+                "Kill it with: Stop-Process -Id (netstat -ano | findstr ':8000') -Force"
+            )

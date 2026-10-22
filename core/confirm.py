@@ -18,14 +18,15 @@ THE DESIGN HERE
     The confirmation token is issued by the *interface*, never by the model:
 
       1. An action calls `request(...)` with a callable that does the real work.
-      2. This module hands the UI a banner with CONFIRM / CANCEL and returns
-         IMMEDIATELY with a sentence for the model to say out loud.
-      3. If — and only if — the user presses CONFIRM, the UI calls `resolve()`,
-         which runs the stored callable off the Qt thread.
+      2. This module posts a yes/no question directly into the chat log and
+         returns IMMEDIATELY with a sentence for the model to say out loud.
+      3. If — and only if — the user types a confirmation word (yes/y/yeah/ok/
+         sure/confirm/proceed) the UI calls `resolve(True)`. Any negative word
+         (no/n/nope/cancel/stop/deny) calls `resolve(False)`.
 
-    Nothing blocks. The model keeps talking while the banner is up, so this
-    costs no latency at all; in fact it is cheaper than the old gate, which
-    burned two tool round trips (reject, then re-call) on every shutdown.
+    Nothing blocks. The model keeps talking while waiting for the answer,
+    so this costs no latency — unlike the old gate, which burned two tool
+    round trips (reject, then re-call) on every shutdown.
 
 WHAT BELONGS HERE AND WHAT DOES NOT
     Only genuinely irreversible things. Anything that can be reversed should be
@@ -42,8 +43,14 @@ from typing import Callable, Optional
 
 # A pending confirmation is abandoned after this long. Chosen to outlast a
 # normal "hang on, let me look at the screen" pause without leaving a live
-# shutdown button sitting on the HUD for the rest of the day.
+# shutdown button sitting in the chat for the rest of the day.
 TIMEOUT_SECONDS = 90.0
+
+# Words the user can type to accept or reject a pending confirmation.
+_YES_WORDS = {"yes", "y", "yeah", "yep", "yup", "ok", "okay", "sure",
+              "confirm", "confirmed", "proceed", "go", "do it", "do", "approve"}
+_NO_WORDS  = {"no", "n", "nope", "nah", "cancel", "stop", "deny",
+              "reject", "abort", "quit", "negative", "dont", "don't"}
 
 
 @dataclass
@@ -58,17 +65,27 @@ class _Pending:
 _pending: Optional[_Pending] = None
 _lock = threading.Lock()
 
-# Set once at startup by main.py. Signature: (title, detail) -> None for show,
-# and () -> None for hide. Both are marshalled onto the Qt thread by the UI.
-_show_cb: Optional[Callable[[str, str], None]] = None
-_hide_cb: Optional[Callable[[], None]] = None
-_log_cb:  Optional[Callable[[str], None]] = None
+# Set once at startup by main.py.
+# _ask_cb(title, detail)   — post the yes/no question to the chat log
+# _cancel_cb()             — optionally note that the question is gone
+# _log_cb(text)            — write a system log line
+_ask_cb:    Optional[Callable[[str, str], None]] = None
+_cancel_cb: Optional[Callable[[], None]]         = None
+_log_cb:    Optional[Callable[[str], None]]      = None
 
 
 def bind(show, hide, log=None) -> None:
-    """Wire this module to the HUD. Called once from main.py at startup."""
-    global _show_cb, _hide_cb, _log_cb
-    _show_cb, _hide_cb, _log_cb = show, hide, log
+    """Wire this module to the chat log. Called once from main.py at startup.
+
+    `show`  — callable(title, detail) that posts the question into the chat.
+    `hide`  — optional callable() called when the pending question is dismissed
+              early (e.g. timeout); pass None if unused.
+    `log`   — optional callable(text) for system-log lines.
+    """
+    global _ask_cb, _cancel_cb, _log_cb
+    _ask_cb    = show
+    _cancel_cb = hide
+    _log_cb    = log
 
 
 def _log(msg: str) -> None:
@@ -80,14 +97,14 @@ def _log(msg: str) -> None:
 
 
 def request(key: str, title: str, detail: str, run: Callable[[], str]) -> str:
-    """Park an irreversible action behind the on-screen gate.
+    """Park an irreversible action behind a conversational yes/no question.
 
     Returns the sentence the tool should hand back to the model — phrased as an
     instruction so the assistant asks the user out loud in their own language,
     rather than reading an English string verbatim."""
     global _pending
 
-    if _show_cb is None:
+    if _ask_cb is None:
         # No interface bound (headless, or a very early call). Refuse rather
         # than silently performing something irreversible.
         return (f"I cannot confirm '{title}' right now because the interface is "
@@ -98,7 +115,7 @@ def request(key: str, title: str, detail: str, run: Callable[[], str]) -> str:
                             run=run, at=time.monotonic())
 
     try:
-        _show_cb(title, detail)
+        _ask_cb(title, detail)
     except Exception as e:
         with _lock:
             _pending = None
@@ -106,14 +123,37 @@ def request(key: str, title: str, detail: str, run: Callable[[], str]) -> str:
 
     _log(f"SYS: Awaiting confirmation — {title}")
     return (
-        f"[CONFIRMATION_PENDING] I have put a confirmation on screen for: {title}. "
+        f"[CONFIRMATION_PENDING] I have asked the user in chat: '{title}'. "
         f"Say ONE short sentence in the user's own language telling them you need "
-        f"them to confirm it on the HUD before you do it. Do not claim it is done."
+        f"them to reply yes or no in the chat before you do it. Do not claim it is done."
     )
 
 
+def check_reply(text: str) -> bool | None:
+    """Check if `text` is a yes/no reply to a pending confirmation.
+
+    Returns True  → accepted
+            False → rejected
+            None  → not a yes/no reply (or nothing pending)
+
+    Called by the UI's text-send handler before routing to the AI.
+    """
+    with _lock:
+        if _pending is None:
+            return None
+        if time.monotonic() - _pending.at > TIMEOUT_SECONDS:
+            return None
+
+    normalised = text.strip().lower().rstrip("!.")
+    if normalised in _YES_WORDS:
+        return True
+    if normalised in _NO_WORDS:
+        return False
+    return None
+
+
 def resolve(accepted: bool) -> None:
-    """Called by the UI when the user presses CONFIRM or CANCEL.
+    """Run (or discard) the stored callable.
 
     Runs the stored callable on a worker thread — this is invoked from the Qt
     thread, and shutting the machine down from inside a button handler would
@@ -123,9 +163,9 @@ def resolve(accepted: bool) -> None:
     with _lock:
         p, _pending = _pending, None
 
-    if _hide_cb:
+    if _cancel_cb:
         try:
-            _hide_cb()
+            _cancel_cb()
         except Exception:
             pass
 
@@ -152,7 +192,7 @@ def resolve(accepted: bool) -> None:
 
 
 def pending_title() -> str:
-    """'' when nothing is waiting. Lets an action avoid stacking two banners."""
+    """'' when nothing is waiting. Lets an action avoid stacking two questions."""
     with _lock:
         if _pending is None:
             return ""

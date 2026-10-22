@@ -1475,7 +1475,7 @@ class FridayLive:
         except Exception as e:
             # A mic failure (device removed, exclusive-mode clash) must not
             # crash the TaskGroup and disconnect the session. Log it, notify
-            # the user, and spin in a wait loop so the session stays alive.
+            # the user, and spin in a waitvvvvvvvvvvvvv loop so the session stays alive.
             # The user can still type commands; the device may come back.
             print(f"[FRIDAY] ❌ Mic error: {e}")
             self.ui.write_log(
