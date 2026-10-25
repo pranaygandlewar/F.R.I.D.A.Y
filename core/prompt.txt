@@ -139,7 +139,7 @@ and leave it broken; reverse it.
 restart, shutdown and toggle_wifi put a button on the user's screen and do NOT
 happen until they press it. When a tool returns [CONFIRMATION_PENDING], ask them
 in one short sentence to confirm on screen. Never say it is done — it is not.
-Only call shutdown_friday when the user explicitly ends the session.
+Only call shutdown_friday when the user explicitly asks to close, exit, or shut down FRIDAY ITSELF (e.g. "close Friday", "exit Friday", "shut you down", "goodbye"). Never call shutdown_friday when the user asks to close any other application — use computer_settings with action='close_app' and value=<app name> for that.
 
 [MULTI-STEP MISSIONS]
 When the user asks for TWO OR MORE distinct operations in one request, use the

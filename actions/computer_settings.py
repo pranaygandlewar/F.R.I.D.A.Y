@@ -244,13 +244,173 @@ def brightness_down():
         except Exception as e:
             print(f"[Settings] Brightness down failed on Windows: {e}")
 
-def close_app():
-    if _OS == "Darwin": pyautogui.hotkey("command", "q")
-    else:               pyautogui.hotkey("alt", "f4")
+def close_app(app_name: str = "") -> str:
+    """Close an application by name (preferred) or the currently focused window.
+
+    On Windows: taskkill /IM <exe> + psutil fallback — works even when Friday is in focus.
+    On macOS:   osascript quit / pkill.
+    Fallback:   Alt+F4 / Cmd+Q on the active window (with protection for Friday itself).
+    """
+    name = (app_name or "").strip()
+    key = name.lower()
+
+    # Safety guard: never kill Friday or Python via close_app
+    if key and any(f in key for f in ("friday", "mark", "assistant", "python")):
+        return "To close Friday, please say 'exit Friday' or 'shut down Friday'."
+
+    # ── Process-name aliases (same vocabulary as open_app) ────────────────
+    _WIN_EXE: dict[str, str] = {
+        "chrome":             "chrome.exe",
+        "google chrome":      "chrome.exe",
+        "firefox":            "firefox.exe",
+        "edge":               "msedge.exe",
+        "microsoft edge":     "msedge.exe",
+        "brave":              "brave.exe",
+        "opera":              "opera.exe",
+        "whatsapp":           "WhatsApp.exe",
+        "telegram":           "Telegram.exe",
+        "discord":            "Discord.exe",
+        "slack":              "slack.exe",
+        "zoom":               "Zoom.exe",
+        "teams":              "ms-teams.exe",
+        "skype":              "Skype.exe",
+        "signal":             "Signal.exe",
+        "spotify":            "Spotify.exe",
+        "vlc":                "vlc.exe",
+        "vscode":             "Code.exe",
+        "visual studio code": "Code.exe",
+        "code":               "Code.exe",
+        "notepad":            "notepad.exe",
+        "calculator":         "Calculator.exe",
+        "paint":              "mspaint.exe",
+        "word":               "WINWORD.EXE",
+        "excel":              "EXCEL.EXE",
+        "powerpoint":         "POWERPNT.EXE",
+        "steam":              "steam.exe",
+        "epic games":         "EpicGamesLauncher.exe",
+        "epic":               "EpicGamesLauncher.exe",
+        "task manager":       "Taskmgr.exe",
+        "explorer":           "explorer.exe",
+        "file explorer":      "explorer.exe",
+        "terminal":           "WindowsTerminal.exe",
+        "powershell":         "powershell.exe",
+        "cmd":                "cmd.exe",
+        "notion":             "Notion.exe",
+        "obsidian":           "Obsidian.exe",
+        "capcut":             "CapCut.exe",
+        "figma":              "Figma.exe",
+        "postman":            "Postman.exe",
+        "blender":            "blender.exe",
+        "netflix":            "Netflix.exe",
+        "instagram":          "Instagram.exe",
+    }
+
+    if name and _OS == "Windows":
+        exe = _WIN_EXE.get(key) or (
+            name if name.lower().endswith(".exe") else name + ".exe"
+        )
+        try:
+            result = subprocess.run(
+                ["taskkill", "/F", "/IM", exe],
+                capture_output=True, text=True, timeout=8,
+                **_WIN_HIDE,
+            )
+            if result.returncode == 0:
+                return f"Closed {name}."
+            # taskkill failed (process not found) — try raw name directly
+            result2 = subprocess.run(
+                ["taskkill", "/F", "/IM", name],
+                capture_output=True, text=True, timeout=8,
+                **_WIN_HIDE,
+            )
+            if result2.returncode == 0:
+                return f"Closed {name}."
+        except Exception as e:
+            print(f"[close_app] taskkill failed: {e}")
+
+        # Fallback to psutil process iteration
+        try:
+            import psutil
+            import os
+            my_pid = os.getpid()
+            target_term = key.replace(".exe", "")
+            killed = False
+            for proc in psutil.process_iter(['pid', 'name']):
+                try:
+                    pname = (proc.info['name'] or '').lower()
+                    if proc.info['pid'] != my_pid and (target_term in pname or pname.replace(".exe", "") == target_term):
+                        proc.kill()
+                        killed = True
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+            if killed:
+                return f"Closed {name}."
+        except Exception as e:
+            print(f"[close_app] psutil search failed: {e}")
+
+        return f"Could not find {name} running to close."
+
+    elif name and _OS == "Darwin":
+        try:
+            result = subprocess.run(
+                ["osascript", "-e", f'quit app "{name}"'],
+                capture_output=True, timeout=8,
+            )
+            if result.returncode == 0:
+                return f"Closed {name}."
+        except Exception:
+            pass
+        try:
+            subprocess.run(["pkill", "-x", name], capture_output=True, timeout=5)
+            return f"Closed {name}."
+        except Exception as e:
+            print(f"[close_app] pkill failed: {e}")
+        return f"Could not close {name}."
+
+    elif name and _OS == "Linux":
+        try:
+            subprocess.run(["pkill", "-x", name], capture_output=True, timeout=5)
+            return f"Closed {name}."
+        except Exception as e:
+            print(f"[close_app] pkill failed: {e}")
+        return f"Could not close {name}."
+
+    # No specific app name given: close currently focused window safely
+    if _OS == "Windows":
+        try:
+            import ctypes
+            import os
+            hwnd = ctypes.windll.user32.GetForegroundWindow()
+            pid = ctypes.c_ulong()
+            ctypes.windll.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+            if pid.value == os.getpid():
+                return "Friday is currently the focused window. To close Friday, ask to shut down Friday."
+        except Exception:
+            pass
+        pyautogui.hotkey("alt", "f4")
+    elif _OS == "Darwin":
+        pyautogui.hotkey("command", "q")
+    else:
+        pyautogui.hotkey("alt", "f4")
+    return "Closed active window."
 
 def close_window():
-    if _OS == "Darwin": pyautogui.hotkey("command", "w")
-    else:               pyautogui.hotkey("ctrl", "w")
+    if _OS == "Windows":
+        try:
+            import ctypes
+            import os
+            hwnd = ctypes.windll.user32.GetForegroundWindow()
+            pid = ctypes.c_ulong()
+            ctypes.windll.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+            if pid.value == os.getpid():
+                return "Friday is currently the focused window. Please switch to another window first."
+        except Exception:
+            pass
+        pyautogui.hotkey("ctrl", "w")
+    elif _OS == "Darwin":
+        pyautogui.hotkey("command", "w")
+    else:
+        pyautogui.hotkey("ctrl", "w")
 
 def full_screen():
     if _OS == "Darwin": pyautogui.hotkey("ctrl", "command", "f")
@@ -821,7 +981,7 @@ def computer_settings(
         if func is None:
             return f"Unknown action: '{raw_action}'."
         if confirm.pending_title():
-            return ("There is already a confirmation waiting on screen. "
+            return ("There is already a confirmation waiting in chat. "
                     "Ask the user to answer that one first.")
         return confirm.request(
             key=action, title=title, detail=detail,
@@ -869,6 +1029,14 @@ def computer_settings(
     if action == "scroll_down":
         scroll_down(int(value or 500))
         return "Scrolled down."
+
+    # close_app accepts an optional app name via `value`
+    if action == "close_app":
+        app_name = str(value or "").strip()
+        result_msg = close_app(app_name)
+        if player:
+            player.write_log(f"[Settings] close_app: {app_name or 'active window'}")
+        return result_msg
 
     func = ACTION_MAP.get(action)
     if not func:
@@ -953,7 +1121,14 @@ TOOL = {
             },
             "value": {
                 "type": "STRING",
-                "description": "Optional value: volume level 0-100, text to type, key name, etc."
+                "description": (
+                    "Optional value depending on action: "
+                    "volume level 0-100 for volume_set; "
+                    "text to type for type_text; "
+                    "key name for press_key; "
+                    "app name (e.g. 'Chrome', 'WhatsApp', 'Spotify') for close_app — "
+                    "ALWAYS provide the app name for close_app so Friday does not close itself."
+                )
             }
         },
         "required": []

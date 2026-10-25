@@ -2988,7 +2988,6 @@ class MainWindow(QMainWindow):
         self.on_interrupt      = None   # callable: () -> None — stop FRIDAY mid-speech
         self.on_voice_change   = None   # callable: () -> None — rebuild session with new voice
         self.on_audio_device_change = None  # callable: () -> None — reopen audio streams
-        self._confirm_overlay  = None   # live ConfirmBanner, if one is on screen
         self.get_plugins       = None   # callable: () -> list[dict], set by FridayLive
         self.get_plugin_settings = None # callable: () -> list[dict] settings schemas, set by FridayLive
         self.on_wake_toggle    = None   # callable: (enable: bool) -> str, set by FridayLive
@@ -5411,32 +5410,19 @@ class MainWindow(QMainWindow):
         self._centre_overlay(ov)
         self._memory_overlay = ov
 
-    # ── Irreversible-action confirmation ─────────────────────────────────────
+    # ── Irreversible-action confirmation (conversational yes/no) ─────────────
 
     def _show_confirm_banner(self, title: str, detail: str):
-        self._hide_confirm_banner()
-        ov = ConfirmBanner(title, detail, parent=self.centralWidget())
-        ov.answered.connect(self._on_confirm_answered)
-        self._centre_overlay(ov)
-        self._confirm_overlay = ov
+        """Post a yes/no question into the chat log instead of a GUI banner."""
+        lines = [f"⚠  {title}"]
+        if detail:
+            lines.append(detail)
+        lines.append("Reply  yes  to confirm or  no  to cancel.")
+        self._log.append_log("\n".join(lines))
 
     def _hide_confirm_banner(self):
-        ov = getattr(self, "_confirm_overlay", None)
-        if ov is not None:
-            ov.hide()
-            ov.deleteLater()
-            self._confirm_overlay = None
-
-    def _on_confirm_answered(self, accepted: bool):
-        # Tear the banner down first: core.confirm.resolve() may be about to
-        # shut the machine down, and a live widget mid-callback is not where you
-        # want to be when that happens.
-        self._hide_confirm_banner()
-        try:
-            from core.confirm import resolve
-            resolve(bool(accepted))
-        except Exception as e:
-            self._log.append_log(f"ERR: Confirmation failed — {e}")
+        """Nothing to hide — the question lives in the chat log."""
+        pass
 
     def _open_plugin_manager(self):
         plugins = self.get_plugins() if self.get_plugins else []
@@ -5544,6 +5530,22 @@ class MainWindow(QMainWindow):
         if not txt: return
         self._input.clear()
         self._log.append_log(f"You: {txt}")
+
+        # ── Intercept yes/no replies to a pending irreversible-action question ─
+        try:
+            from core.confirm import check_reply, resolve
+            verdict = check_reply(txt)
+            if verdict is True:
+                self._log.append_log("SYS: ✔ Confirmed — proceeding.")
+                threading.Thread(target=resolve, args=(True,), daemon=True).start()
+                return
+            if verdict is False:
+                self._log.append_log("SYS: ✖ Cancelled.")
+                threading.Thread(target=resolve, args=(False,), daemon=True).start()
+                return
+        except Exception:
+            pass
+
         if self.on_text_command:
             threading.Thread(target=self.on_text_command, args=(txt,), daemon=True).start()
 
@@ -5662,12 +5664,11 @@ class FridayUI:
         self._win.on_audio_device_change = cb
 
     def show_confirm(self, title: str, detail: str) -> None:
-        """Thread-safe: raise the irreversible-action gate. Called from action
-        handlers running in executor threads, so it goes through a signal."""
+        """Thread-safe: post the yes/no question into the chat log."""
         self._win._confirm_sig.emit(str(title)[:120], str(detail)[:300])
 
     def hide_confirm(self) -> None:
-        """Thread-safe: take the gate down."""
+        """No-op: the question lives in the chat log, nothing to dismiss."""
         self._win._confirm_hide_sig.emit()
 
     @property

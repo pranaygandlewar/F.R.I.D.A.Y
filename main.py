@@ -1937,6 +1937,46 @@ class FridayLive:
 
         asyncio.create_task(_deliver_news())
 
+    async def _send_simple_greeting(self) -> None:
+        """Fires on startup when Morning Brief is OFF.
+        Tells the user the current time and that Friday is online —
+        no news fetch, no session summary, just a quick heads-up.
+        """
+        await asyncio.sleep(0.3)
+        if not self.session:
+            return
+
+        memory   = load_memory()
+        identity = memory.get("identity", {})
+
+        def _val(k: str) -> str:
+            e = identity.get(k, {})
+            return (e.get("value", "") if isinstance(e, dict) else str(e)).strip()
+
+        lang       = _val("language")
+        name       = _val("name")
+        time_str   = datetime.now().strftime("%H:%M")
+
+        lang_clause = (
+            f" Reply in {lang} unless the user speaks another language in their first message."
+            if lang else ""
+        )
+        name_clause = f" Address the user as {name}." if name else ""
+
+        prompt = (
+            f"[STARTUP] Tell the user it is {time_str} and that you are online and ready. "
+            f"One short sentence only. Do not fetch news or call any tools."
+            f"{lang_clause}{name_clause}"
+        )
+        try:
+            await self.session.send_client_content(
+                turns={"role": "user", "parts": [{"text": prompt}]},
+                turn_complete=True,
+            )
+            print("[FRIDAY] Simple startup greeting sent.")
+        except Exception as e:
+            print(f"[FRIDAY] Simple greeting failed: {e}")
+
     # ── Session memory ──────────────────────────────────────────────────────────
 
     async def _save_session_summary(self) -> None:
@@ -2234,12 +2274,15 @@ class FridayLive:
                     if self._dashboard:
                         tg.create_task(self._relay_phone_audio())
 
-                    # Morning briefing — fires once per process launch (if enabled).
-                    # Skipped in wake-word mode: it comes up asleep, and a briefing
+                    # Morning briefing / Startup greeting — fires once per process launch.
+                    # Skipped in wake-word mode: it comes up asleep, and a greeting
                     # would mean talking while "asleep".
-                    if not self._briefing_sent and get_brief_enabled() and self._awake:
+                    if not self._briefing_sent and self._awake:
                         self._briefing_sent = True
-                        tg.create_task(self._send_startup_briefing())
+                        if get_brief_enabled():
+                            tg.create_task(self._send_startup_briefing())
+                        else:
+                            tg.create_task(self._send_simple_greeting())
 
             except KeyboardInterrupt:
                 raise

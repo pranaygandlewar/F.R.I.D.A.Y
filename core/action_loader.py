@@ -128,7 +128,7 @@ class ActionRegistry:
         # Otherwise, enforce Level 3 confirmation centrally here.
         if level >= 3 and name not in ("computer_settings",):
             if confirm.pending_title():
-                return "There is already a confirmation waiting on screen. Ask the user to answer that one first."
+                return "There is already a confirmation waiting in chat. Ask the user to answer that one first."
             return confirm.request(
                 key=f"{name}_{level}", 
                 title=f"Confirm Action: {name}", 

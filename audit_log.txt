@@ -605,3 +605,41 @@
 [2026-10-23 00:03:53] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
 [2026-10-23 00:04:13] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': '1:00:00', 'action': 'play'}
 [2026-10-23 00:04:57] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-10-23 00:12:25] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-23 00:12:33] Action: laptop_control, Level: 3, Reason: Irreversible network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
+[2026-10-23 00:12:55] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'bluetooth_status'}
+[2026-10-23 00:13:15] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'lock_screen'}
+[2026-10-23 00:13:28] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'lock_screen'}
+[2026-10-23 00:13:42] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'sleep_display'}
+[2026-10-25 10:07:09] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'WhatsApp'}
+[2026-10-25 10:08:02] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'how to legally download music songs to computer'}
+[2026-10-25 10:09:32] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'show_desktop'}
+[2026-10-25 10:09:51] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Friday'}
+[2026-10-25 10:10:21] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Microsoft Edge', 'action': 'close_app'}
+[2026-10-25 10:21:41] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-10-25 10:21:55] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'y': 332, 'x': 114, 'action': 'click'}
+[2026-10-25 10:22:07] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'x': 143, 'y': 331, 'action': 'click'}
+[2026-10-25 10:22:19] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'click', 'x': 120, 'y': 331}
+[2026-10-25 10:22:44] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'WhatsApp'}
+[2026-10-25 10:22:54] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'google.com', 'browser': 'chrome'}
+[2026-10-25 10:22:54] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Anti-Gravity'}
+[2026-10-25 10:23:10] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Anti-Gravity', 'action': 'close_app'}
+[2026-10-25 10:23:24] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'AntiGravity', 'action': 'close_app'}
+[2026-10-25 10:23:35] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'AntiGrativity IDE'}
+[2026-10-25 10:23:53] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'trending'}
+[2026-10-25 10:24:08] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'youtube.com', 'browser': 'chrome', 'action': 'go_to'}
+[2026-10-25 10:24:32] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'selector': 'input#search', 'text': 'Mumbai Indians top run chasers', 'action': 'type'}
+[2026-10-25 10:24:44] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'press', 'key': 'Enter', 'selector': 'input#search'}
+[2026-10-25 10:24:45] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'open', 'browser': 'chrome'}
+[2026-10-25 10:24:46] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'y': 128, 'action': 'click', 'x': 650}
+[2026-10-25 10:24:47] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Mumbai Indians top run chasers', 'action': 'type'}
+[2026-10-25 10:24:49] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-10-25 10:25:21] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'scroll_down'}
+[2026-10-25 10:25:30] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'scroll_down'}
+[2026-10-25 10:25:40] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'scroll_down'}
+[2026-10-25 10:25:55] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'scroll_bottom'}
+[2026-10-25 10:26:05] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'Tuljapur Devi video'}
+[2026-10-25 10:26:19] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-10-25 10:26:24] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'https://www.youtube.com/watch?v=UfawRtk3EIQ', 'action': 'type'}
+[2026-10-25 10:26:25] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-10-25 10:27:10] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Chrome', 'action': 'close_app'}
