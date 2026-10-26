@@ -8,7 +8,7 @@ def evaluate(tool_name: str, parameters: dict) -> tuple[int, str]:
     LEVEL 0 — INFORMATION
     LEVEL 1 — REVERSIBLE
     LEVEL 2 — SENSITIVE
-    LEVEL 3 — HIGH RISK / IRREVERSIBLE
+    LEVEL 3 — HIGH RISK / IRREVERSIBLE (Requires confirmation: ONLY shutdown, restart, delete)
     LEVEL 4 — BLOCKED
     """
     
@@ -18,12 +18,12 @@ def evaluate(tool_name: str, parameters: dict) -> tuple[int, str]:
         if not action and parameters.get("description"):
             # A rough estimate if action is missing but description is present
             desc = parameters.get("description", "").lower()
-            if "wifi" in desc or "restart" in desc or "shutdown" in desc:
+            if "restart" in desc or "shutdown" in desc:
                 return 3, "Potentially irreversible system change"
                 
-        if action in ("restart", "shutdown", "toggle_wifi"):
+        if action in ("restart", "shutdown"):
             return 3, f"Irreversible action: {action}"
-        elif action in ("volume_up", "volume_down", "volume_set", "mute", "unmute", "toggle_mute", "brightness_up", "brightness_down", "dark_mode"):
+        elif action in ("volume_up", "volume_down", "volume_set", "mute", "unmute", "toggle_mute", "brightness_up", "brightness_down", "dark_mode", "toggle_wifi"):
             return 1, "Reversible setting change"
         else:
             return 1, "Application or window setting"
@@ -61,21 +61,21 @@ def evaluate(tool_name: str, parameters: dict) -> tuple[int, str]:
     # 5. File Controller
     elif tool_name == "file_controller":
         action = str(parameters.get("action", "")).lower().strip()
-        if action in ("read", "list", "search"):
+        if action in ("read", "list", "search", "largest", "disk_usage", "info"):
             return 0, "Read-only file access"
-        elif action in ("create", "write", "append", "rename", "move"):
+        elif action in ("create", "create_file", "create_folder", "write", "append", "rename", "move", "copy", "organize_desktop"):
             return 1, "Reversible file modification"
-        elif action == "delete":
+        elif action in ("delete", "delete_file", "delete_folder", "remove"):
             return 3, "Irreversible file deletion"
         else:
-            return 2, "File operation"
+            return 1, "File operation"
             
     # 6. File Processor
     elif tool_name == "file_processor":
         action = str(parameters.get("action", "")).lower().strip()
         if action in ("read", "summarize", "search"):
             return 0, "Read-only file access"
-        elif action in ("delete"):
+        elif action in ("delete", "remove"):
             return 3, "Irreversible file deletion"
         else:
             return 1, "File processing"
@@ -108,13 +108,20 @@ def evaluate(tool_name: str, parameters: dict) -> tuple[int, str]:
         elif action in ("focus_window", "minimize_window", "maximize_window", "restore_window", "move_window", "resize_window", "center_window", "bring_to_front"):
             return 1, "Window management"
         elif action in ("bluetooth_on", "bluetooth_off", "wifi_on", "wifi_off"):
-            return 3, f"Irreversible network change: {action}"
+            return 1, f"Network change: {action}"
         elif action in ("service_start", "service_stop", "service_restart"):
-            return 3, f"Service modification: {action}"
+            return 2, f"Service modification: {action}"
         elif action in ("hibernate", "log_out"):
+            return 2, f"Power change: {action}"
+        elif action in ("restart", "shutdown"):
             return 3, f"Power change: {action}"
         else:
-            return 2, f"System control: {action}"
+            return 1, f"System control: {action}"
+
+    # Global check: only shutdown, restart, and delete can ever require Level 3 confirmation
+    action = str(parameters.get("action", "")).lower().strip()
+    if action in ("shutdown", "restart", "delete", "delete_file", "delete_folder", "remove"):
+        return 3, f"Irreversible action: {action}"
 
     # Default fallback
     return 1, "Default reversible action"

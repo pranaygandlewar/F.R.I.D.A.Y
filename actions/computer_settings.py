@@ -834,12 +834,6 @@ _IRREVERSIBLE = {
                     "Anything unsaved will be lost. The computer restarts in 10 seconds."),
     "shutdown":    ("Shut this computer down",
                     "Anything unsaved will be lost. The computer powers off in 10 seconds."),
-    # Not obviously destructive, and that is exactly why it was missed: turning
-    # the WiFi off cuts the assistant's own connection to the Live API, so it
-    # cannot be asked to turn it back on.
-    "toggle_wifi": ("Switch WiFi off or on",
-                    "If this switches WiFi off, FRIDAY loses its connection and "
-                    "cannot switch it back on by voice."),
 }
 
 # Kept so anything still importing the old name keeps working.

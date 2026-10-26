@@ -669,7 +669,7 @@ def file_controller(
         elif action == "create_folder":
             return create_folder(path, name=name)
 
-        elif action == "delete":
+        elif action in ("delete", "delete_file", "delete_folder", "remove"):
             return delete_file(path, name=name)
 
         elif action == "move":

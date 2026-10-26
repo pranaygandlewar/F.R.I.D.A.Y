@@ -51,15 +51,76 @@ def _is_captcha_or_blocked(url: str, page_text: str = "") -> bool:
     return False
 
 
+# ── Custom URL shortcuts ──────────────────────────────────────────────────────
+_URL_SHORTCUTS: dict[str, str] = {
+    "github": "https://github.com/pranaygandlewar",
+    "portfolio": "https://pranay-portfoliio.vercel.app/",
+    "portfoliio": "https://pranay-portfoliio.vercel.app/",
+    "my portfolio": "https://pranay-portfoliio.vercel.app/",
+    "vercel": "https://vercel.com/pranaytechai-6711s-projects",
+    "instagram": "https://www.instagram.com/?hl=en",
+    "chatgpt": "https://www.chatgpt.com/",
+    "chat gpt": "https://www.chatgpt.com/",
+}
+
+_EXACT_DOMAIN_SHORTCUTS: dict[str, str] = {
+    "github.com": "https://github.com/pranaygandlewar",
+    "www.github.com": "https://github.com/pranaygandlewar",
+    "https://github.com": "https://github.com/pranaygandlewar",
+    "https://github.com/": "https://github.com/pranaygandlewar",
+    "http://github.com": "https://github.com/pranaygandlewar",
+    "http://github.com/": "https://github.com/pranaygandlewar",
+
+    "vercel.com": "https://vercel.com/pranaytechai-6711s-projects",
+    "www.vercel.com": "https://vercel.com/pranaytechai-6711s-projects",
+    "https://vercel.com": "https://vercel.com/pranaytechai-6711s-projects",
+    "https://vercel.com/": "https://vercel.com/pranaytechai-6711s-projects",
+    "http://vercel.com": "https://vercel.com/pranaytechai-6711s-projects",
+    "http://vercel.com/": "https://vercel.com/pranaytechai-6711s-projects",
+
+    "instagram.com": "https://www.instagram.com/?hl=en",
+    "www.instagram.com": "https://www.instagram.com/?hl=en",
+    "https://instagram.com": "https://www.instagram.com/?hl=en",
+    "https://instagram.com/": "https://www.instagram.com/?hl=en",
+    "https://www.instagram.com": "https://www.instagram.com/?hl=en",
+    "https://www.instagram.com/": "https://www.instagram.com/?hl=en",
+    "http://instagram.com": "https://www.instagram.com/?hl=en",
+    "http://instagram.com/": "https://www.instagram.com/?hl=en",
+
+    "chatgpt.com": "https://www.chatgpt.com/",
+    "www.chatgpt.com": "https://www.chatgpt.com/",
+    "https://chatgpt.com": "https://www.chatgpt.com/",
+    "https://chatgpt.com/": "https://www.chatgpt.com/",
+    "https://www.chatgpt.com": "https://www.chatgpt.com/",
+    "https://www.chatgpt.com/": "https://www.chatgpt.com/",
+    "http://chatgpt.com": "https://www.chatgpt.com/",
+    "http://chatgpt.com/": "https://www.chatgpt.com/",
+}
+
+
 def _normalize_url(url: str) -> str:
     """
-    Bare words like "instagram" → "https://instagram.com"
-    Domains like "instagram.com" → "https://instagram.com"
-    Full URLs pass through unchanged.
+    Bare words like "instagram" → "https://www.instagram.com/?hl=en"
+    Domains like "github.com" → "https://github.com/pranaygandlewar"
+    Full URLs pass through unchanged unless matched by custom shortcuts.
     """
     url = url.strip()
     if not url:
         return "about:blank"
+
+    clean_key = url.lower().rstrip("/")
+    if url.lower() in _EXACT_DOMAIN_SHORTCUTS:
+        return _EXACT_DOMAIN_SHORTCUTS[url.lower()]
+    if clean_key in _EXACT_DOMAIN_SHORTCUTS:
+        return _EXACT_DOMAIN_SHORTCUTS[clean_key]
+    if clean_key in _URL_SHORTCUTS:
+        return _URL_SHORTCUTS[clean_key]
+
+    import re
+    cleaned = re.sub(r"^(open|launch|start|go\s+to)\s+", "", clean_key).strip()
+    if cleaned in _URL_SHORTCUTS:
+        return _URL_SHORTCUTS[cleaned]
+
     if "://" in url:
         return url
     # No dot at all → assume .com  (e.g. "instagram" → "instagram.com")
@@ -338,40 +399,58 @@ def _resolve_browser(name: str) -> dict | None:
     return {"engine": engine, "exe": exe, "channel": channel}
 
 
-def _detect_default_browser() -> str:
+def _find_chrome_windows_fallback() -> Optional[str]:
+    candidates = [
+        shutil.which("chrome"),
+        Path(os.environ.get("PROGRAMFILES", "C:\\Program Files")) / "Google" / "Chrome" / "Application" / "chrome.exe",
+        Path(os.environ.get("PROGRAMFILES(X86)", "C:\\Program Files (x86)")) / "Google" / "Chrome" / "Application" / "chrome.exe",
+        Path(os.environ.get("LOCALAPPDATA", "")) / "Google" / "Chrome" / "Application" / "chrome.exe",
+    ]
+    for p in candidates:
+        if p and Path(p).exists():
+            return str(p)
+    return None
+
+
+def _focus_browser_window(name: str = "chrome"):
+    """Brings the browser window to the foreground if already open on Windows."""
+    if _OS != "Windows":
+        return
     try:
-        if _OS == "Windows":
-            import winreg
-            k = winreg.OpenKey(
-                winreg.HKEY_CURRENT_USER,
-                r"Software\Microsoft\Windows\Shell\Associations"
-                r"\UrlAssociations\http\UserChoice",
-            )
-            prog_id = winreg.QueryValueEx(k, "ProgId")[0].lower()
-            winreg.CloseKey(k)
-            for kw in ("edge", "firefox", "opera", "brave", "vivaldi", "chrome"):
-                if kw in prog_id:
-                    return kw
-        elif _OS == "Darwin":
-            out = subprocess.run(
-                ["defaults", "read",
-                 "com.apple.LaunchServices/com.apple.launchservices.secure",
-                 "LSHandlers"],
-                capture_output=True, text=True, timeout=5,
-            ).stdout.lower()
-            for kw in ("firefox", "opera", "brave", "vivaldi", "safari", "chrome", "edge"):
-                if kw in out:
-                    return kw
-        elif _OS == "Linux":
-            out = subprocess.run(
-                ["xdg-settings", "get", "default-web-browser"],
-                capture_output=True, text=True, timeout=5,
-            ).stdout.lower()
-            for kw in ("firefox", "opera", "brave", "vivaldi", "chrome", "edge"):
-                if kw in out:
-                    return kw
+        import ctypes
+        EnumWindows = ctypes.windll.user32.EnumWindows
+        EnumWindowsProc = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
+        IsWindowVisible = ctypes.windll.user32.IsWindowVisible
+        GetWindowTextLength = ctypes.windll.user32.GetWindowTextLengthW
+        GetWindowText = ctypes.windll.user32.GetWindowTextW
+        ShowWindow = ctypes.windll.user32.ShowWindow
+        SetForegroundWindow = ctypes.windll.user32.SetForegroundWindow
+
+        target_hwnd = None
+        hint = "chrome" if name == "chrome" else name
+
+        def foreach_window(hwnd, lParam):
+            nonlocal target_hwnd
+            if IsWindowVisible(hwnd):
+                length = GetWindowTextLength(hwnd)
+                if length > 0:
+                    buff = ctypes.create_unicode_buffer(length + 1)
+                    GetWindowText(hwnd, buff, length + 1)
+                    if hint in buff.value.lower():
+                        target_hwnd = hwnd
+                        return False
+            return True
+
+        EnumWindows(EnumWindowsProc(foreach_window), 0)
+        if target_hwnd:
+            ShowWindow(target_hwnd, 9)  # SW_RESTORE
+            SetForegroundWindow(target_hwnd)
     except Exception:
         pass
+
+
+def _detect_default_browser() -> str:
+    # Always prioritize Chrome as default browser
     return "chrome"
 
 
@@ -400,27 +479,25 @@ _WIN_EXE_HINTS: dict[str, str] = {"chrome": "chrome", "edge": "msedge"}
 def _open_native(url: str, browser_name: Optional[str]) -> str:
     """
     Opens the user's REAL browser normally — with their own profile,
-    logged-in accounts and extensions. No automation attaches, so an
-    about:blank tab or a blank profile NEVER shows up.
-    If url is empty the browser starts with no URL (its own start page /
-    session restore) — exactly as if the user had opened it themselves.
-    Works on all three of Windows / macOS / Linux.
+    logged-in accounts and extensions.
+    When Chrome is already open, executing Chrome with a URL automatically opens
+    a new tab in the existing window.
+    Works on Windows / macOS / Linux.
     """
     url = _normalize_url(url) if url and url.strip() else ""
     if url == "about:blank":
         url = ""
 
-    name = None
-    if browser_name:
+    # Always prioritize Chrome over MS Edge for any searches or unassigned browsing
+    if not browser_name or browser_name.lower().strip() in ("edge", "msedge", "microsoft edge", "default"):
+        name = "chrome"
+    else:
         name = _ALIASES.get(browser_name.lower().strip(), browser_name.lower().strip())
-    elif not url:
-        # No URL → only a window will open; needs the default browser's exe
-        name = _detect_default_browser()
 
-    # Specific browser → launch its own executable, exactly like the user would.
+    # Launch browser executable
     if name:
         if _OS == "Darwin":
-            app = _MAC_APP_NAMES.get(name)
+            app = _MAC_APP_NAMES.get(name) or ("Google Chrome" if name == "chrome" else None)
             if app:
                 cmd = ["open", "-a", app] + ([url] if url else [])
                 try:
@@ -434,26 +511,41 @@ def _open_native(url: str, browser_name: Optional[str]) -> str:
         if not exe and _OS == "Windows":
             if name in ("opera", "operagx"):
                 exe = _find_opera_windows()
+            elif name == "chrome":
+                exe = _find_exe_windows("chrome") or _find_chrome_windows_fallback()
             else:
                 exe = _find_exe_windows(_WIN_EXE_HINTS.get(name, name))
+        elif not exe and name == "chrome":
+            exe = shutil.which("google-chrome") or shutil.which("chromium")
+
         if exe:
             try:
+                # Passing [exe, url] to an already running Chrome will open a new tab
+                # in the existing window instead of creating a brand new window.
+                cmd = [exe, url] if url else [exe]
                 subprocess.Popen(
-                    [exe, url] if url else [exe],
+                    cmd,
                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                 )
+                if _OS == "Windows" and name == "chrome":
+                    _focus_browser_window("chrome")
                 return f"Opened in {name}: {url}" if url else f"Opened {name}."
             except Exception as e:
                 print(f"[Browser] Native launch failed for {name}: {e}")
-        print(f"[Browser] '{name}' not found — falling back to default browser.")
+        print(f"[Browser] '{name}' not found — falling back.")
 
     if not url:
         return "Could not find a browser to open."
 
-    # Default browser via the OS — exactly like the user clicking a link.
+    # Fallback only if Chrome executable was not found
     try:
         if _OS == "Windows":
-            os.startfile(url)                       # ShellExecute → default browser
+            chrome_fallback = _find_chrome_windows_fallback()
+            if chrome_fallback:
+                subprocess.Popen([chrome_fallback, url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                _focus_browser_window("chrome")
+                return f"Opened in Chrome: {url}"
+            os.startfile(url)
         elif _OS == "Darwin":
             subprocess.run(["open", url], check=True, timeout=10)
         else:
@@ -461,11 +553,11 @@ def _open_native(url: str, browser_name: Optional[str]) -> str:
                 ["xdg-open", url],
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             )
-        return f"Opened in your default browser: {url}"
+        return f"Opened in browser: {url}"
     except Exception:
         try:
             if webbrowser.open(url):
-                return f"Opened in your default browser: {url}"
+                return f"Opened in browser: {url}"
         except Exception:
             pass
         return f"Could not open a browser for: {url}"
@@ -989,7 +1081,14 @@ def browser_control(
 ) -> str:
     params  = parameters or {}
     action  = params.get("action", "").lower().strip()
-    browser = params.get("browser", "").lower().strip() or None
+    browser_raw = params.get("browser", "").lower().strip()
+
+    # Search and unassigned browsing must open in Chrome rather than Edge
+    if action == "search" or not browser_raw or browser_raw in ("edge", "msedge", "microsoft edge", "default"):
+        browser = "chrome"
+    else:
+        browser = browser_raw
+
     result  = "Unknown action."
 
     if action == "switch":
@@ -1042,6 +1141,8 @@ def browser_control(
             base    = _SEARCH_ENGINES.get(params.get("engine", "google").lower(),
                                           _SEARCH_ENGINES["google"])
             nav_url = base + params.get("query", "").replace(" ", "+")
+        elif action == "new_tab":
+            nav_url = params.get("url", "").strip() or "chrome://newtab"
         else:
             nav_url = params.get("url", "").strip()
 

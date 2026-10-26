@@ -1,7 +1,10 @@
+import os
+import re
 import time
 import subprocess
 import platform
 import shutil
+import webbrowser
 
 try:
     import psutil
@@ -11,14 +14,71 @@ except ImportError:
 
 _SYSTEM = platform.system()
 
+# ── Custom URL shortcuts ──────────────────────────────────────────────────────
+_URL_SHORTCUTS: dict[str, str] = {
+    "github": "https://github.com/pranaygandlewar",
+    "portfolio": "https://pranay-portfoliio.vercel.app/",
+    "portfoliio": "https://pranay-portfoliio.vercel.app/",
+    "my portfolio": "https://pranay-portfoliio.vercel.app/",
+    "vercel": "https://vercel.com/pranaytechai-6711s-projects",
+    "instagram": "https://www.instagram.com/?hl=en",
+    "chatgpt": "https://www.chatgpt.com/",
+    "chat gpt": "https://www.chatgpt.com/",
+}
+
+
+def _find_chrome_exe() -> str | None:
+    for p in [
+        shutil.which("chrome"),
+        r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+        str(Path(os.environ.get("LOCALAPPDATA", "")) / "Google" / "Chrome" / "Application" / "chrome.exe"),
+    ]:
+        if p and os.path.exists(p):
+            return str(p)
+    return None
+
+
+def _launch_url(url: str) -> bool:
+    try:
+        if _SYSTEM == "Windows":
+            chrome_exe = _find_chrome_exe()
+            if chrome_exe:
+                # Passing [chrome_exe, url] automatically opens a new tab in the existing
+                # window if Chrome is already open.
+                subprocess.Popen([chrome_exe, url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                time.sleep(1.0)
+                return True
+            os.startfile(url)
+            time.sleep(1.0)
+            return True
+        elif _SYSTEM == "Darwin":
+            subprocess.run(["open", "-a", "Google Chrome", url], check=True, timeout=10)
+            time.sleep(1.0)
+            return True
+        else:
+            subprocess.Popen(["google-chrome", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(1.0)
+            return True
+    except Exception:
+        try:
+            if webbrowser.open(url):
+                time.sleep(1.0)
+                return True
+        except Exception:
+            pass
+    return False
+
 _APP_ALIASES: dict[str, dict[str, str]] = {
 
     "chrome":             {"Windows": "chrome",                  "Darwin": "Google Chrome",        "Linux": "google-chrome"},
     "google chrome":      {"Windows": "chrome",                  "Darwin": "Google Chrome",        "Linux": "google-chrome"},
+    "browser":            {"Windows": "chrome",                  "Darwin": "Google Chrome",        "Linux": "google-chrome"},
+    "web browser":        {"Windows": "chrome",                  "Darwin": "Google Chrome",        "Linux": "google-chrome"},
     "firefox":            {"Windows": "firefox",                 "Darwin": "Firefox",              "Linux": "firefox"},
-    "edge":               {"Windows": "msedge",                  "Darwin": "Microsoft Edge",       "Linux": "microsoft-edge"},
+    "edge":               {"Windows": "chrome",                  "Darwin": "Google Chrome",        "Linux": "google-chrome"},
     "brave":              {"Windows": "brave",                   "Darwin": "Brave Browser",        "Linux": "brave-browser"},
-    "safari":             {"Windows": "msedge",                  "Darwin": "Safari",               "Linux": "firefox"},
+    "safari":             {"Windows": "chrome",                  "Darwin": "Safari",               "Linux": "firefox"},
     "opera":              {"Windows": "opera",                   "Darwin": "Opera",                "Linux": "opera"},
     "whatsapp":           {"Windows": "WhatsApp",                "Darwin": "WhatsApp",             "Linux": "whatsapp"},
     "telegram":           {"Windows": "Telegram",                "Darwin": "Telegram",             "Linux": "telegram"},
@@ -247,6 +307,32 @@ def open_app(
 
     if not app_name:
         return "No application name provided."
+
+    lower_raw = app_name.lower().strip()
+    clean_name = re.sub(r"^(open|launch|start|go\s+to)\s+", "", lower_raw).strip()
+
+    # Direct URL
+    if lower_raw.startswith("http://") or lower_raw.startswith("https://"):
+        print(f"[open_app] Launching direct URL: '{app_name}'")
+        if player:
+            player.write_log(f"[open_app] {app_name}")
+        if _launch_url(app_name):
+            return f"Opened {app_name}."
+
+    # Custom URL shortcuts
+    matched_url = _URL_SHORTCUTS.get(clean_name) or _URL_SHORTCUTS.get(lower_raw)
+    if not matched_url:
+        for k, v in _URL_SHORTCUTS.items():
+            if k == clean_name or k in clean_name:
+                matched_url = v
+                break
+
+    if matched_url:
+        print(f"[open_app] Launching URL shortcut: '{app_name}' → '{matched_url}'")
+        if player:
+            player.write_log(f"[open_app] {app_name} -> {matched_url}")
+        if _launch_url(matched_url):
+            return f"Opened {app_name} ({matched_url})."
 
     launcher = _OS_LAUNCHERS.get(_SYSTEM)
     if launcher is None:

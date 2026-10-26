@@ -125,14 +125,25 @@ class ActionRegistry:
                 return f"Tool '{name}' failed: {e}"
 
         # If it's a known legacy tool that handles its own confirmation, let it run.
-        # Otherwise, enforce Level 3 confirmation centrally here.
+        # Otherwise, enforce Level 3 confirmation centrally here (strictly for shutdown, restart, delete).
         if level >= 3 and name not in ("computer_settings",):
             if confirm.pending_title():
                 return "There is already a confirmation waiting in chat. Ask the user to answer that one first."
+            act = str(parameters.get("action", "")).lower().strip()
+            if act in ("delete", "delete_file", "delete_folder", "remove") or "delete" in reason.lower():
+                target = parameters.get("name") or parameters.get("path") or parameters.get("file_path") or ""
+                title = f"Delete: {target}" if target else "Delete File or Folder"
+                detail = f"Permanently delete '{target if target else 'selected item'}'. Do you want to proceed?"
+            elif act in ("shutdown", "restart"):
+                title = f"Confirm {act.capitalize()}"
+                detail = f"The computer will {act}. Do you want to proceed?"
+            else:
+                title = f"Confirm Action: {name}"
+                detail = f"{reason}. Do you want to allow this?"
             return confirm.request(
                 key=f"{name}_{level}", 
-                title=f"Confirm Action: {name}", 
-                detail=f"EDITH Risk Level {level}: {reason}. Do you want to allow this?",
+                title=title, 
+                detail=detail,
                 run=_do_run
             )
 
