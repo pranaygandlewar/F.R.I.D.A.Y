@@ -97,6 +97,25 @@ class ActionRegistry:
 
     # -- called by main.py from _execute_tool --
     def run(self, name: str, parameters: dict, ctx: dict | None = None) -> str:
+        if name == "open_camera":
+            try:
+                from ui import FridayUI
+                inst = FridayUI.get_instance()
+                if inst:
+                    inst.start_camera_stream()
+                    return "Camera opened in Friday window."
+            except Exception as e:
+                return f"Failed to open camera: {e}"
+        elif name == "close_camera":
+            try:
+                from ui import FridayUI
+                inst = FridayUI.get_instance()
+                if inst:
+                    inst.stop_camera_stream()
+                    return "Camera closed."
+            except Exception as e:
+                return f"Failed to close camera: {e}"
+
         rec = self._actions.get(name)
         if rec is None or not rec.valid:
             return f"Action '{name}' is not available."

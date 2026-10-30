@@ -361,9 +361,19 @@ TOOL_DECLARATIONS = [
         }
     },
     {
+        "name": "open_camera",
+        "description": (
+            "Opens and starts the live camera view inside Friday's window. "
+            "MUST be called whenever the user asks to open camera, start camera, turn on camera, "
+            "show camera, webcam, etc. "
+            "Always opens the camera inside Friday's window, NEVER launches an external application."
+        ),
+        "parameters": {"type": "OBJECT", "properties": {}, "required": []}
+    },
+    {
         "name": "close_camera",
         "description": (
-            "Closes the live camera view shown on screen. "
+            "Closes the live camera view shown on screen in Friday's window. "
             "Call when the user says (in ANY language): close camera, stop camera, "
             "turn off camera, that's creepy, etc."
         ),
@@ -1199,10 +1209,23 @@ class FridayLive:
                     angle     = args.get("angle", "screen").lower()
                     user_text = args.get("text", "What do you see?")
                     if angle == "camera":
-                        img_b, mime_t = await loop.run_in_executor(None, _capture_camera)
-                        self.ui.start_camera_stream()
+                        if not self.ui.is_camera_streaming():
+                            self.ui.start_camera_stream()
+                        # Wait for the first frame from the live stream
+                        img_b = self.ui.get_latest_camera_frame()
+                        if not img_b:
+                            for _ in range(75):   # up to 3.0s for camera hardware to initialize
+                                await asyncio.sleep(0.04)
+                                img_b = self.ui.get_latest_camera_frame()
+                                if img_b:
+                                    break
+                        if not img_b:
+                            # Stream genuinely failed to start (e.g. no webcam attached)
+                            img_b, mime_t = await loop.run_in_executor(None, _capture_camera)
+                        else:
+                            mime_t = "image/jpeg"
                         self._vision_cam_active = True
-                        print(f"[Vision] 📷 Camera: {len(img_b):,} bytes")
+                        print(f"[Vision] 📷 Camera: {len(img_b) if img_b else 0:,} bytes")
                         _stall = "camera"
                     else:
                         img_b, mime_t = await loop.run_in_executor(None, _capture_screen)
@@ -1220,6 +1243,10 @@ class FridayLive:
                         f"is arriving with this result. Reply once, from what you actually see "
                         f"in it."
                     )
+
+            elif name == "open_camera":
+                self.ui.start_camera_stream()
+                result = "Camera feed opened in Friday window."
 
             elif name == "close_camera":
                 self.ui.stop_camera_stream()
@@ -1523,13 +1550,10 @@ class FridayLive:
             turn_complete=True,
         )
 
-        if self._vision_cam_active:
-            # Camera: stay busy until FRIDAY has finished speaking the answer,
-            # then close the preview.
-            self._vision_cam_active    = False
-            self._vision_close_pending = True
-        else:
-            self._vision_busy = False
+        # Keep camera stream open in Friday window even while FRIDAY speaks and after answering.
+        self._vision_cam_active    = False
+        self._vision_close_pending = False
+        self._vision_busy          = False
         return True
 
     async def _receive_audio(self):
@@ -1638,13 +1662,8 @@ class FridayLive:
                             out_buf = []
 
                             if self._vision_close_pending:
-                                # This turn_complete IS the vision answer — close camera + release busy flag
                                 self._vision_close_pending = False
                                 self._vision_busy = False
-                                async def _cam_close():
-                                    await asyncio.sleep(2.0)
-                                    self.ui.stop_camera_stream()
-                                asyncio.create_task(_cam_close())
 
                     if response.tool_call:
                         fn_responses = []

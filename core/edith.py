@@ -80,9 +80,9 @@ def evaluate(tool_name: str, parameters: dict) -> tuple[int, str]:
         else:
             return 1, "File processing"
 
-    # 7. System Monitor / Background Monitor
-    elif tool_name in ("system_status", "manage_monitor"):
-        return 0, "System information access"
+    # 7. System Monitor / Background Monitor / Camera
+    elif tool_name in ("system_status", "manage_monitor", "open_camera", "close_camera", "screen_process"):
+        return 0, "System / camera interface access"
         
     # 8. Open App
     elif tool_name == "open_app":

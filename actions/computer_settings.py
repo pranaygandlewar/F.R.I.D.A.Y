@@ -270,6 +270,21 @@ def close_app(app_name: str = "") -> str:
     if key and any(f in key for f in ("friday", "mark", "assistant", "python")):
         return "To close Friday, please say 'exit Friday' or 'shut down Friday'."
 
+    if key in ("camera", "webcam", "web cam", "front camera", "camera app", "camera application", "windows camera"):
+        try:
+            from ui import FridayUI
+            inst = FridayUI.get_instance()
+            if inst and hasattr(inst, "stop_camera_stream"):
+                inst.stop_camera_stream()
+        except Exception:
+            pass
+        try:
+            import subprocess
+            subprocess.run(["taskkill", "/F", "/IM", "WindowsCamera.exe"], capture_output=True)
+        except Exception:
+            pass
+        return "Camera closed in Friday window."
+
     # ── Process-name aliases (same vocabulary as open_app) ────────────────
     _WIN_EXE: dict[str, str] = {
         "chrome":             "chrome.exe",

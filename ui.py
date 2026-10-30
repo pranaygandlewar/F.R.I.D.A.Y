@@ -3034,6 +3034,11 @@ class MainWindow(QMainWindow):
         _cam_title.setFont(QFont("Courier New", 8, QFont.Weight.Bold))
         _cam_title.setStyleSheet(f"color: {C.PRI}; background: transparent;")
         _cam_hdr.addWidget(_cam_title)
+        _cam_hdr.addSpacing(16)
+        self._cam_status_lbl = QLabel("●  LIVE")
+        self._cam_status_lbl.setFont(QFont("Courier New", 8, QFont.Weight.Bold))
+        self._cam_status_lbl.setStyleSheet(f"color: {C.PRI}; background: transparent;")
+        _cam_hdr.addWidget(self._cam_status_lbl)
         _cam_hdr.addStretch()
         _cam_x = QPushButton("✕  CLOSE")
         _cam_x.setFont(QFont("Courier New", 8, QFont.Weight.Bold))
@@ -3241,6 +3246,9 @@ class MainWindow(QMainWindow):
         self._quiz_hide_sig.connect(self._hide_quiz)
         self._review_sig.connect(self._show_review)
         self._cam_stop = threading.Event()
+        self._cam_thread: threading.Thread | None = None
+        self._latest_cam_frame: bytes | None = None
+        self._cam_lock = threading.Lock()
 
         # Camera preview overlay (child of central widget, positioned in resizeEvent)
         self._cam_preview = _CameraPreview(self.centralWidget())
@@ -3294,11 +3302,26 @@ class MainWindow(QMainWindow):
                               Qt.TransformationMode.SmoothTransformation)
                 )
 
+    def is_camera_streaming(self) -> bool:
+        with self._cam_lock:
+            return bool(self._cam_thread and self._cam_thread.is_alive() and not self._cam_stop.is_set())
+
+    def get_latest_camera_frame(self) -> bytes | None:
+        with self._cam_lock:
+            return self._latest_cam_frame
+
     def start_camera_stream(self) -> None:
-        self._cam_stop.clear()
-        self._cam_stream_sig.emit(True)
-        t = threading.Thread(target=self._cam_loop, daemon=True, name="cam-stream")
-        t.start()
+        with self._cam_lock:
+            if self._cam_thread and self._cam_thread.is_alive() and not self._cam_stop.is_set():
+                self._cam_stream_sig.emit(True)
+                return
+            if self._cam_thread and self._cam_thread.is_alive():
+                self._cam_stop.set()
+                self._cam_thread.join(timeout=0.5)
+            self._cam_stop.clear()
+            self._cam_stream_sig.emit(True)
+            self._cam_thread = threading.Thread(target=self._cam_loop, daemon=True, name="cam-stream")
+            self._cam_thread.start()
 
     def _cam_loop(self) -> None:
         try:
@@ -3319,23 +3342,39 @@ class MainWindow(QMainWindow):
             if not cap.isOpened():
                 cap = cv2.VideoCapture(0)
             if not cap.isOpened():
+                print(f"[Camera] Could not open camera (index {cam_idx} or 0)")
                 return
             # warm-up frames
             for _ in range(5):
                 cap.read()
+            fail_count = 0
             while not self._cam_stop.wait(0.033) and cap.isOpened():
                 ret, frame = cap.read()
                 if ret and frame is not None:
+                    fail_count = 0
+                    frame = cv2.flip(frame, 1)  # horizontal flip: correct mirror image
                     _, buf = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 65])
-                    self._cam_frame_sig.emit(buf.tobytes())
+                    raw_b = buf.tobytes()
+                    with self._cam_lock:
+                        self._latest_cam_frame = raw_b
+                    self._cam_frame_sig.emit(raw_b)
+                else:
+                    fail_count += 1
+                    if fail_count > 60:
+                        print("[Camera] Lost feed: 60 consecutive empty frames")
+                        break
             cap.release()
         except Exception as e:
             print(f"[Camera] Stream error: {e}")
         finally:
+            with self._cam_lock:
+                self._latest_cam_frame = None
+                self._cam_thread = None
             self._cam_stream_sig.emit(False)
 
     def stop_camera_stream(self) -> None:
-        self._cam_stop.set()
+        with self._cam_lock:
+            self._cam_stop.set()
 
     # --- Video in the HUD area ---------------------------------------------
     #
@@ -5556,6 +5595,16 @@ class MainWindow(QMainWindow):
         # keep speaking=False so the mouth stays closed and the viseme
         # scheduler is not driven.
         self.hud.speaking = (state == "SPEAKING")
+        if hasattr(self, "_cam_status_lbl") and self._cam_status_lbl is not None:
+            if state == "SPEAKING":
+                self._cam_status_lbl.setText("●  SPEAKING")
+                self._cam_status_lbl.setStyleSheet(f"color: {C.ACC}; background: transparent; font-weight: bold;")
+            elif state == "LISTENING":
+                self._cam_status_lbl.setText("●  LISTENING")
+                self._cam_status_lbl.setStyleSheet(f"color: {C.PRI}; background: transparent;")
+            else:
+                self._cam_status_lbl.setText("●  LIVE")
+                self._cam_status_lbl.setStyleSheet(f"color: {C.PRI}; background: transparent;")
 
     def _check_config(self) -> bool:
         if not API_FILE.exists(): return False
@@ -5603,7 +5652,10 @@ class _RootShim:
 
 
 class FridayUI:
+    _instance: "FridayUI | None" = None
+
     def __init__(self, face_path: str, size=None):
+        FridayUI._instance = self
         self._app = QApplication.instance() or QApplication(sys.argv)
         self._app.setStyle("Fusion")
         self._win = MainWindow(face_path)
@@ -5833,6 +5885,18 @@ class FridayUI:
 
     def video_is_playing(self) -> bool:
         return bool(self._win.video_is_playing())
+
+    @classmethod
+    def get_instance(cls) -> "FridayUI | None":
+        return cls._instance
+
+    def is_camera_streaming(self) -> bool:
+        """Thread-safe: check if live camera feed is active."""
+        return self._win.is_camera_streaming()
+
+    def get_latest_camera_frame(self) -> bytes | None:
+        """Thread-safe: get latest JPEG bytes from live camera feed."""
+        return self._win.get_latest_camera_frame()
 
     def start_camera_stream(self) -> None:
         """Thread-safe: start live camera feed in the full HUD area."""

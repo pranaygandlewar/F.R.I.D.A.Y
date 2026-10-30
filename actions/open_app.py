@@ -311,6 +311,19 @@ def open_app(
     lower_raw = app_name.lower().strip()
     clean_name = re.sub(r"^(open|launch|start|go\s+to)\s+", "", lower_raw).strip()
 
+    # Camera: open in Friday window, NEVER external Camera application
+    if clean_name in ("camera", "webcam", "web cam", "front camera", "camera app", "camera application", "windows camera"):
+        try:
+            from ui import FridayUI
+            ui_inst = player if (player and hasattr(player, "start_camera_stream")) else FridayUI.get_instance()
+            if ui_inst and hasattr(ui_inst, "start_camera_stream"):
+                ui_inst.start_camera_stream()
+                if hasattr(ui_inst, "write_log"):
+                    ui_inst.write_log("[Camera] Live stream started in Friday window")
+                return "Camera feed opened in Friday window."
+        except Exception as e:
+            print(f"[open_app] Camera launch in Friday window error: {e}")
+
     # Direct URL
     if lower_raw.startswith("http://") or lower_raw.startswith("https://"):
         print(f"[open_app] Launching direct URL: '{app_name}'")
@@ -362,7 +375,7 @@ def open_app(
 # ── Tool declaration (auto-discovered by core/action_loader.py) ──────────────
 TOOL = {
     "name": "open_app",
-    "description": "Opens any application on the computer. Use this whenever the user asks to open, launch, or start any app, website, or program. Always call this tool — never just say you opened it.",
+    "description": "Opens any application on the computer (for camera, use open_camera to view inside Friday's window). Use this whenever the user asks to open, launch, or start any app, website, or program. Always call this tool — never just say you opened it.",
     "parameters": {
         "type": "OBJECT",
         "properties": {
