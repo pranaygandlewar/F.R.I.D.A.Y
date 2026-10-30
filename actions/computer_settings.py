@@ -60,7 +60,11 @@ def _get_macos_wifi_interface() -> str:
 
 def volume_up():
     if _OS == "Windows":
-        for _ in range(5): pyautogui.press("volumeup")
+        try:
+            from core import windows_control as wc
+            wc.change_volume(10)
+        except Exception:
+            for _ in range(5): pyautogui.press("volumeup")
     elif _OS == "Darwin":
         subprocess.run(["osascript", "-e",
             "set volume output volume (output volume of (get volume settings) + 10)"],
@@ -71,7 +75,11 @@ def volume_up():
 
 def volume_down():
     if _OS == "Windows":
-        for _ in range(5): pyautogui.press("volumedown")
+        try:
+            from core import windows_control as wc
+            wc.change_volume(-10)
+        except Exception:
+            for _ in range(5): pyautogui.press("volumedown")
     elif _OS == "Darwin":
         subprocess.run(["osascript", "-e",
             "set volume output volume (output volume of (get volume settings) - 10)"],
@@ -82,7 +90,11 @@ def volume_down():
 
 def volume_mute():
     if _OS == "Windows":
-        pyautogui.press("volumemute")
+        try:
+            from core import windows_control as wc
+            wc.toggle_mute()
+        except Exception:
+            pyautogui.press("volumemute")
     elif _OS == "Darwin":
         subprocess.run(["osascript", "-e", "set volume with output muted"],
             capture_output=True)

@@ -272,6 +272,48 @@ def _resolve_platform(platform_str: str):
     return lambda r, m: _desktop_send(platform_str.strip().title(), r, m)
 
 
+_SPECIAL_CONTACT_ALIASES = {
+    "9699645603": (
+        "wife",
+        "would be",
+        "wouldbe",
+        "future would be",
+        "future wouldbe",
+        "future wife",
+        "biwi",
+        "bivi",
+        "gf",
+        "girlfriend",
+        "sbse pyari ldki",
+        "sbse pyari ladki",
+        "sabse pyari ldki",
+        "sabse pyari ladki",
+        "sabse pyaari ladki",
+        "sbse pyaari ldki",
+        "pyari ldki",
+        "pyari ladki",
+        "pyaari ladki",
+        "pyaari ldki",
+        "fiancee",
+        "fiance",
+        "jaan",
+        "darling",
+        "shona",
+        "divya",
+        "khushi",
+    )
+}
+
+
+def _resolve_contact_alias(target: str) -> str:
+    clean = (target or "").strip().lower()
+    for number, aliases in _SPECIAL_CONTACT_ALIASES.items():
+        if any(alias in clean for alias in aliases):
+            print(f"[SendMessage] [Alias] Resolved contact '{target}' -> {number}")
+            return number
+    return target
+
+
 def send_message(
     parameters: dict,
     response=None,
@@ -279,7 +321,7 @@ def send_message(
     session_memory=None,
 ) -> str:
     params       = parameters or {}
-    receiver     = params.get("receiver", "").strip()
+    receiver     = _resolve_contact_alias(params.get("receiver", "")).strip()
     message_text = params.get("message_text", "").strip()
     platform     = params.get("platform", "whatsapp").strip()
 

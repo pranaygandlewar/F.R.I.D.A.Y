@@ -4,6 +4,8 @@ import json
 import re
 import time
 import ctypes
+if platform.system() == "Windows":
+    from ctypes import wintypes
 from core.undo import push_undo
 
 def _run_ps(cmd: str) -> str:
@@ -140,7 +142,7 @@ def list_windows() -> str:
     if platform.system() != "Windows":
         return "Requires Windows."
     EnumWindows = ctypes.windll.user32.EnumWindows
-    EnumWindowsProc = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
+    EnumWindowsProc = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
     GetWindowText = ctypes.windll.user32.GetWindowTextW
     GetWindowTextLength = ctypes.windll.user32.GetWindowTextLengthW
     IsWindowVisible = ctypes.windll.user32.IsWindowVisible
@@ -180,7 +182,7 @@ def window_manage(action: str, title: str, x: int = 0, y: int = 0, w: int = 800,
     else:
         # Search for a partial match
         EnumWindows = ctypes.windll.user32.EnumWindows
-        EnumWindowsProc = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
+        EnumWindowsProc = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
         
         def foreach_window(hwnd, lParam):
             nonlocal target_hwnd
@@ -209,7 +211,7 @@ def window_manage(action: str, title: str, x: int = 0, y: int = 0, w: int = 800,
         return "Minimized window."
     elif action == "maximize":
         # Get current state for undo
-        rect = ctypes.wintypes.RECT()
+        rect = wintypes.RECT()
         ctypes.windll.user32.GetWindowRect(target_hwnd, ctypes.byref(rect))
         def _undo_max():
             SetWindowPos(target_hwnd, 0, rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top, 0x0004 | 0x0020)
@@ -223,7 +225,7 @@ def window_manage(action: str, title: str, x: int = 0, y: int = 0, w: int = 800,
         return "Restored window."
     elif action == "move":
         # Get current size
-        rect = ctypes.wintypes.RECT()
+        rect = wintypes.RECT()
         ctypes.windll.user32.GetWindowRect(target_hwnd, ctypes.byref(rect))
         cw = rect.right - rect.left
         ch = rect.bottom - rect.top
@@ -236,7 +238,7 @@ def window_manage(action: str, title: str, x: int = 0, y: int = 0, w: int = 800,
         SetWindowPos(target_hwnd, 0, x, y, cw, ch, 0x0004 | 0x0020) # SWP_NOZORDER | SWP_FRAMECHANGED
         return f"Moved window to {x}, {y}."
     elif action == "resize":
-        rect = ctypes.wintypes.RECT()
+        rect = wintypes.RECT()
         ctypes.windll.user32.GetWindowRect(target_hwnd, ctypes.byref(rect))
         cw = rect.right - rect.left
         ch = rect.bottom - rect.top
@@ -251,7 +253,7 @@ def window_manage(action: str, title: str, x: int = 0, y: int = 0, w: int = 800,
     elif action == "center":
         sw = ctypes.windll.user32.GetSystemMetrics(0)
         sh = ctypes.windll.user32.GetSystemMetrics(1)
-        rect = ctypes.wintypes.RECT()
+        rect = wintypes.RECT()
         ctypes.windll.user32.GetWindowRect(target_hwnd, ctypes.byref(rect))
         cw = rect.right - rect.left
         ch = rect.bottom - rect.top
@@ -293,31 +295,171 @@ def system_info() -> str:
         return "Could not retrieve system info."
 
 def laptop_control(parameters: dict, **kwargs) -> str:
-    action = parameters.get("action", "").lower()
+    from core import windows_control as wc
+    action = str(parameters.get("action", "")).lower().strip()
+    value = parameters.get("value")
     
-    if action == "battery_status":
-        return get_battery()
-    elif action == "wifi_status":
-        return get_wifi_status()
-    elif action == "wifi_on":
-        _run_ps("Enable-NetAdapter -Name (Get-NetAdapter | Where-Object {$_.PhysicalMediaType -eq 'Native 802.11'}).Name -Confirm:$false")
-        return "Verified: " + get_wifi_status()
-    elif action == "wifi_off":
-        _run_ps("Disable-NetAdapter -Name (Get-NetAdapter | Where-Object {$_.PhysicalMediaType -eq 'Native 802.11'}).Name -Confirm:$false")
-        return "Verified: " + get_wifi_status()
-    elif action == "bluetooth_status":
-        return get_bluetooth_status()
-    elif action == "bluetooth_on":
-        return set_bluetooth_state("On")
-    elif action == "bluetooth_off":
-        return set_bluetooth_state("Off")
+    # Audio
+    if action == "get_volume":
+        return str(wc.get_volume())
+    elif action == "set_volume":
+        return str(wc.set_volume(int(value if value is not None else 50)))
+    elif action in ("volume_up", "volume_down"):
+        delta = 10 if action == "volume_up" else -10
+        return str(wc.change_volume(delta))
+    elif action in ("mute", "unmute", "toggle_mute"):
+        if action == "mute": return str(wc.set_mute(True))
+        if action == "unmute": return str(wc.set_mute(False))
+        return str(wc.toggle_mute())
+    elif action == "get_mute_state":
+        return str(wc.get_mute_state())
     elif action == "list_audio_devices":
-        return get_audio_devices()
+        return str(wc.list_audio_devices())
+    elif action == "set_default_audio":
+        dev = str(value or parameters.get("name", "")).strip()
+        dev_type = str(parameters.get("type", "output")).strip()
+        return str(wc.set_default_audio_device(dev, dev_type))
+    elif action == "get_mic_level":
+        return str(wc.get_mic_level())
+    elif action == "set_mic_level":
+        return str(wc.set_mic_level(int(value if value is not None else 50)))
+
+    # Display & Brightness
+    elif action == "get_brightness":
+        return str(wc.get_brightness())
+    elif action == "set_brightness":
+        return str(wc.set_brightness(int(value if value is not None else 50)))
+    elif action in ("brightness_up", "brightness_down"):
+        delta = 10 if action == "brightness_up" else -10
+        return str(wc.change_brightness(delta))
+    elif action == "enumerate_displays":
+        return str(wc.enumerate_displays())
+    elif action == "projection_mode":
+        mode = str(value or parameters.get("mode", "extend")).strip()
+        return str(wc.switch_projection_mode(mode))
+    elif action == "night_light_status":
+        return str(wc.get_night_light_status())
+    elif action == "toggle_night_light":
+        return str(wc.toggle_night_light())
+    elif action == "gpu_info":
+        return str(wc.get_gpu_info())
+
+    # Wi-Fi, Bluetooth & Hotspot
+    elif action in ("battery_status", "power_status"):
+        return str(wc.get_power_status())
+    elif action == "battery_report":
+        return str(wc.generate_battery_report())
+    elif action == "wifi_status":
+        return str(wc.get_wifi_status())
+    elif action == "wifi_on":
+        return str(wc.set_wifi_state(True))
+    elif action == "wifi_off":
+        return str(wc.set_wifi_state(False))
+    elif action == "list_wifi_networks":
+        return str(wc.list_wifi_networks())
+    elif action == "connect_wifi":
+        ssid = str(value or parameters.get("name", "")).strip()
+        return str(wc.connect_wifi(ssid))
+    elif action == "disconnect_wifi":
+        return str(wc.disconnect_wifi())
+    elif action == "bluetooth_status":
+        return str(wc.get_bluetooth_status())
+    elif action == "bluetooth_on":
+        return str(wc.set_bluetooth_state(True))
+    elif action == "bluetooth_off":
+        return str(wc.set_bluetooth_state(False))
+    elif action == "list_bluetooth_devices":
+        return str(wc.list_bluetooth_devices())
+    elif action == "hotspot_status":
+        return str(wc.get_hotspot_status())
+    elif action == "toggle_hotspot":
+        return str(wc.toggle_hotspot())
+    elif action == "airplane_mode_status":
+        return str(wc.get_airplane_mode_status())
+
+    # Network Diagnostics & VPN
+    elif action == "network_diagnostics":
+        return str(wc.run_network_diagnostics())
+    elif action == "flush_dns":
+        return str(wc.flush_dns())
+    elif action in ("list_vpn", "vpn_status"):
+        return str(wc.list_vpn_connections())
+
+    # Power Schemes & Timeouts
+    elif action == "power_plans":
+        return str(wc.get_power_plans())
+    elif action == "set_power_plan":
+        plan = str(value or parameters.get("name", "")).strip()
+        return str(wc.set_power_plan(plan))
+    elif action == "display_timeout":
+        mins = int(value if value is not None else 10)
+        return str(wc.set_display_timeout(mins))
+    elif action == "sleep_timeout":
+        mins = int(value if value is not None else 30)
+        return str(wc.set_sleep_timeout(mins))
+    elif action == "sleep":
+        return str(wc.request_sleep())
+    elif action == "hibernate":
+        return str(wc.request_hibernate())
+    elif action == "cancel_shutdown":
+        return str(wc.cancel_shutdown())
+    elif action == "recovery_options":
+        return str(wc.open_recovery_options())
+
+    # Theme & Personalization
+    elif action == "theme_status":
+        return str(wc.get_theme_status())
+    elif action == "set_theme":
+        m = str(value or parameters.get("mode", "dark")).strip()
+        return str(wc.set_theme(m))
+    elif action == "toggle_theme":
+        return str(wc.toggle_theme())
+    elif action == "set_wallpaper":
+        wp = str(value or parameters.get("path", "")).strip()
+        return str(wc.set_wallpaper(wp))
+    elif action == "transparency_status":
+        return str(wc.get_transparency_status())
+
+    # Security & Updates
+    elif action == "security_status":
+        return str(wc.get_security_status())
+    elif action == "elevation_status":
+        return str(wc.get_elevation_status())
+    elif action == "windows_version":
+        return str(wc.get_windows_version())
+    elif action == "check_updates":
+        return str(wc.check_windows_updates())
+
+    # Startup & Storage
+    elif action == "startup_apps":
+        return str(wc.list_startup_apps())
+    elif action == "disk_usage":
+        return str(wc.get_disk_usage())
+    elif action == "preview_cleanup":
+        return str(wc.preview_temp_cleanup())
+    elif action == "empty_recycle_bin":
+        return str(wc.empty_recycle_bin())
+
+    # Services & Processes
     elif action in ("service_status", "service_start", "service_stop", "service_restart"):
         svc_name = parameters.get("name", "")
         if not svc_name: return "Missing service name."
         act = action.split("_")[1]
-        return service_control(act, svc_name)
+        return str(wc.service_control(svc_name, act))
+    elif action == "list_processes":
+        return str(wc.list_running_processes())
+    elif action in ("close_application", "close_app"):
+        app = str(value or parameters.get("name", "")).strip()
+        return str(wc.close_application_gracefully(app))
+
+    # Focus & Settings
+    elif action == "focus_status":
+        return str(wc.get_focus_status())
+    elif action == "open_settings":
+        page = str(value or parameters.get("page", "display")).strip()
+        return str(wc.open_settings_page(page))
+
+    # Native Windows Management
     elif action == "list_windows":
         return list_windows()
     elif action in ("focus_window", "minimize_window", "maximize_window", "restore_window", "move_window", "resize_window", "center_window", "bring_to_front"):
@@ -331,31 +473,41 @@ def laptop_control(parameters: dict, **kwargs) -> str:
         return window_manage(act, title, x, y, w, h)
     elif action == "system_info":
         return system_info()
-    elif action == "hibernate":
-        _run_ps("shutdown -h")
-        return "Hibernating..."
     elif action == "log_out":
         _run_ps("logoff")
         return "Logging out..."
-    elif action == "cancel_shutdown":
-        _run_ps("shutdown -a")
-        return "Shutdown cancelled."
     
-    return f"Unsupported laptop control action: {action}"
+    return f"Unsupported laptop control action: '{action}'. Call with a supported Windows control action."
 
 TOOL = {
     "name": "laptop_control",
-    "description": "Windows native laptop and system control. Manages Wi-Fi, Bluetooth, battery, services, native window management, system info.",
+    "description": (
+        "Advanced Windows 11 system and laptop control layer. "
+        "Audio: get_volume, set_volume, volume_up, volume_down, mute, unmute, toggle_mute, get_mute_state, list_audio_devices, set_default_audio, get_mic_level, set_mic_level. "
+        "Display: get_brightness, set_brightness, brightness_up, brightness_down, enumerate_displays, projection_mode, night_light_status, toggle_night_light, gpu_info. "
+        "Network: wifi_status, wifi_on, wifi_off, list_wifi_networks, connect_wifi, disconnect_wifi, bluetooth_status, bluetooth_on, bluetooth_off, list_bluetooth_devices, hotspot_status, toggle_hotspot, airplane_mode_status, network_diagnostics, flush_dns, list_vpn. "
+        "Power & Battery: power_status, battery_report, power_plans, set_power_plan, display_timeout, sleep_timeout, sleep, hibernate, cancel_shutdown, recovery_options. "
+        "Personalization: theme_status, set_theme, toggle_theme, set_wallpaper, transparency_status. "
+        "System & Maintenance: security_status, elevation_status, windows_version, check_updates, startup_apps, disk_usage, preview_cleanup, empty_recycle_bin, list_processes, close_application, service_status, service_start, service_stop, service_restart, focus_status, open_settings, list_windows, focus_window, minimize_window, maximize_window, restore_window, move_window, resize_window, center_window, system_info."
+    ),
     "parameters": {
         "type": "OBJECT",
         "properties": {
             "action": {
                 "type": "STRING",
-                "description": "One of: battery_status, wifi_status, wifi_on, wifi_off, bluetooth_status, bluetooth_on, bluetooth_off, list_audio_devices, service_status, service_start, service_stop, service_restart, list_windows, focus_window, minimize_window, maximize_window, restore_window, move_window, resize_window, center_window, bring_to_front, system_info, hibernate, log_out, cancel_shutdown"
+                "description": "The exact system action to perform (e.g. set_volume, set_brightness, wifi_status, list_wifi_networks, connect_wifi, network_diagnostics, power_status, power_plans, set_theme, security_status, disk_usage, preview_cleanup, empty_recycle_bin, etc.)"
+            },
+            "value": {
+                "type": "STRING",
+                "description": "Optional numeric percentage (for volume, brightness, timeouts), mode string (dark/light, duplicate/extend), or general target value."
             },
             "name": {
                 "type": "STRING",
-                "description": "Service name if action is service_*"
+                "description": "Target name (SSID for connect_wifi, service name, app name, device name, or power plan name)."
+            },
+            "page": {
+                "type": "STRING",
+                "description": "Settings page key for open_settings (e.g. display, sound, wifi, bluetooth, powersleep, notifications, recovery, etc.)"
             },
             "title": {
                 "type": "STRING",

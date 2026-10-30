@@ -198,9 +198,9 @@ def get_turn_tuning() -> dict:
             return default
 
     return {
-        "enabled":    bool(cfg.get("enabled", False)),
-        "silence_ms": _int("silence_ms", 550, 200, 3000),
-        "prefix_ms":  _int("prefix_ms", 150, 0, 1000),
+        "enabled":    bool(cfg.get("enabled", True)),
+        "silence_ms": _int("silence_ms", 350, 200, 3000),
+        "prefix_ms":  _int("prefix_ms", 100, 0, 1000),
         # "high" = quicker to decide speech has ended.
         "end_sensitivity":   str(cfg.get("end_sensitivity", "high")).lower(),
         "start_sensitivity": str(cfg.get("start_sensitivity", "default")).lower(),
@@ -226,13 +226,9 @@ def get_proactive_audio_enabled() -> bool:
     """Whether the model gets to decide an utterance was not aimed at it and
     stay quiet.
 
-    On by default — it is what stops the assistant answering the room. But it
-    is also the first thing to switch off if replies ever seem to arrive a turn
-    late: what looks like lag is usually the model having judged your previous
-    sentence as not addressed to it, and only changing its mind once the next
-    one arrives.
+    Off by default for lowest response latency and instant replies.
     """
-    return bool(load_api_keys().get("proactive_audio", True))
+    return bool(load_api_keys().get("proactive_audio", False))
 
 
 def save_proactive_audio_enabled(enabled: bool) -> None:

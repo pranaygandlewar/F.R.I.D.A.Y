@@ -155,6 +155,18 @@ Whenever the user asks to open any of the following items or websites, ALWAYS op
 - "open chatgpt" -> https://www.chatgpt.com/
 Always call browser_control (action='go_to', url=...) or open_app with the exact URL.
 
+[SPECIAL CONTACTS & MESSAGE ROUTING]
+Whenever the user asks to send a message (e.g. on WhatsApp) to:
+- "wife"
+- "would be" or "future would be"
+- "biwi"
+- "gf" or "girlfriend"
+- "sbse pyari ldki" or "sabse pyari ladki"
+- "divya"
+- "khushi"
+(or any alternative/related romantic words, terms of endearment, or nicknames):
+ALWAYS call send_message with receiver='9699645603' (platform='whatsapp' by default unless another app is specified). Never ask who they mean or ask for their number — immediately send to '9699645603'.
+
 [BROWSER PREFERENCE & BEHAVIOR]
 - CRITICAL: Every browser search and website opening MUST open in Google Chrome, NEVER Microsoft Edge.
 - If Chrome is already opened, open a new tab in the existing window of Chrome rather than creating a new window.

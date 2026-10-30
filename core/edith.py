@@ -103,7 +103,15 @@ def evaluate(tool_name: str, parameters: dict) -> tuple[int, str]:
     # 11. Laptop Control (New Tool)
     elif tool_name == "laptop_control":
         action = str(parameters.get("action", "")).lower().strip()
-        if action in ("battery_status", "wifi_status", "bluetooth_status", "cpu_info", "gpu_info", "ram_usage", "disk_usage", "temperature", "network_status", "running_processes", "uptime", "os_version", "hardware_info", "list_windows", "list_audio_devices"):
+        if action in (
+            "battery_status", "power_status", "wifi_status", "bluetooth_status", "cpu_info",
+            "gpu_info", "ram_usage", "disk_usage", "temperature", "network_status", "network_diagnostics",
+            "running_processes", "list_processes", "uptime", "os_version", "windows_version",
+            "hardware_info", "list_windows", "list_audio_devices", "list_wifi_networks",
+            "list_bluetooth_devices", "list_vpn", "hotspot_status", "airplane_mode_status",
+            "theme_status", "get_volume", "get_mute_state", "get_brightness", "get_mic_level",
+            "security_status", "elevation_status", "startup_apps", "focus_status", "preview_cleanup"
+        ):
             return 0, "System information access"
         elif action in ("focus_window", "minimize_window", "maximize_window", "restore_window", "move_window", "resize_window", "center_window", "bring_to_front"):
             return 1, "Window management"
@@ -113,14 +121,14 @@ def evaluate(tool_name: str, parameters: dict) -> tuple[int, str]:
             return 2, f"Service modification: {action}"
         elif action in ("hibernate", "log_out"):
             return 2, f"Power change: {action}"
-        elif action in ("restart", "shutdown"):
-            return 3, f"Power change: {action}"
+        elif action in ("restart", "shutdown", "empty_recycle_bin", "delete"):
+            return 3, f"Irreversible action: {action}"
         else:
             return 1, f"System control: {action}"
 
     # Global check: only shutdown, restart, and delete can ever require Level 3 confirmation
     action = str(parameters.get("action", "")).lower().strip()
-    if action in ("shutdown", "restart", "delete", "delete_file", "delete_folder", "remove"):
+    if action in ("shutdown", "restart", "delete", "delete_file", "delete_folder", "remove", "empty_recycle_bin"):
         return 3, f"Irreversible action: {action}"
 
     # Default fallback

@@ -659,3 +659,34 @@
 [2026-10-26 11:08:38] Action: laptop_control, Level: 1, Reason: Network change: bluetooth_on, Params: {'action': 'bluetooth_on'}
 [2026-10-26 11:08:49] Action: laptop_control, Level: 1, Reason: Network change: bluetooth_off, Params: {'action': 'bluetooth_off'}
 [2026-10-26 11:09:05] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'how to turn on mobile hotspot on windows 11'}
+[2026-10-28 07:53:11] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Pal Pal Dil Ke Paas'}
+[2026-10-28 07:53:20] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'volume_down'}
+[2026-10-28 07:53:26] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-28 07:53:48] Action: laptop_control, Level: 1, Reason: System control: set_volume, Params: {'action': 'set_volume', 'value': '100'}
+[2026-10-28 07:54:04] Action: laptop_control, Level: 1, Reason: System control: set_volume, Params: {'value': '50', 'action': 'set_volume'}
+[2026-10-28 08:22:09] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'short horror story in Hindi', 'mode': 'search'}
+[2026-10-28 08:22:58] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'famous real life unsolved mystery suspense thriller story longer', 'mode': 'research'}
+[2026-10-28 08:23:27] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'famous real life unsolved mystery longer story for storytelling', 'mode': 'research'}
+[2026-10-28 08:24:45] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Wouldbe', 'message_text': 'Good morning!', 'platform': 'WhatsApp'}
+[2026-10-28 08:25:02] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Good morning!', 'receiver': 'Wouldbe', 'platform': 'WhatsApp'}
+[2026-10-28 08:25:23] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Good morning! ☀️😊❤️', 'platform': 'WhatsApp', 'receiver': 'Wouldbe'}
+[2026-10-28 08:27:05] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-28 08:27:15] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-28 08:27:29] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-10-28 08:27:38] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'sleep_display'}
+[2026-10-28 08:28:08] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'lock_screen'}
+[2026-10-28 08:29:10] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'origin and meaning of name Chushabh CHUSHABH', 'mode': 'search'}
+[2026-10-28 08:29:34] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'origin and meaning of name Pranay'}
+[2026-10-28 08:30:12] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'meaning of name Ujjwal'}
+[2026-10-30 10:37:11] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': '🩷dya chya bala', 'receiver': 'chushabh', 'platform': 'WhatsApp'}
+[2026-10-30 10:37:59] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': '🩷dya chya bala', 'receiver': 'chushabh', 'platform': 'WhatsApp'}
+[2026-10-30 10:39:36] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'chushabh', 'platform': 'WhatsApp', 'message_text': "Hello! I am FRIDAY, a female AI assistant running as a native desktop application on this machine. I help Pranay with various tasks like managing files, browsing the web, controlling computer settings, and much more! I'm here to make things easier."}
+[2026-10-30 10:54:00] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Jushop', 'message_text': 'Hi', 'platform': 'WhatsApp'}
+[2026-10-30 10:54:33] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Jushop', 'platform': 'WhatsApp', 'message_text': 'Hi'}
+[2026-10-30 10:55:22] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'mere khud ko song', 'action': 'play'}
+[2026-10-30 10:55:57] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-10-30 11:25:25] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes'}
+[2026-10-30 11:25:51] Action: laptop_control, Level: 1, Reason: System control: close_application, Params: {'name': 'explorer.exe', 'action': 'close_application'}
+[2026-10-30 11:25:51] Action: laptop_control, Level: 1, Reason: System control: close_application, Params: {'name': 'OneDrive.exe', 'action': 'close_application'}
+[2026-10-30 12:00:26] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'क्या हुआ?', 'receiver': '9699645603', 'platform': 'whatsapp'}
+[2026-10-30 12:01:10] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': '9699645603', 'platform': 'whatsapp', 'message_text': 'Kya hua?'}

@@ -506,6 +506,15 @@ def computer_control(
                 print(f"[ComputerControl] ⚠️ No '{field}' in memory, using random: {value}")
             return value
 
+        if action in ("close_application", "close_app"):
+            app_target = str(params.get("name") or params.get("text") or params.get("value") or "").strip()
+            try:
+                from core import windows_control as wc
+                return str(wc.close_application_gracefully(app_target))
+            except Exception:
+                from actions.computer_settings import close_app
+                return close_app(app_target)
+
         return f"Unknown action: '{action}'"
 
     except Exception as e:

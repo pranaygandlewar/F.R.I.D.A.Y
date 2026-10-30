@@ -31,6 +31,10 @@ for _stream in ("stdout", "stderr"):
     except Exception:
         pass          # pythonw / redirected pipes / anything exotic — never fatal
 
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning, module="pynvml")
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="sounddevice")
+
 # ─────────────────────────────────────────────────────────────────────────────
 
 import asyncio
@@ -148,6 +152,15 @@ _TAIL_MARGIN = 0.25
 _VIS_WIN = 1024        # ~43 ms analysis window at 24 kHz: enough for formants
 _VIS_HOP = 480         # 20 ms between frames, i.e. 50 shapes a second
 
+# Precomputed FFT constants to eliminate CPU allocations and latency in audio thread
+_VIS_WIN_ARR = np.hanning(_VIS_WIN).astype(np.float32)
+_VIS_FREQS   = np.fft.rfftfreq(_VIS_WIN, 1.0 / RECEIVE_SAMPLE_RATE)
+_B_F1_LO     = (_VIS_FREQS >= 150) & (_VIS_FREQS < 450)     # F1 of close vowels
+_B_F1_HI     = (_VIS_FREQS >= 450) & (_VIS_FREQS < 1100)    # F1 of open vowels
+_B_F2_BK     = (_VIS_FREQS >= 600) & (_VIS_FREQS < 1300)    # F2 of rounded vowels
+_B_F2_FR     = (_VIS_FREQS >= 1700) & (_VIS_FREQS < 3200)   # F2 of spread vowels
+_B_HISS      = (_VIS_FREQS >= 3800) & (_VIS_FREQS < 8000)   # fricatives
+
 # Delay from handing the first bytes of a reply to an already-running output
 # stream to hearing them: one callback period, plus whatever the DAC adds.
 _FIRST_SOUND = CHUNK_SIZE / RECEIVE_SAMPLE_RATE      # ~43 ms
@@ -172,25 +185,10 @@ def _pcm_visemes(samples, sr: int = 24000):
         x = np.asarray(samples, dtype=np.float32)
         if x.size < _VIS_WIN:
             return []
-        win = np.hanning(_VIS_WIN).astype(np.float32)
-        freqs = np.fft.rfftfreq(_VIS_WIN, 1.0 / sr)
-        b_f1_lo = (freqs >= 150) & (freqs < 450)     # F1 of close vowels
-        b_f1_hi = (freqs >= 450) & (freqs < 1100)    # F1 of open vowels
-        b_f2_bk = (freqs >= 600) & (freqs < 1300)    # F2 of rounded vowels
-        b_f2_fr = (freqs >= 1700) & (freqs < 3200)   # F2 of spread vowels
-        b_hiss = (freqs >= 3800) & (freqs < 8000)    # fricatives
 
-        # One frame per hop across the *whole* block. Stepping only while a full
-        # window fits stopped 1024 - 480 samples short of the end, so a 200 ms
-        # batch yielded 160 ms of schedule: the mouth ran out of frames before
-        # the audio ran out of sound, and each batch no longer lined up with the
-        # end of the one before it. Losing 20 % of every batch is most of why
-        # the mouth did not track the words.
+        # One frame per hop across the *whole* block.
         out = []
         for start in range(0, x.size, _VIS_HOP):
-            # The level gates closures, so it is measured over exactly this
-            # 20 ms and never looks ahead. The spectrum needs a longer window
-            # to resolve formants and may be short-filled at the very end.
             level = _pcm_level(x[start:start + _VIS_HOP])
             seg = x[start:start + _VIS_WIN]
             if seg.size < _VIS_WIN:
@@ -199,17 +197,14 @@ def _pcm_visemes(samples, sr: int = 24000):
             if level <= 0.0:
                 out.append((0.0, 0.0, 0.0))
                 continue
-            mag = np.abs(np.fft.rfft((seg - seg.mean()) * win))
-            f1l, f1h = float(mag[b_f1_lo].sum()), float(mag[b_f1_hi].sum())
-            f2b, f2f = float(mag[b_f2_bk].sum()), float(mag[b_f2_fr].sum())
-            hiss = float(mag[b_hiss].sum())
+            mag = np.abs(np.fft.rfft((seg - seg.mean()) * _VIS_WIN_ARR))
+            f1l, f1h = float(mag[_B_F1_LO].sum()), float(mag[_B_F1_HI].sum())
+            f2b, f2f = float(mag[_B_F2_BK].sum()), float(mag[_B_F2_FR].sum())
+            hiss = float(mag[_B_HISS].sum())
 
             openness = f1h / (f1l + f1h + 1e-6)
             width = (f2f - f2b) / (f2f + f2b + 1e-6)
             # A wide-open jaw physically cannot purse, so openness damps width.
-            # /a/ has a low enough F2 to read as "rounded" on the bands alone;
-            # letting openness suppress the width term is what keeps an open
-            # vowel from pursing.
             width *= (1.0 - openness) ** 0.8
             # Fricatives are formed with a nearly closed mouth.
             h = hiss / (f1l + f1h + f2b + f2f + hiss + 1e-6)
