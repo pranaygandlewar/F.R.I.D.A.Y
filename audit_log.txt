@@ -713,3 +713,98 @@
 [2026-10-30 22:00:20] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': '7057274830', 'platform': 'whatsapp', 'message_text': 'Hi'}
 [2026-10-30 22:01:50] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'how to check app permissions windows 11'}
 [2026-10-30 23:09:53] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'what is ODBC'}
+[2026-11-01 09:07:25] Action: laptop_control, Level: 1, Reason: System control: sleep, Params: {'action': 'sleep'}
+[2026-11-01 09:17:46] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'action': 'list', 'path': 'ppt'}
+[2026-11-01 09:18:15] Action: file_controller, Level: 0, Reason: Read-only file access, Params: {'action': 'list', 'path': 'D:/Friday/ppt'}
+[2026-11-01 09:20:39] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Antigravity IDE'}
+[2026-11-01 09:20:45] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'D:\\F.R.I.D.A.Y'}
+[2026-11-01 09:21:00] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'go_to', 'url': 'D:\\F.R.I.D.A.Y'}
+[2026-11-01 09:21:18] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+o'}
+[2026-11-01 09:21:23] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'D:\\F.R.I.D.A.Y', 'action': 'type', 'clear_first': True}
+[2026-11-01 09:21:25] Action: computer_control, Level: 1, Reason: Standard computer control, Params: {'key': 'enter', 'action': 'key'}
+[2026-11-01 09:21:28] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-01 09:21:57] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'alt+d', 'action': 'hotkey'}
+[2026-11-01 09:21:59] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'D:\\F.R.I.D.A.Y', 'clear_first': True}
+[2026-11-01 09:22:01] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-01 09:23:07] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+k ctrl+o'}
+[2026-11-01 09:23:14] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+k ctrl+o', 'action': 'hotkey'}
+[2026-11-01 09:23:31] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+k ctrl+o', 'action': 'hotkey'}
+[2026-11-01 09:23:54] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+k'}
+[2026-11-01 09:23:54] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+o'}
+[2026-11-01 09:24:07] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'alt+d', 'action': 'hotkey'}
+[2026-11-01 09:24:08] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'clear_first': True, 'text': 'D:\\F.R.I.D.A.Y'}
+[2026-11-01 09:24:10] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-01 09:24:39] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-01 09:24:52] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Select folder button', 'action': 'screen_click'}
+[2026-11-02 12:48:49] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Hi', 'platform': 'whatsapp', 'receiver': 'Wife'}
+[2026-11-02 12:50:01] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://web.whatsapp.com', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-02 12:50:32] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'screen_find', 'description': "search contact input with placeholder 'Search or start new chat'"}
+[2026-11-02 12:50:40] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Tushar'}
+[2026-11-02 12:50:41] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-02 12:50:41] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Hi'}
+[2026-11-02 12:50:42] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-02 12:50:50] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-02 12:50:50] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Hi Tushar', 'action': 'type'}
+[2026-11-02 12:50:51] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-02 12:50:52] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-02 12:50:59] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-02 12:50:59] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Hi Tushar', 'action': 'type'}
+[2026-11-02 12:51:00] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-02 12:51:16] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'browser': 'chrome', 'action': 'click', 'selector': "[title^='Search or start new chat']"}
+[2026-11-02 12:51:28] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Tushar'}
+[2026-11-02 12:51:28] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'key': 'enter', 'action': 'press'}
+[2026-11-02 12:51:29] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Hi'}
+[2026-11-02 12:51:29] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-02 12:51:30] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'action': 'type', 'text': 'Tushar', 'browser': 'chrome'}
+[2026-11-02 12:51:44] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': '7057274830', 'platform': 'whatsapp', 'message_text': 'Hello Mummy'}
+[2026-11-02 12:52:28] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'whatsapp', 'message_text': 'Hi Mummy', 'receiver': '7057274830'}
+[2026-11-02 12:52:45] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Chrome', 'action': 'close_app'}
+[2026-11-02 12:52:53] Action: laptop_control, Level: 1, Reason: System control: close_application, Params: {'name': 'WhatsApp', 'action': 'close_application'}
+[2026-11-02 12:53:16] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes'}
+[2026-11-03 22:06:02] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'saajan saajan video song'}
+[2026-11-03 22:06:13] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-11-03 22:06:50] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-11-03 22:07:35] Action: laptop_control, Level: 1, Reason: System control: system_info, Params: {'action': 'system_info'}
+[2026-11-03 22:14:49] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'https://pranay-portfoliio.vercel.app/', 'action': 'go_to'}
+[2026-11-03 22:14:56] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'maximize_window', 'title': 'chrome'}
+[2026-11-03 22:16:07] Action: laptop_control, Level: 1, Reason: System control: brightness_up, Params: {'action': 'brightness_up'}
+[2026-11-03 22:16:26] Action: laptop_control, Level: 1, Reason: System control: brightness_up, Params: {'action': 'brightness_up'}
+[2026-11-03 22:16:30] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '100', 'action': 'set_brightness'}
+[2026-11-03 22:16:34] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '100'}
+[2026-11-03 22:16:38] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '100', 'action': 'set_brightness'}
+[2026-11-03 22:16:46] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '100'}
+[2026-11-03 22:16:49] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '100'}
+[2026-11-03 22:17:04] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '30'}
+[2026-11-03 22:18:02] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'price', 'query': 'ASUS TUF F16 price history India'}
+[2026-11-03 22:34:26] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes', 'value': 'memory'}
+[2026-11-03 22:34:42] Action: laptop_control, Level: 1, Reason: System control: close_application, Params: {'name': 'pyrefly.exe', 'action': 'close_application'}
+[2026-11-03 22:35:05] Action: laptop_control, Level: 1, Reason: System control: sleep, Params: {'action': 'sleep'}
+[2026-11-04 08:42:26] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Hello Divya! 😊 Thinking of you. ❤️ How is your day going? ✨', 'platform': 'whatsapp', 'receiver': '9699645603'}
+[2026-11-04 08:46:19] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Good morning Divya! 😊☀️❤️', 'platform': 'whatsapp', 'receiver': '9699645603'}
+[2026-11-05 22:19:05] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes', 'value': 'memory'}
+[2026-11-05 22:19:33] Action: laptop_control, Level: 1, Reason: System control: close_application, Params: {'name': 'OneDrive.exe', 'action': 'close_application'}
+[2026-11-05 22:19:46] Action: laptop_control, Level: 0, Reason: System information access, Params: {'value': 'memory', 'action': 'list_processes'}
+[2026-11-05 22:20:55] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes', 'value': 'memory'}
+[2026-11-05 22:21:58] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes', 'value': 'memory'}
+[2026-11-05 22:22:35] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes', 'value': 'memory'}
+[2026-11-10 15:39:36] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes'}
+[2026-11-10 15:42:38] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/'}
+[2026-11-10 15:44:40] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'go_to', 'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/'}
+[2026-11-12 11:27:44] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_windows'}
+[2026-11-12 11:28:12] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'search', 'query': 'effect of long system uptime on RAM usage'}
+[2026-11-12 11:28:54] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'task_manager'}
+[2026-11-12 11:29:45] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Chrome', 'action': 'close_app'}
+[2026-11-12 11:30:08] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Task Manager'}
+[2026-11-12 11:30:20] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'taskmgr'}
+[2026-11-12 11:30:41] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Ramayan movie'}
+[2026-11-12 11:30:56] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-11-12 11:31:46] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-11-12 11:32:35] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Dilruba Dilkash remix song'}
+[2026-11-12 11:32:47] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-11-12 18:39:44] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes'}
+[2026-11-12 18:39:57] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Chrome'}
+[2026-11-12 18:40:55] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'type_text', 'value': '[whispering] understood, sir. switching back to whisper mode now. what would you like me to do?'}
+[2026-11-12 18:46:03] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': '[whispering] ek baar ek chhota sa bhalu tha, jo jungle mein rehta tha... use shahad bahut pasand tha... kya tum sunna chahte ho aage?', 'action': 'type_text'}
+[2026-11-12 18:46:16] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': '[whispering] toh woh chhota bhalu har din shahad ki khoj mein nikal padta... ek din use ek bada sa chhatta mila, lekin uspar bahut saari madhumakhiyan thin... woh thoda dar gaya... phir kya hua hoga?', 'action': 'type_text'}
+[2026-11-12 18:46:33] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': '[whispering] phir usne ek idea lagaya! usne ek badi si lakdi li aur chhatte ko gira diya. madhumakhiyan uske peeche bhagin, lekin woh tez bhagkar nadi mein kood gaya. aur pata hai, phir kyahua? use saara shahad mil gaya!', 'action': 'type_text'}
+[2026-11-12 18:46:57] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'type_text', 'value': '[whispering] hmm... chhota bhalu ab chain se so raha hai... woh sapne mein shahad ki nadiyan dekh raha hai aur bahut khush hai... use ab koi tension nahi hai... kya tum bhi so rahe ho, Pranay?'}

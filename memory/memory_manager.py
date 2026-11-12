@@ -216,6 +216,12 @@ def format_memory_for_prompt(memory: dict | None) -> str:
     if not memory:
         return ""
 
+    try:
+        from core.private_mode import is_private_mode_active, is_sensitive_entry
+        _priv = is_private_mode_active()
+    except Exception:
+        _priv = True
+
     core_lines: list[str] = []
 
     # 1. Identity - always, in full
@@ -223,6 +229,8 @@ def format_memory_for_prompt(memory: dict | None) -> str:
     for field in _IDENTITY_FIELDS:
         val = _entry_value(identity.get(field))
         if not val:
+            continue
+        if not _priv and is_sensitive_entry("identity", field, val):
             continue
         if field == "language":
             # Labelled as an observation, not a setting. A bare "Language:
@@ -238,6 +246,8 @@ def format_memory_for_prompt(memory: dict | None) -> str:
             continue
         val = _entry_value(entry)
         if val:
+            if not _priv and is_sensitive_entry("identity", key, val):
+                continue
             core_lines.append(f"{_pretty(key).title()}: {val}")
 
     # 2. Everything else, most recently updated first
@@ -246,6 +256,8 @@ def format_memory_for_prompt(memory: dict | None) -> str:
         for key, entry in (memory.get(cat, {}) or {}).items():
             val = _entry_value(entry)
             if not val:
+                continue
+            if not _priv and is_sensitive_entry(cat, key, val):
                 continue
             updated = (entry.get("updated", "") if isinstance(entry, dict) else "") or "0000-00-00"
             rest.append((updated, cat, key, val))
@@ -352,6 +364,19 @@ def search_memory(query: str, limit: int = 8) -> str:
 
     An empty query is treated as "show me everything you know", capped - the
     model asks that when the user says "what do you remember about me?"."""
+    try:
+        from core.private_mode import is_private_mode_active, is_sensitive_query, is_sensitive_entry
+        _priv = is_private_mode_active()
+    except Exception:
+        _priv = True
+
+    if not _priv and is_sensitive_query(query):
+        return (
+            "ACCESS RESTRICTED: Information matching this query is confidential and locked "
+            "under Personal/Private Mode. Ask the user for their password ('Password please') "
+            "to enable Private Mode before retrieving this information."
+        )
+
     memory = load_memory()
     words  = [w for w in re.split(r"[^\w]+", (query or "").lower()) if len(w) > 1]
 
@@ -362,6 +387,8 @@ def search_memory(query: str, limit: int = 8) -> str:
         for key, entry in items.items():
             val = _entry_value(entry)
             if not val:
+                continue
+            if not _priv and is_sensitive_entry(cat, key, val):
                 continue
             s = _score(words, cat, key, val) if words else 1
             if s > 0:
