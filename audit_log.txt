@@ -808,3 +808,76 @@
 [2026-11-12 18:46:16] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': '[whispering] toh woh chhota bhalu har din shahad ki khoj mein nikal padta... ek din use ek bada sa chhatta mila, lekin uspar bahut saari madhumakhiyan thin... woh thoda dar gaya... phir kya hua hoga?', 'action': 'type_text'}
 [2026-11-12 18:46:33] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': '[whispering] phir usne ek idea lagaya! usne ek badi si lakdi li aur chhatte ko gira diya. madhumakhiyan uske peeche bhagin, lekin woh tez bhagkar nadi mein kood gaya. aur pata hai, phir kyahua? use saara shahad mil gaya!', 'action': 'type_text'}
 [2026-11-12 18:46:57] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'type_text', 'value': '[whispering] hmm... chhota bhalu ab chain se so raha hai... woh sapne mein shahad ki nadiyan dekh raha hai aur bahut khush hai... use ab koi tension nahi hai... kya tum bhi so rahe ho, Pranay?'}
+[2026-11-12 19:10:59] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '11 12 7', 'action': 'enable'}
+[2026-11-12 19:11:07] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'enable', 'password': '12 11 7'}
+[2026-11-12 19:11:19] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-12 19:34:33] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '11 12 24', 'action': 'enable'}
+[2026-11-12 19:35:18] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-12 19:35:36] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-12 19:42:11] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 07', 'action': 'enable'}
+[2026-11-12 19:42:22] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 07', 'action': 'enable'}
+[2026-11-12 19:42:36] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-12 19:46:25] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-12 19:46:39] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-12 19:54:36] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-12 19:56:00] Action: code_helper, Level: 1, Reason: Default reversible action, Params: {'action': 'explain', 'code': '# FRIDAY starts here\nself.personal_mode = False\ndef enable_personal_mode(self, password):\n    if password == "12 11 7":\n        self.personal_mode = True\n# Access restrictions apply when False', 'description': 'How personal mode is hardcoded'}
+[2026-11-12 19:56:40] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-12 19:56:50] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'enable', 'password': '12 11 7'}
+[2026-11-12 19:57:15] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-12 19:57:26] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'whatsapp', 'message_text': 'Hi', 'receiver': '9699645603'}
+[2026-11-12 20:04:21] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'meaning of chico', 'mode': 'search'}
+[2026-11-12 20:04:51] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-12 20:05:46] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'enable', 'password': '12 11 7'}
+[2026-11-12 20:06:00] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Hi', 'platform': 'whatsapp', 'receiver': '9699645603'}
+[2026-11-12 20:06:09] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'whatsapp', 'receiver': '9699645603', 'message_text': 'Hi'}
+[2026-11-12 20:06:18] Action: send_message, Level: 2, Reason: Sending communication, Params: {'message_text': 'Hi', 'receiver': '9699645603', 'platform': 'whatsapp'}
+[2026-11-12 20:06:27] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-12 20:06:27] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'whatsapp', 'receiver': '9699645603', 'message_text': 'Hi'}
+[2026-11-12 20:06:27] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-12 20:06:41] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://pranay-portfoliio.vercel.app/', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-12 20:06:51] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'scroll', 'direction': 'down'}
+[2026-11-12 20:07:05] Action: browser_control, Level: 0, Reason: Information access, Params: {'direction': 'down', 'action': 'scroll'}
+[2026-11-12 20:07:10] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'scroll', 'direction': 'down'}
+[2026-11-12 20:07:16] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'action': 'click', 'description': "Navigate to the 'projects' section of the page", 'text': 'Projects'}
+[2026-11-12 20:07:23] Action: browser_control, Level: 0, Reason: Information access, Params: {'description': 'Click on the live demo button for a project', 'action': 'smart_click', 'text': 'Live Demo'}
+[2026-11-12 20:07:38] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'smart_click', 'description': 'Click on the Live Demo button in the Projects section'}
+[2026-11-12 20:07:56] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://github.com/pranaygandlewar'}
+[2026-11-12 20:07:58] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://github.com/pranaygandlewar', 'action': 'go_to', 'browser': 'chrome'}
+[2026-11-12 20:08:09] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'close_all'}
+[2026-11-12 20:08:09] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://github.com/pranaygandlewar', 'browser': 'chrome'}
+[2026-11-12 20:08:41] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://github.com/pranaygandlewar', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-12 20:08:58] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-11-12 20:09:20] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-12 20:09:23] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://vercel.com/pranaytechai-6711s-projects', 'action': 'go_to', 'browser': 'chrome'}
+[2026-11-12 20:09:23] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'https://pranay-portfoliio.vercel.app/', 'action': 'go_to'}
+[2026-11-12 20:09:23] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.instagram.com/?hl=en', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-12 20:09:31] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Chrome'}
+[2026-11-12 20:10:10] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-12 20:10:13] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'go_to', 'url': 'https://github.com/pranaygandlewar'}
+[2026-11-12 20:10:13] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://vercel.com/pranaytechai-6711s-projects', 'action': 'go_to', 'browser': 'chrome'}
+[2026-11-12 20:10:13] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://pranay-portfoliio.vercel.app/', 'browser': 'chrome'}
+[2026-11-12 20:10:13] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://www.instagram.com/?hl=en', 'browser': 'chrome'}
+[2026-11-12 20:10:54] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://github.com/pranaygandlewar', 'action': 'new_tab', 'browser': 'chrome'}
+[2026-11-12 20:10:55] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://vercel.com/pranaytechai-6711s-projects', 'action': 'new_tab', 'browser': 'chrome'}
+[2026-11-12 20:10:56] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'new_tab', 'url': 'https://pranay-portfoliio.vercel.app/'}
+[2026-11-12 20:10:56] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab', 'browser': 'chrome', 'url': 'https://www.instagram.com/?hl=en'}
+[2026-11-12 20:11:31] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Chrome', 'action': 'close_app'}
+[2026-11-12 20:11:33] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'go_to', 'incognito': False, 'url': 'https://github.com/pranaygandlewar'}
+[2026-11-12 20:11:34] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'https://vercel.com/pranaytechai-6711s-projects', 'action': 'go_to', 'incognito': False}
+[2026-11-12 20:11:35] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://pranay-portfoliio.vercel.app/', 'action': 'go_to', 'incognito': False, 'browser': 'chrome'}
+[2026-11-12 20:11:36] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.instagram.com/?hl=en', 'incognito': False, 'action': 'go_to', 'browser': 'chrome'}
+[2026-11-12 20:11:57] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Chrome', 'action': 'close_app'}
+[2026-11-12 20:12:09] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://github.com/pranaygandlewar', 'action': 'new_tab', 'browser': 'chrome'}
+[2026-11-12 20:12:09] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab', 'browser': 'chrome', 'url': 'https://vercel.com/pranaytechai-6711s-projects'}
+[2026-11-12 20:12:09] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://pranay-portfoliio.vercel.app/', 'action': 'new_tab', 'browser': 'chrome'}
+[2026-11-12 20:12:09] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.instagram.com/?hl=en', 'browser': 'chrome', 'action': 'new_tab'}
+[2026-11-12 20:12:23] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Chrome'}
+[2026-11-12 20:12:32] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Antigravity IDE'}
+[2026-11-14 17:41:40] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-14 17:42:01] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-11-14 17:42:13] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-14 17:45:49] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'C:\\Users\\m\\OneDrive\\Videos\\Movies\\Hindi\\Wajah.mp4'}
+[2026-11-17 01:26:46] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'date': '2026-11-17', 'message': "Send 'hi' to 9518995110 via WhatsApp", 'time': '01:27'}
+[2026-11-17 01:28:54] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'message': "Send 'hi' to 9518995110 via WhatsApp", 'date': '2026-11-17', 'time': '01:28'}
+[2026-11-17 01:29:40] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'message': "Send 'hi' to 9518995110 via WhatsApp", 'date': '2026-11-17', 'time': '01:30'}
+[2026-11-17 01:30:48] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'WhatsApp', 'receiver': '9518995110', 'message_text': 'hi'}

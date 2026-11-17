@@ -116,7 +116,7 @@ def enable_private_mode(candidate: str) -> Tuple[bool, str]:
         (
             "DENIED: Incorrect password. Personal/Private Mode remains DISABLED. "
             "You must NOT reveal any details about Divya or personal contacts. "
-            "Inform the user that the password was incorrect."
+            "Say: 'Incorrect password. I don't know anything about personal details without Personal Mode.'"
         ),
     )
 
@@ -161,3 +161,149 @@ def is_sensitive_entry(cat: str, key: str, val: str) -> bool:
     ):
         return True
     return False
+
+
+def is_personal_contact(target: str) -> bool:
+    """Check if target represents a personal contact (Divya, family, or personal numbers)."""
+    if not target:
+        return False
+    t = str(target).lower().strip()
+    digits = re.sub(r"[^0-9]", "", t)
+    if any(num in digits for num in _PRIVATE_NUMBERS if num.isdigit()):
+        return True
+    return any(
+        k in t
+        for k in (
+            "divya", "khushi", "wife", "biwi", "gf", "girlfriend", "partner",
+            "mummy", "mom", "mother", "aai", "maa", "pappa", "papa", "dad",
+            "father", "shruti", "sister", "didi", "tai", "would be", "would_be",
+            "sbse pyari", "sabse pyari", "fiance", "fiancee", "jaan", "darling",
+        )
+    )
+
+
+
+# ── Password Masking for Activity Log ─────────────────────────────────────────
+
+import time as _time
+
+_awaiting_password: bool = False
+_awaiting_password_time: float = 0.0
+
+_PW_PROMPT_PATTERNS = [
+    r"\bpassword\s+please\b",
+    r"\bpassword\s+bataiye\b",
+    r"\bpassword\s+dijiye\b",
+    r"\bpassword\s+bolo\b",
+    r"\bprovide\s+(?:the\s+)?password\b",
+    r"\bstate\s+(?:the\s+)?password\b",
+    r"\benter\s+(?:the\s+)?password\b",
+    r"\bpassword\s+required\b",
+    r"\bpassword\s+kya\s+hai\b",
+    r"\bplease\s+provide\s+password\b",
+]
+
+_CORRECT_PASSWORD_PATTERNS = [
+    r"\b12[\s,/\.\-]+11[\s,/\.\-]+7\b",
+    r"\b12117\b",
+    r"\bbaa?rah?\s+gyaa?rah?\s+saa?th?\b",
+    r"\bbaa?rah?\s+gyaa?ra\s+saa?th?\b",
+    r"\bbaa?ra\s+akk?ra\s+saa?th?\b",
+    r"\btwelve\s+eleven\s+seven\b",
+    r"बारह\s+ग्यारह\s+सात",
+    r"बारा\s+अकरा\s+सात",
+    r"१२[\s,/\.\-]+११[\s,/\.\-]+७",
+    r"१२११७",
+]
+
+
+def is_awaiting_password() -> bool:
+    """Return whether the system is actively waiting for a password input."""
+    global _awaiting_password
+    with _lock:
+        if _awaiting_password:
+            # Expire after 60 seconds if abandoned
+            if _time.monotonic() - _awaiting_password_time > 60.0:
+                _awaiting_password = False
+                return False
+            return True
+        return False
+
+
+def set_awaiting_password(awaiting: bool) -> None:
+    """Flag that the next user input is a password attempt."""
+    global _awaiting_password, _awaiting_password_time
+    with _lock:
+        _awaiting_password = bool(awaiting)
+        _awaiting_password_time = _time.monotonic() if awaiting else 0.0
+
+
+def check_if_prompting_password(text: str) -> bool:
+    """Check if assistant or system message asks for the password."""
+    t = (text or "").lower()
+    # If reporting verification outcome, Friday is not asking for password
+    if any(w in t for w in ("verified", "correct", "incorrect", "wrong", "galat", "denied", "enabled", "activated", "sahi hai")):
+        return False
+    if "password" in t:
+        if any(w in t for w in ("please", "bataiye", "dijiye", "bolo", "kya", "provide", "state", "enter", "required", "sir", "?")):
+            return True
+    return any(re.search(pat, t) for pat in _PW_PROMPT_PATTERNS)
+
+
+def mask_user_text(text: str) -> str:
+    """
+    Mask password in user text (spoken or typed).
+    1. If Friday asked for the password, the user's response in that turn is masked
+       in the form of (*), even if the password is wrong.
+    2. Even if Friday's prompt flag wasn't set, any correct password (12 11 7 /
+       barah gyarah sat / bara akra sat / twelve eleven seven) is ALWAYS hidden in (*).
+    3. Normal commands ('Friday enable private mode', etc.) are shown in full.
+    """
+    global _awaiting_password
+    if not text:
+        return text
+
+    prefix = ""
+    content = text
+    m_pfx = re.match(r"^(You:\s*|User:\s*)", text, re.IGNORECASE)
+    if m_pfx:
+        prefix = m_pfx.group(0)
+        content = text[len(prefix):]
+
+    # 1. If Friday asked for the password, mask whatever was given (even wrong password)
+    if is_awaiting_password():
+        set_awaiting_password(False)
+        masked = re.sub(r"\S", "*", content)
+        return prefix + masked
+
+    # 2. If the user's message is the correct password, ALWAYS hide it
+    if verify_password(content) and not any(k in content.lower() for k in ("mode", "enable", "switch", "karo", "turn", "activate")):
+        masked = re.sub(r"\S", "*", content)
+        return prefix + masked
+
+    # 3. If the password appears inside a command (e.g. 'enable private mode 12 11 7'), mask only the password
+    res = content
+    for pat in _CORRECT_PASSWORD_PATTERNS:
+        res = re.sub(pat, lambda m: re.sub(r"\S", "*", m.group(0)), res, flags=re.IGNORECASE)
+
+    return prefix + res
+
+
+def mask_log_line(text: str) -> str:
+    """
+    Scrubber for the Activity Log widget.
+    Detects when Friday asks for password, and masks the user's immediate reply.
+    """
+    if not text:
+        return text
+    tl = text.lower().strip()
+
+    if tl.startswith("you:") or tl.startswith("user:"):
+        return mask_user_text(text)
+
+    # When assistant asks for password, prime the awaiting flag
+    if check_if_prompting_password(text):
+        set_awaiting_password(True)
+
+    return text
+

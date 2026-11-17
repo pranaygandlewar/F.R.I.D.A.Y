@@ -366,7 +366,8 @@ def send_message(
     session_memory=None,
 ) -> str:
     params       = parameters or {}
-    receiver     = _resolve_contact_alias(params.get("receiver", "")).strip()
+    raw_receiver = str(params.get("receiver", "")).strip()
+    receiver     = _resolve_contact_alias(raw_receiver).strip()
     message_text = params.get("message_text", "").strip()
     platform     = params.get("platform", "whatsapp").strip()
 
@@ -374,6 +375,23 @@ def send_message(
         return "Please specify a recipient."
     if not message_text:
         return "Please specify the message content."
+
+    # ── Security Guard: Personal Mode Required for Personal Contacts ───
+    try:
+        from core.private_mode import is_private_mode_active, is_personal_contact
+        if not is_private_mode_active() and (is_personal_contact(raw_receiver) or is_personal_contact(receiver)):
+            msg = (
+                "RESTRICTED: Personal Mode is currently OFF. Cannot send messages to personal contacts "
+                "(Divya, family, or private contacts) without authentication. "
+                "Please turn on Personal Mode first."
+            )
+            print(f"[SendMessage] 🔒 Blocked message to personal contact '{raw_receiver}' (Personal Mode is OFF)")
+            if player:
+                player.write_log("SECURITY: 🔒 Message blocked — Personal Mode is OFF")
+            return msg
+    except Exception as e:
+        print(f"[SendMessage] Personal mode check error: {e}")
+
     if not _PYAUTOGUI:
         return "PyAutoGUI is not installed — cannot control the desktop."
 

@@ -371,11 +371,7 @@ def search_memory(query: str, limit: int = 8) -> str:
         _priv = True
 
     if not _priv and is_sensitive_query(query):
-        return (
-            "ACCESS RESTRICTED: Information matching this query is confidential and locked "
-            "under Personal/Private Mode. Ask the user for their password ('Password please') "
-            "to enable Private Mode before retrieving this information."
-        )
+        return "I don't know. If you want personal information, then turn on Personal Mode."
 
     memory = load_memory()
     words  = [w for w in re.split(r"[^\w]+", (query or "").lower()) if len(w) > 1]

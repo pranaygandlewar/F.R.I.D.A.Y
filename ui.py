@@ -1043,6 +1043,11 @@ class LogWidget(QTextEdit):
         self._sig.connect(self._enqueue)
 
     def append_log(self, text: str):
+        try:
+            from core.private_mode import mask_log_line
+            text = mask_log_line(text)
+        except Exception:
+            pass
         self._sig.emit(text)
 
     def _enqueue(self, text: str):

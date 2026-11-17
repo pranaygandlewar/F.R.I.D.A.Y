@@ -1632,12 +1632,18 @@ class FridayLive:
                             full_in = " ".join(in_buf).strip()
                             if full_in:
                                 self._last_out_logged = ""   # new exchange
-                                self.ui.write_log(f"You: {full_in}")
-                                self._session_log.append(f"User: {full_in}")
+                                try:
+                                    from core.private_mode import mask_user_text
+                                    masked_in = mask_user_text(f"You: {full_in}")
+                                    display_in = masked_in[len("You: "):] if masked_in.startswith("You: ") else masked_in
+                                except Exception:
+                                    display_in = full_in
+                                self.ui.write_log(f"You: {display_in}")
+                                self._session_log.append(f"User: {display_in}")
                                 if self._dashboard:
                                     asyncio.create_task(self._dashboard.broadcast({
                                         "type": "log", "speaker": "user",
-                                        "text": full_in,
+                                        "text": display_in,
                                         "ts": datetime.now().isoformat(),
                                     }))
                             in_buf = []
@@ -1651,6 +1657,12 @@ class FridayLive:
                                     full_out = ""
                             if full_out:
                                 self._last_out_logged = full_out
+                                try:
+                                    from core.private_mode import check_if_prompting_password, set_awaiting_password
+                                    if check_if_prompting_password(full_out):
+                                        set_awaiting_password(True)
+                                except Exception:
+                                    pass
                                 self.ui.write_log(f"{self._asst_name}: {full_out}")
                                 self._session_log.append(f"{self._asst_name}: {full_out}")
                                 if self._dashboard:

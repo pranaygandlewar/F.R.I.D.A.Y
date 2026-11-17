@@ -13,6 +13,7 @@ from core.private_mode import (
     enable_private_mode,
     disable_private_mode,
     is_private_mode_active,
+    set_awaiting_password,
 )
 
 
@@ -26,6 +27,7 @@ def personal_mode_action(
 
     if action in ("enable", "activate", "unlock", "on"):
         if not password:
+            set_awaiting_password(True)
             msg = (
                 "PASSWORD_REQUIRED: Password is required to enable Personal/Private Mode. "
                 "Ask the user: 'Password please.'"
