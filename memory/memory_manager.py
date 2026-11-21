@@ -333,6 +333,27 @@ def format_memory_for_prompt(memory: dict | None) -> str:
                        + (f" (+{len(indexed) - len(names)} more)"
                           if len(indexed) > len(names) else ""))
 
+    # 4. PRM block — split into public (always) and private (Private Mode only).
+    #    format_public_prm_for_prompt() — no auth gate, only professional info.
+    #    format_prm_for_prompt()        — auth check inside, returns "" when locked.
+    try:
+        from memory.prm_manager import (
+            format_prm_for_prompt as _fmt_prm,
+            format_public_prm_for_prompt as _fmt_pub_prm,
+        )
+        # Public professional info — always added
+        pub_prm_block = _fmt_pub_prm()
+        if pub_prm_block:
+            out.append("")
+            out.append(pub_prm_block)
+        # Private personal info — only when Private Mode is ON
+        priv_prm_block = _fmt_prm()
+        if priv_prm_block:
+            out.append("")
+            out.append(priv_prm_block)
+    except Exception:
+        pass
+
     return "\n".join(out) + "\n"
 
 
@@ -400,7 +421,23 @@ def search_memory(query: str, limit: int = 8) -> str:
              else "Everything currently stored:")
     more  = (f"\n(+{len(rows) - len(lines)} more — search with a narrower keyword)"
              if len(rows) > len(lines) else "")
-    return head + "\n" + "\n".join(lines) + more
+    result = head + "\n" + "\n".join(lines) + more
+
+    # Also search PRM:
+    #   - Public info: always searchable (no auth gate).
+    #   - Private info: only when Private Mode is ON (search_prm handles this internally).
+    try:
+        from memory.prm_manager import search_prm as _search_prm
+        prm_result = _search_prm(query or "")
+        # search_prm now returns public info always + private info when unlocked.
+        # Only skip if truly nothing found.
+        _nothing = ("Nothing stored", "I don't know")
+        if prm_result and not any(prm_result.startswith(n) for n in _nothing):
+            result = result + "\n\n[Personal Relationships]\n" + prm_result
+    except Exception:
+        pass
+
+    return result
 
 
 def all_entries_for_ui() -> list[dict]:

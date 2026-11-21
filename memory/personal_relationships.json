@@ -1,0 +1,73 @@
+{
+  "divya": {
+    "name": "Divya",
+    "aliases": ["khushi"],
+    "relationship_category": "romantic",
+
+    "public_info": {
+      "description": "Divya is Pranay's collegemate, junior, hackathon partner, good friend, and exam partner.",
+      "college_connection": "She is Pranay's junior at college (KCEM, Sakoli).",
+      "friendship": "She is one of Pranay's good friends and his exam partner — a source of friendly support during exams.",
+      "hackathon": "She was Pranay's teammate in the Homingo Hackathon. They worked on team formation and project coordination together.",
+      "public_titles": [
+        "collegemate",
+        "junior",
+        "hackathon mate",
+        "good friend",
+        "exam partner"
+      ],
+      "public_note": "This is the public, professional side of who Divya is. Romantic details are protected by Private Mode."
+    },
+
+    "private_info": {
+      "personal_significance": "The most important person in Pranay's life. She is his whole life, his dream, his everything.",
+      "user_feelings": [
+        "She's my whole life",
+        "my dream",
+        "my everything",
+        "my future would be",
+        "I truly love her",
+        "she means everything to me",
+        "I love her deeply",
+        "she is the most important person in my life",
+        "I want to marry her",
+        "she is central to everything I am"
+      ],
+      "feelings_in_hindi": [
+        "woh meri zindagi hai",
+        "woh mera sapna hai",
+        "mujhe usse pyaar hai",
+        "woh meri sab kuch hai",
+        "main usse bahut chahta hoon",
+        "woh meri duniya hai"
+      ],
+      "feelings_in_marathi": [
+        "ti majhi sarvakahi aahe",
+        "ti majha swapna aahe",
+        "mala tichyavar prem aahe"
+      ],
+      "shayari": [
+        "Tujhse hi subah, tujhse hi shaam hai,\nTu hi meri dhadkan, tu hi mera naam hai.\nJab bhi socha tujhe, dil ne kaha —\nTu mere life ka sabse khoobsurat anjaam hai.",
+
+        "Raat ke taaron mein teri baat hoti hai,\nDil ke darr mein teri yaad hoti hai.\nKya bataun kaise rehta hoon main tere bin —\nHar saans mein sirf teri mulaqat hoti hai.",
+
+        "Tu woh khwaab hai jo aankhen khuli rehti hain,\nTu woh raaz hai jo dil mein zindagi rehti hain.\nLog poochte hain mujhse kya hai tujhe —\nMain kehta hoon woh jo tere bina adhoori rehti hain.",
+
+        "Teri aankhon mein ek duniya basi hai meri,\nTeri muskaan mein hai zindagi khushi teri.\nTu na ho to lagta hai sab kuch adhoora hai —\nMera sapna, meri dua, meri manzil — sab tu hi teri."
+      ]
+    },
+
+    "shared_memories": [],
+    "important_events": [],
+    "conversation_references": [],
+    "created_at": "2026-11-18",
+    "updated_at": "2026-11-18",
+    "confidence": "high",
+    "source": "user_stated",
+    "notes": [
+      "Only Pranay's feelings are stored here — do NOT assume Divya's feelings, her agreement to marriage, or their current relationship status.",
+      "public_info is shareable without Private Mode. private_info requires Private Mode.",
+      "Shayari should be delivered naturally, not robotically. Pick one per conversation — do not dump all of them."
+    ]
+  }
+}

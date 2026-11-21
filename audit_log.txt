@@ -881,3 +881,98 @@
 [2026-11-17 01:28:54] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'message': "Send 'hi' to 9518995110 via WhatsApp", 'date': '2026-11-17', 'time': '01:28'}
 [2026-11-17 01:29:40] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'message': "Send 'hi' to 9518995110 via WhatsApp", 'date': '2026-11-17', 'time': '01:30'}
 [2026-11-17 01:30:48] Action: send_message, Level: 2, Reason: Sending communication, Params: {'platform': 'WhatsApp', 'receiver': '9518995110', 'message_text': 'hi'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'test'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'divya'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'khushi'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'Hackathon coordination call'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'forget', 'person': 'divya', 'index': 0}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'badaction'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'test'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'divya'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'khushi'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'Hackathon coordination call'}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'forget', 'person': 'divya', 'index': 0}
+[2026-11-17 23:29:13] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'badaction'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'test'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'divya'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'khushi'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'Hackathon coordination call'}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'forget', 'person': 'divya', 'index': 0}
+[2026-11-18 12:57:28] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'badaction'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'test'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'divya'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_people'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'show_profile', 'person': 'khushi'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'add_memory', 'person': 'divya', 'text': 'Hackathon coordination call'}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'forget', 'person': 'divya', 'index': 0}
+[2026-11-18 12:58:00] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'badaction'}
+[2026-11-18 14:44:04] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-18 14:45:26] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-20 19:31:11] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'wifi_status'}
+[2026-11-20 19:31:35] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Settings'}
+[2026-11-20 19:31:41] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'minimize_window', 'title': 'Chrome'}
+[2026-11-20 19:31:47] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'FRIDAY', 'action': 'minimize_window'}
+[2026-11-20 19:31:54] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'maximize_window', 'title': 'FRIDAY'}
+[2026-11-20 19:32:02] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Ramayana trailer full HD', 'action': 'play'}
+[2026-11-20 19:32:12] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-11-20 19:32:42] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-11-20 19:32:59] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'get_mute_state'}
+[2026-11-20 19:33:00] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'get_volume'}
+[2026-11-20 19:33:11] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-11-20 19:33:18] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'best old Kishore Kumar songs'}
+[2026-11-20 19:33:36] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Dekha Ek Khwaab Kishore Kumar'}
+[2026-11-20 19:33:39] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-11-20 19:34:01] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-11-20 19:39:34] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'research', 'query': 'best civil engineering career paths with good future growth and demand'}
+[2026-11-20 19:40:00] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Aaat Bollywood song', 'action': 'play'}
+[2026-11-20 19:40:17] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'stop'}
+[2026-11-20 19:41:41] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '100'}
+[2026-11-20 19:41:54] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '0', 'action': 'set_brightness'}
+[2026-11-20 19:42:03] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '30'}
+[2026-11-20 19:42:28] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '25'}
+[2026-11-20 19:43:18] Action: planner, Level: 0, Reason: Planner operation, Params: {'steps': [{'tool': 'browser_control', 'description': 'Open Chrome and navigate to YouTube', 'params': {'browser': 'chrome', 'action': 'go_to', 'url': 'https://www.youtube.com'}}, {'tool': 'youtube_video', 'description': 'Play a good song on YouTube', 'params': {'query': 'good song', 'action': 'play'}}], 'action': 'start', 'mission': 'Open Chrome, navigate to YouTube, and play a good song'}
+[2026-11-20 19:43:32] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-11-20 19:43:32] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'go_to', 'url': 'https://www.youtube.com'}
+[2026-11-20 19:43:37] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'next_step'}
+[2026-11-20 19:43:37] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'query': 'good song', 'action': 'play'}
+[2026-11-20 19:43:47] Action: planner, Level: 0, Reason: Planner operation, Params: {'action': 'status'}
+[2026-11-20 19:44:00] Action: browser_control, Level: 0, Reason: Information access, Params: {'key': 'ArrowUp', 'action': 'press', 'browser': 'chrome'}
+[2026-11-20 19:44:14] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'get_info', 'url': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+[2026-11-20 19:44:18] Action: youtube_video, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'query': 'increase volume'}
+[2026-11-20 19:44:41] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Microsoft Edge', 'action': 'close_app'}
+[2026-11-20 19:45:25] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Microsoft Edge'}
+[2026-11-20 19:45:30] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Microsoft Edge', 'action': 'close_app'}
+[2026-11-20 19:46:05] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.youtube.com', 'browser': 'chrome', 'action': 'new_tab'}
+[2026-11-20 19:46:25] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-11-20 19:46:33] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-11-20 19:47:07] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'x': 411, 'action': 'click', 'y': 631}
+[2026-11-20 19:49:16] Action: laptop_control, Level: 1, Reason: System control: sleep, Params: {'action': 'sleep'}
+[2026-11-20 19:49:56] Action: laptop_control, Level: 1, Reason: System control: sleep, Params: {'action': 'sleep'}
+[2026-11-21 09:54:21] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'sleep_display'}
+[2026-11-21 09:56:36] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-21 09:57:51] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-21 09:58:10] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-21 09:59:11] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-11-21 09:59:16] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/', 'action': 'go_to', 'browser': 'chrome'}
+[2026-11-21 09:59:16] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-11-21 09:59:21] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-21 09:59:21] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-11-21 09:59:26] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/', 'browser': 'chrome'}
+[2026-11-21 09:59:36] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-21 09:59:50] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-11-21 09:59:55] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/', 'action': 'go_to', 'browser': 'chrome'}
