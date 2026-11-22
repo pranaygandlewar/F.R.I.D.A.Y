@@ -343,6 +343,10 @@ def laptop_control(parameters: dict, **kwargs) -> str:
         return str(wc.toggle_night_light())
     elif action == "gpu_info":
         return str(wc.get_gpu_info())
+    elif action in ("keyboard_backlight", "keyboard_backlit", "backlight", "backlit", "aura", "cycle_backlight", "change_backlight"):
+        from core.asus_aura import cycle_keyboard_backlight
+        target = str(value or parameters.get("name", "")).strip()
+        return cycle_keyboard_backlight(target or None)
 
     # Wi-Fi, Bluetooth & Hotspot
     elif action in ("battery_status", "power_status"):
@@ -484,7 +488,7 @@ TOOL = {
     "description": (
         "Advanced Windows 11 system and laptop control layer. "
         "Audio: get_volume, set_volume, volume_up, volume_down, mute, unmute, toggle_mute, get_mute_state, list_audio_devices, set_default_audio, get_mic_level, set_mic_level. "
-        "Display: get_brightness, set_brightness, brightness_up, brightness_down, enumerate_displays, projection_mode, night_light_status, toggle_night_light, gpu_info. "
+        "Display: get_brightness, set_brightness, brightness_up, brightness_down, enumerate_displays, projection_mode, night_light_status, toggle_night_light, gpu_info, keyboard_backlight. "
         "Network: wifi_status, wifi_on, wifi_off, list_wifi_networks, connect_wifi, disconnect_wifi, bluetooth_status, bluetooth_on, bluetooth_off, list_bluetooth_devices, hotspot_status, toggle_hotspot, airplane_mode_status, network_diagnostics, flush_dns, list_vpn. "
         "Power & Battery: power_status, battery_report, power_plans, set_power_plan, display_timeout, sleep_timeout, sleep, hibernate, cancel_shutdown, recovery_options. "
         "Personalization: theme_status, set_theme, toggle_theme, set_wallpaper, transparency_status. "

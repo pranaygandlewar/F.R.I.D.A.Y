@@ -976,3 +976,26 @@
 [2026-11-21 09:59:36] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
 [2026-11-21 09:59:50] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
 [2026-11-21 09:59:55] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/', 'action': 'go_to', 'browser': 'chrome'}
+[2026-11-21 19:14:54] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'enable', 'password': '12 11 7'}
+[2026-11-21 19:15:00] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-21 19:17:06] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'disable'}
+[2026-11-22 12:10:07] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-22 12:10:16] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-22 12:10:35] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'off'}
+[2026-11-22 12:26:42] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-22 12:27:16] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-22 12:27:19] Action: laptop_control, Level: 3, Reason: Irreversible action: empty_recycle_bin, Params: {'action': 'empty_recycle_bin'}
+[2026-11-22 12:27:38] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'most common causes of anger'}
+[2026-11-22 12:29:17] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-22 12:29:27] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'green', 'action': 'keyboard_backlight'}
+[2026-11-22 12:29:31] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'green', 'action': 'keyboard_backlight'}
+[2026-11-22 12:29:37] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'white'}
+[2026-11-22 12:29:50] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'brightness_up'}
+[2026-11-22 12:33:14] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '30', 'action': 'set_brightness'}
+[2026-11-22 12:33:17] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '30', 'action': 'set_brightness'}
+[2026-11-22 12:33:32] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'rainbow'}
+[2026-11-22 12:33:54] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'breathing', 'action': 'keyboard_backlight'}
+[2026-11-22 12:34:30] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'red', 'action': 'keyboard_backlight'}
+[2026-11-22 12:34:53] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'screenshot'}
+[2026-11-22 12:35:05] Action: laptop_control, Level: 1, Reason: System control: brightness_up, Params: {'value': '10', 'action': 'brightness_up'}
+[2026-11-22 12:35:26] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}

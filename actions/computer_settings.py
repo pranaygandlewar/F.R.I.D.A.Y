@@ -837,6 +837,7 @@ ACTION_MAP: dict[str, callable] = {
     "open_run":            open_run,
     "dark_mode":           dark_mode,
     "toggle_wifi":         toggle_wifi,
+    "keyboard_backlight":  lambda: __import__("core.asus_aura", fromlist=["cycle_keyboard_backlight"]).cycle_keyboard_backlight(),
     "restart":             restart_computer,
     "shutdown":            shutdown_computer,
 }
@@ -897,12 +898,19 @@ _ALIASES = {
     "screenshot":      ("capture screen", "take a screenshot", "snip"),
     "refresh_page":    ("refresh", "reload page"),
     "new_tab":         ("open a tab", "open new tab"),
+    "keyboard_backlight": (
+        "backlight", "backlit", "change backlit", "change backlight",
+        "keyboard light", "keyboard backlight", "aura", "change aura",
+        "keyboard color", "backlit color", "backlight color", "fn f4",
+        "fn+f4", "fn f4 key", "aura lighting", "keyboard ki light",
+        "keyboard light change", "keyboard backlit change", "change keyboard light"
+    ),
     "shutdown":        ("power off", "turn off the computer", "switch off the pc"),
     "restart":         ("reboot", "restart the pc"),
 }
 
 _VALUE_ACTIONS = {"volume_set", "type_text", "press_key", "reload_n",
-                  "scroll_up", "scroll_down"}
+                  "scroll_up", "scroll_down", "keyboard_backlight"}
 
 
 def _normalise(text: str) -> str:
@@ -1051,6 +1059,14 @@ def computer_settings(
         scroll_down(int(value or 500))
         return "Scrolled down."
 
+    if action in ("keyboard_backlight", "backlight", "backlit", "aura", "keyboard_light", "change_backlight"):
+        from core.asus_aura import cycle_keyboard_backlight
+        target_color = str(value or params.get("color", "")).strip()
+        msg = cycle_keyboard_backlight(target_color or None)
+        if player:
+            player.write_log(f"[Settings] {msg}")
+        return msg
+
     # close_app accepts an optional app name via `value`
     if action == "close_app":
         app_name = str(value or "").strip()
@@ -1100,7 +1116,7 @@ def computer_settings(
 # ── Tool declaration (auto-discovered by core/action_loader.py) ──────────────
 TOOL = {
     "name": "computer_settings",
-    "description": "Controls the computer: volume, brightness, keyboard shortcuts, typing text on screen, closing apps, fullscreen, dark mode, restart, shutdown, scrolling, tab management, zoom, screenshots, lock screen, refresh/reload page. Use for ANY single computer control command. restart and shutdown put a confirmation on the user's screen and do NOT happen until they press it — never claim they are done. Volume, brightness and dark mode can be reversed with the `undo` tool.",
+    "description": "Controls the computer: volume, brightness, keyboard shortcuts, keyboard backlit/aura lighting (Fn + F4), typing text on screen, closing apps, fullscreen, dark mode, restart, shutdown, scrolling, tab management, zoom, screenshots, lock screen, refresh/reload page. Use for ANY single computer control command. restart and shutdown put a confirmation on the user's screen and do NOT happen until they press it — never claim they are done. Volume, brightness and dark mode can be reversed with the `undo` tool.",
     "parameters": {
         "type": "OBJECT",
         "properties": {
@@ -1129,7 +1145,7 @@ TOOL = {
                     "scroll_bottom | page_up | page_down | copy | paste | cut | "
                     "undo | redo | select_all | save | enter | escape | press_key | "
                     "type_text | screenshot | lock_screen | open_settings | "
-                    "file_explorer | open_run | dark_mode | "
+                    "file_explorer | open_run | dark_mode | keyboard_backlight | "
                     "restart | shutdown"
                 )
             },
@@ -1147,6 +1163,7 @@ TOOL = {
                     "volume level 0-100 for volume_set; "
                     "text to type for type_text; "
                     "key name for press_key; "
+                    "color name (e.g. 'red', 'blue', 'green', 'rainbow') for keyboard_backlight; "
                     "app name (e.g. 'Chrome', 'WhatsApp', 'Spotify') for close_app — "
                     "ALWAYS provide the app name for close_app so Friday does not close itself."
                 )
