@@ -1001,6 +1001,495 @@ class MetricBar(QWidget):
 
         p.end()
 
+
+# ── Live Neural Network Visualiser (Code & Process Telemetry) ─────────────────
+class NeuralNetWidget(QWidget):
+    """
+    Live architectural neural-network visualiser for FRIDAY's code & processes.
+
+    Each node represents a real FRIDAY subsystem, code module, or live runtime
+    process across 5 layers:
+        0: INPUT / SENSORS   (mic_stt, wake, vision, ui_in, telem)
+        1: CORE ENGINE       (gemini, llm, edith, memory, action_ldr, plugin_ldr)
+        2: CODE MODULES      (web, browser, winctrl, file_code, planner, media, sysmon)
+        3: LIVE PROCESSES    (asyncio, threads, audio_io, dash, os_proc)
+        4: OUTPUT / ACTUATE  (tts, hud, os_act, log_mem)
+
+    Activations are driven by real events (state changes, tool calls, log
+    activity, and live psutil/threading/sys.modules telemetry) and propagate
+    forward along architectural pathways.
+    """
+
+    _TICK_MS = 42
+    _FADE    = 0.052
+    _FWD_LAG = 3
+
+    # (key, short_label, code_path)
+    _LAYER_DEFS: list[tuple[str, list[tuple[str, str, str]]]] = [
+        ("INPUT", [
+            ("mic_stt",    "MIC/STT",   "core/stt.py"),
+            ("wake",       "WAKE",      "core/wake_word.py"),
+            ("vision",     "VISION",    "actions/screen_processor.py"),
+            ("ui_in",      "UI/KEY",    "core/hotkey.py"),
+            ("telem",      "TELEM",     "psutil / _metrics"),
+        ]),
+        ("CORE", [
+            ("gemini",     "GEMINI",    "core/gemini.py"),
+            ("llm",        "LLM",       "core/llm_client.py"),
+            ("edith",      "EDITH",     "core/edith.py"),
+            ("memory",     "MEMORY",    "memory/memory_manager.py"),
+            ("action_ldr", "ACTIONS",   "core/action_loader.py"),
+            ("plugin_ldr", "PLUGINS",   "core/plugin_loader.py"),
+        ]),
+        ("MODULES", [
+            ("web",        "WEB",       "actions/web_search.py"),
+            ("browser",    "BROWSER",   "actions/browser_control.py"),
+            ("winctrl",    "WINCTRL",   "core/windows_control/"),
+            ("file_code",  "FILE/CODE", "actions/file_processor.py"),
+            ("planner",    "PLANNER",   "actions/planner.py"),
+            ("media",      "MEDIA",     "actions/youtube_video.py"),
+            ("sysmon",     "SYSMON",    "actions/system_monitor.py"),
+        ]),
+        ("PROCESSES", [
+            ("asyncio",    "ASYNCIO",   "main.py (event loop)"),
+            ("threads",    "THREADS",   "threading.active_count()"),
+            ("audio_io",   "AUDIO I/O", "core/audio_devices.py"),
+            ("dash",       "DASHBRD",   "dashboard/server.py"),
+            ("os_proc",    "PROC RSS",  "psutil.Process(pid)"),
+        ]),
+        ("OUTPUT", [
+            ("tts",        "TTS/VOICE", "core/tts.py"),
+            ("hud",        "HUD/3D",    "core/avatar.py"),
+            ("os_act",     "OS ACT",    "actions/open_app.py"),
+            ("log_mem",    "LOG/UNDO",  "core/undo.py"),
+        ]),
+    ]
+
+    # Map tool names / log keywords to node keys
+    _TOOL_TO_NODE: dict[str, str] = {
+        "web_search":       "web",
+        "browser_control":  "browser",
+        "screen_process":   "vision",
+        "save_memory":      "memory",
+        "recall_memory":    "memory",
+        "undo":             "log_mem",
+        "system_status":    "sysmon",
+        "manage_monitor":   "sysmon",
+        "file_processor":   "file_code",
+        "code_helper":      "file_code",
+        "dev_agent":        "file_code",
+        "open_app":         "os_act",
+        "close_app":        "os_act",
+        "computer_control": "winctrl",
+        "computer_settings":"winctrl",
+        "laptop_control":   "winctrl",
+        "windows_control":  "winctrl",
+        "youtube_video":    "media",
+        "video_player":     "media",
+        "planner":          "planner",
+        "reminder":         "planner",
+        "proactive":        "planner",
+        "weather_report":   "web",
+        "flight_finder":    "web",
+        "send_message":     "plugin_ldr",
+        "personal_mode":    "memory",
+    }
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setAttribute(Qt.WidgetAttribute.WA_OpaquePaintEvent, True)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.setMinimumSize(200, 130)
+        self.setMouseTracking(True)
+
+        self._layers: list[int] = [len(nodes) for _, nodes in self._LAYER_DEFS]
+        self._node_index: dict[str, tuple[int, int]] = {}
+        for li, (_lname, nodes) in enumerate(self._LAYER_DEFS):
+            for ni, (key, _lbl, _path) in enumerate(nodes):
+                self._node_index[key] = (li, ni)
+
+        rng = random.Random(42)
+
+        self._node_act: list[list[float]] = [[0.0] * n for n in self._layers]
+        self._fwd_cd:   list[list[int]]   = [[0] * n for n in self._layers]
+        self._fwd_src:  list[list[float]] = [[0.0] * n for n in self._layers]
+
+        # Seeded architectural weights
+        self._weights: list[list[list[float]]] = []
+        for li in range(len(self._layers) - 1):
+            w_layer = [
+                [rng.uniform(0.32, 0.95) for _ in range(self._layers[li + 1])]
+                for _ in range(self._layers[li])
+            ]
+            self._weights.append(w_layer)
+
+        self._radii: list[list[float]] = [
+            [6.5 if li in (1, 3) else 5.5 for _ in range(n)]
+            for li, n in enumerate(self._layers)
+        ]
+
+        self._pos: list[list[tuple[float, float]]] = []
+        self._last_size: tuple[int, int] = (0, 0)
+        self._tick = 0
+        self._hover_node: tuple[int, int] | None = None
+
+        # Live runtime state & process telemetry
+        self._state: str = "LISTENING"
+        self._cpu_pct: float = 0.0
+        self._mem_pct: float = 0.0
+        self._net_mb: float = 0.0
+        self._proc_cpu: float = 0.0
+        self._proc_rss_mb: float = 0.0
+        self._thread_cnt: int = threading.active_count()
+        self._mod_cnt: int = len(sys.modules)
+        self._sys_procs: int = 0
+        self._last_event: str = "IDLE · MONITORING"
+        self._last_event_ts: float = time.monotonic()
+        self._last_sample_ts: float = 0.0
+
+        try:
+            self._self_proc = psutil.Process(os.getpid())
+            self._self_proc.cpu_percent(interval=None)
+        except Exception:
+            self._self_proc = None
+
+        self._timer = QTimer(self)
+        self._timer.setInterval(self._TICK_MS)
+        self._timer.timeout.connect(self._tick_animation)
+        self._timer.start()
+
+    # ── Live event hooks ──────────────────────────────────────────────────
+    def set_state(self, state: str) -> None:
+        self._state = str(state or "IDLE").upper()
+        self._last_event = f"STATE → {self._state}"
+        self._last_event_ts = time.monotonic()
+
+        if self._state == "LISTENING":
+            self.pulse("mic_stt", 0.95)
+            self.pulse("audio_io", 0.70)
+        elif self._state == "THINKING":
+            self.pulse("gemini", 1.0)
+            self.pulse("asyncio", 0.85)
+        elif self._state == "EXECUTING":
+            self.pulse("action_ldr", 1.0)
+            self.pulse("edith", 0.85)
+            self.pulse("os_act", 0.80)
+        elif self._state == "SPEAKING":
+            self.pulse("gemini", 0.85)
+            self.pulse("audio_io", 0.95)
+            self.pulse("tts", 1.0)
+            self.pulse("hud", 0.90)
+        elif self._state == "SLEEPING":
+            self.pulse("wake", 0.75)
+        elif self._state == "INTERRUPTED":
+            self.pulse("ui_in", 0.90)
+            self.pulse("asyncio", 0.85)
+
+    def pulse(self, key_or_tool: str, strength: float = 1.0) -> None:
+        """Fire a specific code/process node and cascade forward."""
+        k = str(key_or_tool or "").strip().lower()
+        target = self._TOOL_TO_NODE.get(k, k)
+        if target in self._node_index:
+            li, ni = self._node_index[target]
+            self._node_act[li][ni] = min(1.0, max(self._node_act[li][ni], strength))
+            self._schedule_fwd(li, ni, self._node_act[li][ni])
+            if li == 2:
+                # Tool/module execution also lights up action_ldr -> asyncio -> os_act
+                self._boost("action_ldr", strength * 0.75)
+                self._boost("edith", strength * 0.55)
+                self._boost("asyncio", strength * 0.80)
+            _lbl, _path = self._LAYER_DEFS[li][1][ni][1], self._LAYER_DEFS[li][1][ni][2]
+            self._last_event = f"{_lbl} ({_path})"
+            self._last_event_ts = time.monotonic()
+
+    def _boost(self, key: str, strength: float) -> None:
+        if key in self._node_index:
+            li, ni = self._node_index[key]
+            self._node_act[li][ni] = min(1.0, max(self._node_act[li][ni], strength))
+
+    def update_telemetry(self, cpu: float, mem: float, net: float, sys_procs: int = 0) -> None:
+        self._cpu_pct = float(cpu)
+        self._mem_pct = float(mem)
+        self._net_mb = float(net)
+        if sys_procs:
+            self._sys_procs = int(sys_procs)
+        if self._cpu_pct > 35.0:
+            self._boost("telem", min(1.0, self._cpu_pct / 100.0))
+            self._boost("sysmon", min(0.85, self._cpu_pct / 100.0))
+
+    # ── Layout & Mouse ────────────────────────────────────────────────────
+    def _layout_nodes(self, W: int, H: int) -> None:
+        self._pos = []
+        top_pad = 28
+        bot_pad = 24
+        usable_h = max(60, H - top_pad - bot_pad)
+        n_layers = len(self._layers)
+        x_step = W / (n_layers + 0.6)
+        x_off = x_step * 0.8
+        for li, count in enumerate(self._layers):
+            x = x_off + x_step * li
+            y_step = usable_h / (count + 1)
+            self._pos.append([(x, top_pad + y_step * (ni + 1)) for ni in range(count)])
+        self._last_size = (W, H)
+
+    def mouseMoveEvent(self, event) -> None:
+        pos = event.position()
+        mx, my = pos.x(), pos.y()
+        found = None
+        for li, layer in enumerate(self._pos):
+            for ni, (nx, ny) in enumerate(layer):
+                if (mx - nx) ** 2 + (my - ny) ** 2 <= 18 ** 2:
+                    found = (li, ni)
+                    break
+            if found is not None:
+                break
+        if found != self._hover_node:
+            self._hover_node = found
+            self.update()
+
+    def leaveEvent(self, _event) -> None:
+        if self._hover_node is not None:
+            self._hover_node = None
+            self.update()
+
+    # ── Animation & Live Sampling Tick ────────────────────────────────────
+    def _sample_runtime(self) -> None:
+        now = time.monotonic()
+        if now - self._last_sample_ts < 1.2:
+            return
+        self._last_sample_ts = now
+        self._thread_cnt = threading.active_count()
+        self._mod_cnt = len(sys.modules)
+        if self._self_proc is not None:
+            try:
+                self._proc_cpu = self._self_proc.cpu_percent(interval=None)
+                self._proc_rss_mb = self._self_proc.memory_info().rss / (1024.0 * 1024.0)
+            except Exception:
+                pass
+
+    def _tick_animation(self) -> None:
+        self._tick += 1
+        self._sample_runtime()
+
+        # Subtle live heartbeat on active runtime nodes based on current FRIDAY state
+        if self._tick % 8 == 0:
+            self._boost("telem", max(0.18, min(0.75, self._cpu_pct / 100.0)))
+            self._boost("os_proc", max(0.22, min(0.85, (self._proc_cpu + 8.0) / 60.0)))
+            self._boost("threads", max(0.20, min(0.75, self._thread_cnt / 30.0)))
+            self._boost("asyncio", 0.42 if self._state != "SLEEPING" else 0.15)
+            if self._state == "LISTENING":
+                self._boost("mic_stt", 0.45)
+            elif self._state == "SPEAKING":
+                self._boost("tts", 0.65)
+                self._boost("audio_io", 0.60)
+                self._boost("hud", 0.55)
+            elif self._state == "THINKING":
+                self._boost("gemini", 0.70)
+            elif self._state == "EXECUTING":
+                self._boost("action_ldr", 0.65)
+                self._boost("os_act", 0.55)
+
+        # Forward propagation countdowns
+        for li in range(1, len(self._layers)):
+            for ni in range(self._layers[li]):
+                if self._fwd_cd[li][ni] > 0:
+                    self._fwd_cd[li][ni] -= 1
+                    if self._fwd_cd[li][ni] == 0:
+                        strength = self._fwd_src[li][ni]
+                        self._node_act[li][ni] = min(
+                            1.0, self._node_act[li][ni] + strength * 0.72
+                        )
+                        self._schedule_fwd(li, ni, self._node_act[li][ni])
+
+        # Exponential decay
+        for li in range(len(self._layers)):
+            for ni in range(self._layers[li]):
+                if self._node_act[li][ni] > 0.002:
+                    self._node_act[li][ni] *= (1.0 - self._FADE)
+                else:
+                    self._node_act[li][ni] = 0.0
+
+        self.update()
+
+    def _schedule_fwd(self, src_li: int, src_ni: int, strength: float) -> None:
+        if src_li + 1 >= len(self._layers) or strength < 0.12:
+            return
+        weights = self._weights[src_li][src_ni]
+        for dst_ni in range(self._layers[src_li + 1]):
+            if random.random() < 0.55 * weights[dst_ni]:
+                if self._fwd_cd[src_li + 1][dst_ni] == 0:
+                    self._fwd_cd[src_li + 1][dst_ni] = self._FWD_LAG
+                    self._fwd_src[src_li + 1][dst_ni] = strength * weights[dst_ni]
+
+    # ── Painting ──────────────────────────────────────────────────────────
+    def paintEvent(self, _event) -> None:
+        W, H = self.width(), self.height()
+        if (W, H) != self._last_size or not self._pos:
+            self._layout_nodes(W, H)
+
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        p.fillRect(0, 0, W, H, qcol(C.BG))
+
+        # Top telemetry bar
+        pid = os.getpid()
+        hdr = (
+            f"STATE: {self._state}  │  MODS: {self._mod_cnt}  │  "
+            f"THREADS: {self._thread_cnt}  │  PID {pid}: "
+            f"{self._proc_cpu:.1f}% CPU · {self._proc_rss_mb:.0f}MB"
+        )
+        p.setFont(QFont("Courier New", 7, QFont.Weight.Bold))
+        p.setPen(QPen(qcol(C.PRI, 190), 1))
+        p.drawText(QRectF(8, 4, W - 16, 16), Qt.AlignmentFlag.AlignCenter, hdr)
+
+        # Layer column headers at bottom
+        p.setFont(QFont("Courier New", 6, QFont.Weight.Bold))
+        p.setPen(QPen(qcol(C.TEXT_DIM, 140), 1))
+        for li, (lname, _nodes) in enumerate(self._LAYER_DEFS):
+            if li < len(self._pos) and self._pos[li]:
+                lx = self._pos[li][0][0]
+                p.drawText(QRectF(lx - 36, H - 17, 72, 14),
+                           Qt.AlignmentFlag.AlignCenter, lname)
+
+        # ── Draw edges ──
+        for li in range(len(self._layers) - 1):
+            for src_ni, (sx, sy) in enumerate(self._pos[li]):
+                src_act = self._node_act[li][src_ni]
+                for dst_ni, (dx, dy) in enumerate(self._pos[li + 1]):
+                    dst_act = self._node_act[li + 1][dst_ni]
+                    w = self._weights[li][src_ni][dst_ni]
+                    edge_act = max(src_act, dst_act) * w
+
+                    is_hover_edge = (
+                        self._hover_node == (li, src_ni)
+                        or self._hover_node == (li + 1, dst_ni)
+                    )
+                    if is_hover_edge:
+                        alpha = int(130 + edge_act * 125)
+                        pen_w = 1.3 + edge_act * 1.3
+                        p.setPen(QPen(QColor(0, 235, 255, alpha), pen_w))
+                    else:
+                        alpha = int(16 + edge_act * 185)
+                        r = int(0 + edge_act * 15)
+                        g = int(105 + edge_act * 150)
+                        b = int(145 + edge_act * 110)
+                        pen_w = 0.55 + edge_act * 1.45
+                        p.setPen(QPen(QColor(r, g, b, alpha), pen_w))
+                    p.drawLine(QPointF(sx, sy), QPointF(dx, dy))
+
+        # ── Draw nodes + real module/process labels ──
+        compact = H < 220
+        for li, (_lname, nodes) in enumerate(self._LAYER_DEFS):
+            for ni, (nx, ny) in enumerate(self._pos[li]):
+                key, lbl, _path = nodes[ni]
+                act = self._node_act[li][ni]
+                rad = self._radii[li][ni]
+                hovered = (self._hover_node == (li, ni))
+
+                if act > 0.05 or hovered:
+                    halo_r = rad + (0.6 if hovered else act) * 11
+                    grad = QRadialGradient(QPointF(nx, ny), halo_r)
+                    ga = int(max(act, 0.55 if hovered else 0.0) * 120)
+                    grad.setColorAt(0.0, QColor(0, 225, 255, ga))
+                    grad.setColorAt(1.0, QColor(0, 180, 200, 0))
+                    p.setBrush(QBrush(grad))
+                    p.setPen(Qt.PenStyle.NoPen)
+                    p.drawEllipse(QPointF(nx, ny), halo_r, halo_r)
+
+                fill_v = int(10 + act * 24)
+                p.setBrush(QBrush(QColor(fill_v, fill_v + 12, fill_v + 24)))
+                rim_r = int(20 if hovered else act * 30)
+                rim_g = int(185 + act * 70)
+                rim_b = int(205 + act * 50)
+                rim_a = 255 if hovered else int(145 + act * 110)
+                p.setPen(QPen(QColor(rim_r, rim_g, rim_b, rim_a),
+                              2.0 if hovered else (1.1 + act * 1.5)))
+                p.drawEllipse(QPointF(nx, ny), rad, rad)
+
+                if act > 0.15:
+                    p.setBrush(QBrush(QColor(190, 245, 255, int(act * 255))))
+                    p.setPen(Qt.PenStyle.NoPen)
+                    p.drawEllipse(QPointF(nx, ny), rad * 0.36, rad * 0.36)
+
+                # Dynamic tag for live process nodes
+                tag = lbl
+                if key == "threads":
+                    tag = f"THREADS·{self._thread_cnt}"
+                elif key == "os_proc":
+                    tag = f"RSS·{self._proc_rss_mb:.0f}M"
+                elif key == "telem":
+                    tag = f"CPU·{self._cpu_pct:.0f}%"
+
+                p.setFont(QFont("Courier New", 6,
+                                QFont.Weight.Bold if (act > 0.25 or hovered) else QFont.Weight.Normal))
+                txt_a = 245 if (act > 0.25 or hovered) else (150 if not compact else 125)
+                p.setPen(QPen(QColor(150, 235, 255, txt_a) if (act > 0.25 or hovered)
+                              else qcol(C.TEXT_MED, txt_a), 1))
+                p.drawText(QRectF(nx + rad + 4, ny - 7, 74, 14),
+                           Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft,
+                           tag)
+
+        # ── Travelling signal packets ──
+        for li in range(1, len(self._layers)):
+            for ni in range(self._layers[li]):
+                cd = self._fwd_cd[li][ni]
+                if cd > 0:
+                    t = 1.0 - cd / self._FWD_LAG
+                    best_src = max(range(self._layers[li - 1]),
+                                   key=lambda s: self._weights[li - 1][s][ni])
+                    sx, sy = self._pos[li - 1][best_src]
+                    dx, dy = self._pos[li][ni]
+                    px = sx + (dx - sx) * t
+                    py = sy + (dy - sy) * t
+                    strength = self._fwd_src[li][ni]
+                    p.setBrush(QBrush(QColor(0, 255, 220, int(215 * strength))))
+                    p.setPen(Qt.PenStyle.NoPen)
+                    p.drawEllipse(QPointF(px, py), 3.0, 3.0)
+
+        # ── Last event indicator (bottom-left) ──
+        age = time.monotonic() - self._last_event_ts
+        if age < 8.0:
+            p.setFont(QFont("Courier New", 6))
+            p.setPen(QPen(qcol(C.PRI, 180), 1))
+            p.drawText(QRectF(8, H - 17, 220, 14),
+                       Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
+                       f"⚡ {self._last_event[:32]}")
+
+        # ── Hover inspection card ──
+        if self._hover_node is not None:
+            li, ni = self._hover_node
+            key, lbl, path = self._LAYER_DEFS[li][1][ni]
+            act = self._node_act[li][ni]
+            nx, ny = self._pos[li][ni]
+            box_w, box_h = 190, 44
+            bx = min(max(8.0, nx + 14), max(8.0, W - box_w - 8))
+            by = min(max(24.0, ny - box_h - 6), max(24.0, H - box_h - 22))
+            p.setBrush(QBrush(QColor(4, 16, 26, 235)))
+            p.setPen(QPen(qcol(C.PRI, 210), 1.0))
+            p.drawRoundedRect(QRectF(bx, by, box_w, box_h), 4, 4)
+            p.setFont(QFont("Courier New", 7, QFont.Weight.Bold))
+            p.setPen(QPen(qcol(C.PRI, 255), 1))
+            p.drawText(QRectF(bx + 7, by + 4, box_w - 14, 16),
+                       Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
+                       f"{lbl}  [{int(act * 100)}%]")
+            p.setFont(QFont("Courier New", 6))
+            p.setPen(QPen(qcol(C.TEXT_MED, 230), 1))
+            p.drawText(QRectF(bx + 7, by + 22, box_w - 14, 16),
+                       Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
+                       path)
+
+        p.end()
+
+    def stop(self) -> None:
+        """Freeze animation (call when paused)."""
+        self._timer.stop()
+
+    def resume(self) -> None:
+        """Restart animation (call when resumed)."""
+        if not self._timer.isActive():
+            self._timer.start()
+
+
 class LogWidget(QTextEdit):
     _sig = pyqtSignal(str)
 
@@ -2963,6 +3452,7 @@ class MainWindow(QMainWindow):
     _quiz_sig       = pyqtSignal(str, object, object)  # (topic, questions, grader)
     _quiz_hide_sig  = pyqtSignal()
     _review_sig     = pyqtSignal(str, str, object, object)  # document review payload
+    _nn_pulse_sig   = pyqtSignal(str, float)               # (node_or_tool, strength)
 
     def __init__(self, face_path: str):
         super().__init__()
@@ -3183,11 +3673,96 @@ class MainWindow(QMainWindow):
             _miss.setStyleSheet(f"color: {C.TEXT_DIM}; background: transparent;")
             _vid_v.addWidget(_miss, stretch=1)
 
+        # ── Neural Network visualiser panel (always-visible, below HUD) ──
+        self._neural_net = NeuralNetWidget()
+        self._nn_sect = QWidget()
+        self._nn_sect.setStyleSheet(f"background: {C.BG};")
+        _nn_v = QVBoxLayout(self._nn_sect)
+        _nn_v.setContentsMargins(0, 0, 0, 0)
+        _nn_v.setSpacing(0)
+        # Neural-net header bar
+        _nn_hdr = QHBoxLayout()
+        _nn_hdr.setContentsMargins(8, 4, 8, 4)
+        _nn_hdr.setSpacing(6)
+        _nn_title = QLabel("◈  LIVE NEURAL NETWORK")
+        _nn_title.setFont(QFont("Courier New", 8, QFont.Weight.Bold))
+        _nn_title.setStyleSheet(f"color: {C.PRI}; background: transparent;")
+        _nn_hdr.addWidget(_nn_title)
+        _nn_hdr.addStretch()
+        # Maximize button for Neural Net panel
+        self._nn_max_btn = QPushButton("⤢  MAXIMIZE")
+        self._nn_max_btn.setFont(QFont("Courier New", 8, QFont.Weight.Bold))
+        self._nn_max_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._nn_max_btn.setStyleSheet(f"""
+            QPushButton {{
+                color: {C.TEXT_DIM}; background: transparent;
+                border: none; padding: 2px 6px;
+            }}
+            QPushButton:hover {{ color: {C.PRI}; }}
+        """)
+        self._nn_max_btn.clicked.connect(self._toggle_nn_maximize)
+        _nn_hdr.addWidget(self._nn_max_btn)
+        _nn_v.addLayout(_nn_hdr)
+        _nn_v.addWidget(self._neural_net, stretch=1)
+        self._nn_maximized = False   # track maximize state
+
+        # ── HUD cap-stack: 0=HUD, 1=camera, 2=video ──────────────────────
         # Stack: 0 = animated HUD, 1 = live camera, 2 = video
         self._hud_cam_stack = QStackedWidget()
         self._hud_cam_stack.addWidget(self.hud)
         self._hud_cam_stack.addWidget(_cam_cont)
         self._hud_cam_stack.addWidget(self._video_cont)
+
+        # HUD section wrapper — adds its own maximize button in the header
+        self._hud_sect = QWidget()
+        self._hud_sect.setStyleSheet(f"background: {C.BG};")
+        _hud_wrap_v = QVBoxLayout(self._hud_sect)
+        _hud_wrap_v.setContentsMargins(0, 0, 0, 0)
+        _hud_wrap_v.setSpacing(0)
+        _hud_top_bar = QHBoxLayout()
+        _hud_top_bar.setContentsMargins(8, 4, 8, 4)
+        _hud_top_bar.setSpacing(6)
+        _hud_top_lbl = QLabel("◈  FRIDAY HUD")
+        _hud_top_lbl.setFont(QFont("Courier New", 8, QFont.Weight.Bold))
+        _hud_top_lbl.setStyleSheet(f"color: {C.PRI}; background: transparent;")
+        _hud_top_bar.addWidget(_hud_top_lbl)
+        _hud_top_bar.addStretch()
+        # Maximize button for HUD panel
+        self._hud_max_btn = QPushButton("⤢  MAXIMIZE")
+        self._hud_max_btn.setFont(QFont("Courier New", 8, QFont.Weight.Bold))
+        self._hud_max_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._hud_max_btn.setStyleSheet(f"""
+            QPushButton {{
+                color: {C.TEXT_DIM}; background: transparent;
+                border: none; padding: 2px 6px;
+            }}
+            QPushButton:hover {{ color: {C.PRI}; }}
+        """)
+        self._hud_max_btn.clicked.connect(self._toggle_hud_maximize)
+        _hud_top_bar.addWidget(self._hud_max_btn)
+        _hud_wrap_v.addLayout(_hud_top_bar)
+        _hud_wrap_v.addWidget(self._hud_cam_stack, stretch=1)
+        self._hud_maximized = False  # track maximize state
+
+        # ── HUD + Neural Net vertical splitter ────────────────────────────
+        self._hud_nn_split = QSplitter(Qt.Orientation.Vertical)
+        self._hud_nn_split.setStyleSheet(f"""
+            QSplitter::handle {{
+                background: {C.BORDER};
+                height: 3px;
+            }}
+            QSplitter::handle:hover {{
+                background: {C.PRI_DIM};
+            }}
+        """)
+        self._hud_nn_split.addWidget(self._hud_sect)
+        self._hud_nn_split.addWidget(self._nn_sect)
+        self._hud_nn_split.setStretchFactor(0, 3)
+        self._hud_nn_split.setStretchFactor(1, 2)
+        self._hud_nn_split.setCollapsible(0, False)
+        self._hud_nn_split.setCollapsible(1, False)
+        # start with NN collapsed to a header-height stub; user can drag open
+        self._hud_nn_split.setSizes([9999, 180])
 
         self._center_split = QSplitter(Qt.Orientation.Vertical)
         self._center_split.setStyleSheet(f"""
@@ -3199,7 +3774,7 @@ class MainWindow(QMainWindow):
                 background: {C.PRI_DIM};
             }}
         """)
-        self._center_split.addWidget(self._hud_cam_stack)
+        self._center_split.addWidget(self._hud_nn_split)
         self._center_split.addWidget(self._content_panel)
         self._center_split.addWidget(self._quiz_panel)
         self._center_split.setStretchFactor(0, 3)
@@ -3233,7 +3808,9 @@ class MainWindow(QMainWindow):
         self._update_metrics()
 
         self._log_sig.connect(self._log.append_log)
+        self._log_sig.connect(self._on_log_neural)
         self._state_sig.connect(self._apply_state)
+        self._nn_pulse_sig.connect(self._neural_net.pulse)
         self._content_sig.connect(self._show_content)
         self._reconfig_sig.connect(self._show_setup)
         self._camera_sig.connect(self._show_camera_frame)
@@ -3528,6 +4105,57 @@ class MainWindow(QMainWindow):
 
     def video_is_playing(self) -> bool:
         return bool(self._video_on)
+
+    # ------------------------------------------------------------------
+    # Neural Network visualiser — animation control & maximize toggles
+    # ------------------------------------------------------------------
+    def show_neural_net(self) -> None:
+        """Resume the neural-net animation (NN panel is always visible below the HUD)."""
+        self._neural_net.resume()
+
+    def _close_neural_net(self) -> None:
+        """Pause the neural-net animation (panel stays; animation is stopped)."""
+        self._neural_net.stop()
+
+    def _toggle_nn_maximize(self) -> None:
+        """Maximize the Neural Network panel / restore split view."""
+        self._nn_maximized = not self._nn_maximized
+        if self._nn_maximized:
+            # Give all height to the NN section
+            total = self._hud_nn_split.height()
+            self._hud_nn_split.setSizes([0, total])
+            self._nn_max_btn.setText("⤡  RESTORE")
+            self._hud_maximized = False
+            self._hud_max_btn.setText("⤢  MAXIMIZE")
+        else:
+            total = self._hud_nn_split.height()
+            self._hud_nn_split.setSizes([total * 3 // 5, total * 2 // 5])
+            self._nn_max_btn.setText("⤢  MAXIMIZE")
+
+    def _toggle_hud_maximize(self) -> None:
+        """Maximize the FRIDAY HUD panel / restore split view."""
+        self._hud_maximized = not self._hud_maximized
+        if self._hud_maximized:
+            # Give all height to the HUD section
+            total = self._hud_nn_split.height()
+            self._hud_nn_split.setSizes([total, 0])
+            self._hud_max_btn.setText("⤡  RESTORE")
+            self._nn_maximized = False
+            self._nn_max_btn.setText("⤢  MAXIMIZE")
+        else:
+            total = self._hud_nn_split.height()
+            self._hud_nn_split.setSizes([total * 3 // 5, total * 2 // 5])
+            self._hud_max_btn.setText("⤢  MAXIMIZE")
+
+    def _toggle_nn_animation(self) -> None:
+        """Toggle the neural-net animation timer on/off from the left panel button."""
+        if self._nn_anim_running:
+            self._neural_net.stop()
+            self._nn_anim_btn.setText("▶  NEURAL NET")
+        else:
+            self._neural_net.resume()
+            self._nn_anim_btn.setText("⏸  NEURAL NET")
+        self._nn_anim_running = not self._nn_anim_running
 
     # ------------------------------------------------------------------
     # Icon generation — arc-reactor style, rendered with Pillow
@@ -3970,7 +4598,11 @@ class MainWindow(QMainWindow):
             proc_count = len(psutil.pids())
             self._proc_lbl.setText(f"PROC  {proc_count}")
         except Exception:
+            proc_count = 0
             self._proc_lbl.setText("PROC  --")
+
+        if hasattr(self, "_neural_net"):
+            self._neural_net.update_telemetry(cpu, mem, net, proc_count)
 
 
     def _build_header(self) -> QWidget:
@@ -4112,6 +4744,25 @@ class MainWindow(QMainWindow):
         ip_lay.addWidget(os_lbl)
 
         lay.addWidget(info_panel)
+        lay.addSpacing(4)
+
+        # Neural Network animation toggle (NN panel always visible below HUD)
+        self._nn_anim_btn = QPushButton("⏸  NEURAL NET")
+        self._nn_anim_btn.setFont(QFont("Courier New", 7, QFont.Weight.Bold))
+        self._nn_anim_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._nn_anim_btn.setStyleSheet(f"""
+            QPushButton {{
+                color: {C.PRI}; background: {C.PANEL2};
+                border: 1px solid {C.BORDER_A}; border-radius: 3px;
+                padding: 5px 2px;
+            }}
+            QPushButton:hover {{
+                background: {C.PRI_GHO}; border-color: {C.PRI_DIM};
+            }}
+        """)
+        self._nn_anim_running = True  # starts resumed with the widget
+        self._nn_anim_btn.clicked.connect(self._toggle_nn_animation)
+        lay.addWidget(self._nn_anim_btn)
         lay.addSpacing(4)
 
         lay.addStretch()
@@ -5593,8 +6244,34 @@ class MainWindow(QMainWindow):
         if self.on_text_command:
             threading.Thread(target=self.on_text_command, args=(txt,), daemon=True).start()
 
+    def _on_log_neural(self, text: str) -> None:
+        """Route live log events into the code/process neural network."""
+        if not hasattr(self, "_neural_net"):
+            return
+        low = str(text or "").lower()
+        self._neural_net.pulse("log_mem", 0.55)
+        if low.startswith("you:"):
+            self._neural_net.pulse("mic_stt", 0.90)
+            self._neural_net.pulse("gemini", 0.75)
+        elif low.startswith("friday:"):
+            self._neural_net.pulse("tts", 0.90)
+            self._neural_net.pulse("hud", 0.75)
+        elif "memory" in low:
+            self._neural_net.pulse("memory", 0.90)
+        elif "vision" in low or "camera" in low or "screen" in low:
+            self._neural_net.pulse("vision", 0.90)
+        elif "wake" in low or "sleep" in low:
+            self._neural_net.pulse("wake", 0.85)
+        elif "plugin" in low:
+            self._neural_net.pulse("plugin_ldr", 0.85)
+        elif "err:" in low:
+            self._neural_net.pulse("edith", 0.85)
+            self._neural_net.pulse("asyncio", 0.80)
+
     def _apply_state(self, state: str):
         self.hud.state = state
+        if hasattr(self, "_neural_net"):
+            self._neural_net.set_state(state)
         # Lip sync (mouth animation) only runs while actually speaking.
         # INTERRUPTED, EXECUTING, THINKING, ERROR, LISTENING, SLEEPING all
         # keep speaking=False so the mouth stays closed and the viseme
@@ -5818,6 +6495,13 @@ class FridayUI:
 
     def write_log(self, text: str):
         self._win._log_sig.emit(text)
+
+    def pulse_neural(self, key_or_tool: str, strength: float = 1.0) -> None:
+        """Thread-safe: pulse a code module or process node in the neural net."""
+        try:
+            self._win._nn_pulse_sig.emit(str(key_or_tool or ""), float(strength))
+        except Exception:
+            pass
 
     def wait_for_api_key(self):
         while not self._win._ready:

@@ -1027,3 +1027,140 @@
 [2026-11-23 09:48:03] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'breathing', 'action': 'keyboard_backlight'}
 [2026-11-23 09:48:24] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'breathing red', 'action': 'keyboard_backlight'}
 [2026-11-23 09:49:04] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-11-23 15:26:20] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'doggy', 'browser': 'chrome'}
+[2026-11-23 15:26:29] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Chrome'}
+[2026-11-23 15:28:01] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'play', 'source': 'Sudhamari C'}
+[2026-11-23 15:28:27] Action: computer_settings, Level: 1, Reason: Reversible setting change, Params: {'action': 'volume_up'}
+[2026-11-23 15:30:03] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-23 15:33:56] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab', 'browser': 'chrome'}
+[2026-11-23 15:34:14] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'query': 'भाड़', 'action': 'search'}
+[2026-11-23 15:34:26] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Chrome', 'action': 'full_screen'}
+[2026-11-23 15:34:35] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://www.google.com/search?q=Maari+video+2.0'}
+[2026-11-23 15:34:46] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://mahadbt.maharashtra.gov.in/'}
+[2026-11-23 15:34:58] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://www.google.com/search?q=MahaDBT+2.0+website'}
+[2026-11-23 15:35:04] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://mahadbt.in/', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-23 15:35:30] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://www.google.com/search?q=MahaDBT+2.0+login'}
+[2026-11-23 15:35:44] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'action': 'click', 'selector': 'h3', 'text': 'RTS - MahaDBT', 'browser': 'chrome'}
+[2026-11-23 15:36:20] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-23 15:36:28] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'red', 'action': 'keyboard_backlight'}
+[2026-11-23 15:36:46] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'rainbow', 'action': 'keyboard_backlight'}
+[2026-11-23 15:36:59] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'white', 'action': 'keyboard_backlight'}
+[2026-11-23 15:37:11] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-23 15:43:11] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://mahadbt.maharashtra.gov.in/'}
+[2026-11-23 15:43:42] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'go_to', 'url': 'https://mahadbt.maharashtra.gov.in/'}
+[2026-11-23 15:44:00] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'edge', 'action': 'go_to', 'url': 'https://mahadbt.maharashtra.gov.in/'}
+[2026-11-23 15:44:45] Action: game_updater, Level: 1, Reason: Default reversible action, Params: {'platform': 'steam', 'game_name': 'Dread Hunger', 'action': 'update'}
+[2026-11-23 15:45:39] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'FRIDAY V2'}
+[2026-11-23 15:45:53] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://mahadbt.maharashtra.gov.in/', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-23 15:46:01] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'FRIDAY V2'}
+[2026-11-23 15:46:07] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'https://mahadbt.maharashtra.gov.in/', 'action': 'go_to'}
+[2026-11-23 15:46:34] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://mahadbt.maharashtra.gov.in/', 'browser': 'chrome'}
+[2026-11-23 15:46:45] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://mahadbt.maharashtra.gov.in/', 'browser': 'chrome'}
+[2026-11-23 15:47:05] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'Chrome'}
+[2026-11-23 15:47:20] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'https://mahadbt.maharashtra.gov.in/', 'action': 'go_to'}
+[2026-11-23 15:47:44] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'query': 'MahaDBT 2.0 application', 'mode': 'search'}
+[2026-11-23 15:48:34] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'off', 'action': 'keyboard_backlight'}
+[2026-11-23 15:57:11] Action: browser_control, Level: 0, Reason: Information access, Params: {'query': 'X-Men: Apocalypse movie download', 'browser': 'chrome', 'action': 'search'}
+[2026-11-23 15:57:41] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'incognito': True, 'url': 'https://www.google.com'}
+[2026-11-23 15:57:41] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'action': 'type', 'text': 'xhamster', 'browser': 'chrome'}
+[2026-11-23 15:57:46] Action: browser_control, Level: 0, Reason: Information access, Params: {'key': 'Enter', 'browser': 'chrome', 'action': 'press'}
+[2026-11-23 15:57:55] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'smart_click', 'description': 'first search result', 'browser': 'chrome'}
+[2026-11-23 15:58:10] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'description': 'first search result', 'action': 'smart_click'}
+[2026-11-23 15:58:25] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'smart_click', 'browser': 'chrome', 'description': 'first search result'}
+[2026-11-23 15:58:40] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'smart_click', 'description': 'first search result', 'browser': 'chrome'}
+[2026-11-23 15:58:40] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'smart_click', 'description': 'first search result', 'browser': 'chrome'}
+[2026-11-23 15:58:40] Action: browser_control, Level: 0, Reason: Information access, Params: {'description': 'first search result', 'browser': 'chrome', 'action': 'smart_click'}
+[2026-11-23 15:58:44] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'smart_click', 'description': 'first search result', 'browser': 'chrome'}
+[2026-11-23 15:58:45] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'action': 'click', 'browser': 'chrome', 'selector': 'h3'}
+[2026-11-23 15:58:51] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://xhamster.com/login', 'browser': 'chrome', 'action': 'load_url'}
+[2026-11-23 15:58:54] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://xhamster.com/login', 'browser': 'chrome'}
+[2026-11-23 15:59:40] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'enable', 'password': '12 11 7'}
+[2026-11-23 16:00:32] Action: web_search, Level: 0, Reason: Information retrieval, Params: {'mode': 'news', 'query': 'latest tourism news'}
+[2026-11-23 16:01:20] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-23 16:01:28] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'off'}
+[2026-11-23 16:01:51] Action: reminder, Level: 1, Reason: Default reversible action, Params: {'time': '10:41', 'date': '2026-11-23', 'message': '10 minute zale ahet.'}
+[2026-11-23 16:01:52] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-11-23 16:03:28] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-23 16:03:30] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'copy'}
+[2026-11-23 16:05:09] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'power_status'}
+[2026-11-23 16:09:38] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'browser': 'chrome', 'query': 'shops near me'}
+[2026-11-23 16:11:07] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-23 16:16:40] Action: relationship_memory, Level: 1, Reason: Default reversible action, Params: {'action': 'recall', 'person': 'divya'}
+[2026-11-23 16:18:23] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'browser': 'chrome', 'url': 'https://www.instagram.com/?hl=en'}
+[2026-11-23 16:21:53] Action: laptop_control, Level: 1, Reason: System control: set_volume, Params: {'value': '100', 'action': 'set_volume'}
+[2026-11-23 16:22:05] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '100'}
+[2026-11-23 16:22:20] Action: laptop_control, Level: 1, Reason: System control: set_volume, Params: {'value': '30', 'action': 'set_volume'}
+[2026-11-23 16:22:20] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'go_to', 'url': 'https://www.google.com/search?q=kuch+bhi+send+karo', 'browser': 'chrome'}
+[2026-11-23 16:22:49] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '30', 'action': 'set_brightness'}
+[2026-11-23 16:22:52] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '30', 'action': 'set_brightness'}
+[2026-11-23 16:23:07] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'light blue'}
+[2026-11-23 16:23:14] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'faint blue', 'action': 'keyboard_backlight'}
+[2026-11-23 16:23:32] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'off'}
+[2026-11-23 16:23:40] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'lock_screen'}
+[2026-11-23 16:24:07] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'close_all'}
+[2026-11-24 12:51:48] Action: laptop_control, Level: 1, Reason: System control: set_volume, Params: {'value': '100', 'action': 'set_volume'}
+[2026-11-24 12:52:03] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'Dilruba Dilnasheen song', 'action': 'play'}
+[2026-11-24 12:52:13] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'action': 'unmute'}
+[2026-11-24 12:55:06] Action: laptop_control, Level: 1, Reason: System control: set_volume, Params: {'action': 'set_volume', 'value': '50'}
+[2026-11-24 12:55:14] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '10', 'action': 'set_brightness'}
+[2026-11-24 12:55:25] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'value': '30', 'action': 'set_brightness'}
+[2026-11-24 12:55:40] Action: laptop_control, Level: 1, Reason: Window management, Params: {'title': 'FRIDAY', 'action': 'minimize_window'}
+[2026-11-24 12:55:48] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'x': 500, 'y': 500, 'action': 'click'}
+[2026-11-24 12:56:02] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'restore_window', 'title': 'FRIDAY'}
+[2026-11-24 12:56:08] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-11-24 12:56:18] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'action': 'status'}
+[2026-11-24 12:56:29] Action: personal_mode, Level: 1, Reason: Default reversible action, Params: {'password': '12 11 7', 'action': 'enable'}
+[2026-11-24 13:05:22] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-11-24 13:05:37] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-11-24 13:05:44] Action: computer_settings, Level: 3, Reason: Irreversible action: shutdown, Params: {'action': 'shutdown'}
+[2026-11-24 16:30:07] Action: send_message, Level: 2, Reason: Sending communication, Params: {'receiver': 'Singhila', 'message_text': 'पसंद आए?', 'platform': 'whatsapp'}
+[2026-11-24 16:30:27] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'action': 'go_to', 'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/'}
+[2026-11-24 16:30:36] Action: browser_control, Level: 0, Reason: Information access, Params: {'direction': 'down', 'browser': 'chrome', 'amount': 500, 'action': 'scroll'}
+[2026-11-24 21:47:31] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes'}
+[2026-11-24 21:47:59] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'search', 'query': 'India vs UAE yesterday match highlights', 'browser': 'chrome'}
+[2026-11-24 21:48:36] Action: video_player, Level: 1, Reason: Default reversible action, Params: {'source': 'India vs UAE highlights', 'action': 'play'}
+[2026-11-26 12:51:56] Action: browser_control, Level: 0, Reason: Information access, Params: {'browser': 'chrome', 'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/', 'action': 'go_to'}
+[2026-11-26 12:52:26] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'new_tab', 'url': 'https://www.linkedin.com/in/pranay-gandlewar-41198b428/'}
+[2026-11-26 12:52:32] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'full_screen'}
+[2026-11-26 12:52:42] Action: laptop_control, Level: 1, Reason: Window management, Params: {'action': 'maximize_window'}
+[2026-11-26 12:53:16] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_windows'}
+[2026-11-26 12:55:04] Action: browser_control, Level: 2, Reason: Active browser interaction, Params: {'browser': 'chrome', 'action': 'click', 'text': 'Live Demo'}
+[2026-11-26 12:55:19] Action: browser_control, Level: 0, Reason: Information access, Params: {'description': 'The live demo link shown in the post.', 'text': 'https://lnkd.in/g5VTDAW', 'action': 'smart_click'}
+[2026-11-26 12:55:54] Action: browser_control, Level: 0, Reason: Information access, Params: {'action': 'back'}
+[2026-11-26 12:57:07] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-11-26 12:57:21] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+f'}
+[2026-11-26 12:57:29] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Shruti'}
+[2026-11-26 12:57:30] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-26 12:57:38] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+f', 'action': 'hotkey'}
+[2026-11-26 12:57:38] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Shruti', 'action': 'type'}
+[2026-11-26 12:57:39] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-26 12:58:23] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'ctrl+f'}
+[2026-11-26 12:58:23] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'text': 'Shruti', 'action': 'type'}
+[2026-11-26 12:58:24] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-26 12:58:25] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Hi'}
+[2026-11-26 12:58:27] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-26 12:58:46] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'WhatsApp'}
+[2026-11-26 12:59:01] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'ctrl+f', 'action': 'hotkey'}
+[2026-11-26 12:59:01] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Shruti'}
+[2026-11-26 12:59:02] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-26 12:59:02] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'Hi'}
+[2026-11-26 12:59:03] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'press', 'key': 'enter'}
+[2026-11-26 12:59:23] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'close_app', 'value': 'WhatsApp'}
+[2026-11-26 12:59:54] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'get_brightness'}
+[2026-11-26 13:00:02] Action: laptop_control, Level: 1, Reason: System control: brightness_up, Params: {'action': 'brightness_up'}
+[2026-11-26 13:00:20] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '60'}
+[2026-11-26 13:00:34] Action: laptop_control, Level: 1, Reason: System control: brightness_up, Params: {'action': 'brightness_up'}
+[2026-11-26 13:00:50] Action: laptop_control, Level: 1, Reason: System control: set_brightness, Params: {'action': 'set_brightness', 'value': '20'}
+[2026-11-26 13:01:18] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'red'}
+[2026-11-26 13:01:27] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'cycle', 'action': 'keyboard_backlight'}
+[2026-11-26 13:01:52] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'orange'}
+[2026-11-26 13:02:00] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'yellow'}
+[2026-11-26 13:02:06] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'purple'}
+[2026-11-26 13:02:15] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'violet'}
+[2026-11-26 13:03:27] Action: laptop_control, Level: 0, Reason: System information access, Params: {'action': 'list_processes'}
+[2026-11-26 13:04:16] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'win+d'}
+[2026-11-26 13:04:27] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'win+d', 'action': 'hotkey'}
+[2026-11-26 13:04:39] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'alt+f4'}
+[2026-11-26 14:09:41] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'task_manager'}
+[2026-11-26 14:09:49] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Performance tab in Task Manager', 'action': 'screen_click'}
+[2026-11-26 14:10:04] Action: computer_settings, Level: 3, Reason: Irreversible action: restart, Params: {'action': 'restart'}

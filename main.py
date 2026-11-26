@@ -1152,6 +1152,8 @@ class FridayLive:
         args = dict(fc.args or {})
 
         print(f"[FRIDAY] 🔧 {name}  {args}")
+        if hasattr(self.ui, "pulse_neural"):
+            self.ui.pulse_neural(name, 1.0)
         # Fast local tools stay in THINKING; slow or world-touching tools show EXECUTING.
         _EXECUTING_TOOLS = {
             "screen_process", "system_status", "manage_monitor",
