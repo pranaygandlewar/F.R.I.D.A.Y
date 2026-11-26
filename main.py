@@ -418,6 +418,30 @@ TOOL_DECLARATIONS = [
         }
     },
     {
+        "name": "neural_network_panel",
+        "description": (
+            "Show or hide the Live Neural Network panel inside FRIDAY's window, "
+            "or describe its current state to the user. "
+            "MUST be called when user says: 'bring neural network', 'show neural network', "
+            "'hide neural network', 'open/close neural net', 'what does the neural network show', "
+            "'describe the neural network', 'neural net status', 'explain the NN', etc. "
+            "action='show' expands the NN to fill the full HUD area (HUD hides). "
+            "action='hide' restores the normal split view (HUD + NN side-by-side). "
+            "action='status' returns a full live snapshot of every node, activation, "
+            "module path, thread count, CPU, and RSS so you can describe it in detail."
+        ),
+        "parameters": {
+            "type": "OBJECT",
+            "properties": {
+                "action": {
+                    "type": "STRING",
+                    "description": "show | hide | status",
+                },
+            },
+            "required": ["action"],
+        },
+    },
+    {
         "name": "save_memory",
         "description": (
             "Save an important personal fact about the user to long-term memory. "
@@ -1270,6 +1294,52 @@ class FridayLive:
                     result = ("Monitoring: " + ", ".join(topics)) if topics else "No topics are being monitored."
                 else:
                     result = "Specify action (add/remove/list) and a topic."
+
+            elif name == "neural_network_panel":
+                action = args.get("action", "status").lower().strip()
+                if action == "show":
+                    self.ui.toggle_neural_network(True)
+                    result = (
+                        "Neural Network panel expanded to full view. "
+                        "The holographic 5-layer architecture graph is now filling the HUD area, "
+                        "showing FRIDAY's live code modules and process activations."
+                    )
+                elif action == "hide":
+                    self.ui.toggle_neural_network(False)
+                    result = (
+                        "Neural Network panel restored to split view. "
+                        "The HUD avatar and NN graph are now sharing the center panel."
+                    )
+                else:  # status
+                    snap = self.ui.get_neural_net_status()
+                    if "error" in snap:
+                        result = f"Neural network status unavailable: {snap['error']}"
+                    else:
+                        # Build a detailed human-readable description
+                        lines = [
+                            f"FRIDAY Live Neural Architecture — {snap['architecture']}",
+                            f"Total nodes: {snap['total_nodes']} across 5 layers",
+                            f"Current state: {snap['state']}",
+                            f"Process: PID {snap['pid']}, {snap['proc_cpu_pct']}% CPU, {snap['proc_rss_mb']} MB RAM",
+                            f"System: {snap['cpu_pct']}% CPU, {snap['mem_pct']}% RAM",
+                            f"Active threads: {snap['thread_count']}, Loaded modules: {snap['module_count']}",
+                            f"Last event: {snap['last_event']}",
+                            f"Fullscreen: {'yes' if snap['fullscreen'] else 'no'}",
+                            "",
+                            "Active nodes (activation > 20%):",
+                        ]
+                        any_active = False
+                        for layer in snap["layers"]:
+                            for node in layer["nodes"]:
+                                if node["activation_pct"] > 20:
+                                    lines.append(
+                                        f"  [{layer['layer']}] {node['label']} — "
+                                        f"{node['activation_pct']}% active  ({node['module']})"
+                                    )
+                                    any_active = True
+                        if not any_active:
+                            lines.append("  All nodes at background heartbeat levels (idle monitoring).")
+                        result = "\n".join(lines)
 
             elif name == "shutdown_friday":
                 self.ui.write_log("SYS: Shutdown requested.")

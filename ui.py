@@ -1322,36 +1322,54 @@ class NeuralNetWidget(QWidget):
                     self._fwd_src[src_li + 1][dst_ni] = strength * weights[dst_ni]
 
     # ── Painting ──────────────────────────────────────────────────────────
-    def paintEvent(self, _event) -> None:
+    def paintEvent(self, _event) -> None:  # noqa: C901
         W, H = self.width(), self.height()
         if (W, H) != self._last_size or not self._pos:
             self._layout_nodes(W, H)
 
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
-        p.fillRect(0, 0, W, H, qcol(C.BG))
+        p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
 
-        # Top telemetry bar
+        # ── Deep-space background ─────────────────────────────────────────
+        bg_grad = QLinearGradient(QPointF(W * 0.5, 0), QPointF(W * 0.5, H))
+        bg_grad.setColorAt(0.0, QColor(1,  8, 22))
+        bg_grad.setColorAt(1.0, QColor(0,  4, 14))
+        p.fillRect(0, 0, W, H, QBrush(bg_grad))
+
+        # subtle grid
+        p.setPen(QPen(QColor(0, 60, 100, 28), 0.5))
+        grid = max(28, min(48, W // 18))
+        for gx in range(0, W, grid):
+            p.drawLine(QPointF(gx, 0), QPointF(gx, H))
+        for gy in range(0, H, grid):
+            p.drawLine(QPointF(0, gy), QPointF(W, gy))
+
+        # ── Telemetry bar (top) ───────────────────────────────────────────
         pid = os.getpid()
         hdr = (
-            f"STATE: {self._state}  │  MODS: {self._mod_cnt}  │  "
-            f"THREADS: {self._thread_cnt}  │  PID {pid}: "
-            f"{self._proc_cpu:.1f}% CPU · {self._proc_rss_mb:.0f}MB"
+            f"◈ FRIDAY NEURAL ARCHITECTURE  │  STATE: {self._state}"
+            f"  │  THREADS: {self._thread_cnt}  │  MODS: {self._mod_cnt}"
+            f"  │  PID {pid}: {self._proc_cpu:.1f}% · {self._proc_rss_mb:.0f} MB"
         )
         p.setFont(QFont("Courier New", 7, QFont.Weight.Bold))
-        p.setPen(QPen(qcol(C.PRI, 190), 1))
-        p.drawText(QRectF(8, 4, W - 16, 16), Qt.AlignmentFlag.AlignCenter, hdr)
+        p.setPen(QPen(QColor(0, 200, 255, 220), 1))
+        p.drawText(QRectF(8, 5, W - 16, 16), Qt.AlignmentFlag.AlignCenter, hdr)
 
-        # Layer column headers at bottom
+        # Separator line under header
+        p.setPen(QPen(QColor(0, 140, 220, 80), 1))
+        p.drawLine(QPointF(16, 22), QPointF(W - 16, 22))
+
+        # ── Layer column headers (bottom) ─────────────────────────────────
         p.setFont(QFont("Courier New", 6, QFont.Weight.Bold))
-        p.setPen(QPen(qcol(C.TEXT_DIM, 140), 1))
+        p.setPen(QPen(QColor(0, 160, 220, 160), 1))
         for li, (lname, _nodes) in enumerate(self._LAYER_DEFS):
             if li < len(self._pos) and self._pos[li]:
                 lx = self._pos[li][0][0]
-                p.drawText(QRectF(lx - 36, H - 17, 72, 14),
+                p.drawText(QRectF(lx - 40, H - 18, 80, 14),
                            Qt.AlignmentFlag.AlignCenter, lname)
 
-        # ── Draw edges ──
+        # ── Edges with arrowhead diamonds ────────────────────────────────
         for li in range(len(self._layers) - 1):
             for src_ni, (sx, sy) in enumerate(self._pos[li]):
                 src_act = self._node_act[li][src_ni]
@@ -1359,59 +1377,115 @@ class NeuralNetWidget(QWidget):
                     dst_act = self._node_act[li + 1][dst_ni]
                     w = self._weights[li][src_ni][dst_ni]
                     edge_act = max(src_act, dst_act) * w
-
-                    is_hover_edge = (
+                    hover_e = (
                         self._hover_node == (li, src_ni)
                         or self._hover_node == (li + 1, dst_ni)
                     )
-                    if is_hover_edge:
-                        alpha = int(130 + edge_act * 125)
-                        pen_w = 1.3 + edge_act * 1.3
-                        p.setPen(QPen(QColor(0, 235, 255, alpha), pen_w))
-                    else:
-                        alpha = int(16 + edge_act * 185)
-                        r = int(0 + edge_act * 15)
-                        g = int(105 + edge_act * 150)
-                        b = int(145 + edge_act * 110)
-                        pen_w = 0.55 + edge_act * 1.45
-                        p.setPen(QPen(QColor(r, g, b, alpha), pen_w))
+                    if hover_e:
+                        base_a, pen_w = 220, 1.6 + edge_act * 0.8
+                        col = QColor(100, 240, 255, base_a)
+                    elif edge_act > 0.5:          # hot / firing — golden
+                        base_a = int(90 + edge_act * 165)
+                        pen_w  = 0.8 + edge_act * 1.4
+                        cr = int(200 + edge_act * 55)
+                        cg = int(190 + edge_act * 65)
+                        cb = int(60  + edge_act * 40)
+                        col = QColor(cr, cg, cb, base_a)
+                    else:                          # cool / idle — cyan-white
+                        base_a = int(18 + edge_act * 150)
+                        pen_w  = 0.5 + edge_act * 1.0
+                        col = QColor(130, 210, 255, base_a)
+
+                    p.setPen(QPen(col, pen_w))
                     p.drawLine(QPointF(sx, sy), QPointF(dx, dy))
 
-        # ── Draw nodes + real module/process labels ──
-        compact = H < 220
+                    # Arrowhead diamond at 75% along the edge
+                    if edge_act > 0.25 or hover_e:
+                        t = 0.75
+                        ax = sx + (dx - sx) * t
+                        ay = sy + (dy - sy) * t
+                        length = max(1.0, ((dx - sx) ** 2 + (dy - sy) ** 2) ** 0.5)
+                        ux, uy = (dx - sx) / length, (dy - sy) / length
+                        px_n, py_n = -uy, ux          # perpendicular
+                        ds = 4.5 * (0.6 + edge_act * 0.5)
+                        tip   = QPointF(ax + ux * ds,       ay + uy * ds)
+                        left  = QPointF(ax + px_n * ds * 0.45, ay + py_n * ds * 0.45)
+                        right = QPointF(ax - px_n * ds * 0.45, ay - py_n * ds * 0.45)
+                        back  = QPointF(ax - ux * ds * 0.5,   ay - uy * ds * 0.5)
+                        poly  = [tip, left, back, right]
+                        from PyQt6.QtGui import QPolygonF
+                        da = int(min(255, base_a + 60))
+                        p.setBrush(QBrush(QColor(col.red(), col.green(), col.blue(), da)))
+                        p.setPen(Qt.PenStyle.NoPen)
+                        p.drawPolygon(QPolygonF(poly))
+
+        # ── Nodes ────────────────────────────────────────────────────────
+        compact = H < 240
         for li, (_lname, nodes) in enumerate(self._LAYER_DEFS):
             for ni, (nx, ny) in enumerate(self._pos[li]):
                 key, lbl, _path = nodes[ni]
                 act = self._node_act[li][ni]
                 rad = self._radii[li][ni]
                 hovered = (self._hover_node == (li, ni))
+                hot = act > 0.5          # golden hot state
 
-                if act > 0.05 or hovered:
-                    halo_r = rad + (0.6 if hovered else act) * 11
-                    grad = QRadialGradient(QPointF(nx, ny), halo_r)
-                    ga = int(max(act, 0.55 if hovered else 0.0) * 120)
-                    grad.setColorAt(0.0, QColor(0, 225, 255, ga))
-                    grad.setColorAt(1.0, QColor(0, 180, 200, 0))
-                    p.setBrush(QBrush(grad))
-                    p.setPen(Qt.PenStyle.NoPen)
-                    p.drawEllipse(QPointF(nx, ny), halo_r, halo_r)
+                # --- outer glow halo
+                halo_r = rad + (10 if hovered else max(2.0, act * 18))
+                hgrad = QRadialGradient(QPointF(nx, ny), halo_r)
+                if hot:
+                    hgrad.setColorAt(0.0, QColor(255, 220,  80, int(max(act, 0.4) * 130)))
+                    hgrad.setColorAt(0.6, QColor(220, 140,  40, int(act * 60)))
+                    hgrad.setColorAt(1.0, QColor(180,  80,   0, 0))
+                elif hovered:
+                    hgrad.setColorAt(0.0, QColor(0, 240, 255, 150))
+                    hgrad.setColorAt(0.6, QColor(0, 160, 220, 50))
+                    hgrad.setColorAt(1.0, QColor(0, 100, 180, 0))
+                else:
+                    hgrad.setColorAt(0.0, QColor(0, 200, 255, int(max(act, 0.08) * 110)))
+                    hgrad.setColorAt(0.6, QColor(0, 140, 220, int(act * 40)))
+                    hgrad.setColorAt(1.0, QColor(0,  80, 160, 0))
+                p.setBrush(QBrush(hgrad))
+                p.setPen(Qt.PenStyle.NoPen)
+                p.drawEllipse(QPointF(nx, ny), halo_r, halo_r)
 
-                fill_v = int(10 + act * 24)
-                p.setBrush(QBrush(QColor(fill_v, fill_v + 12, fill_v + 24)))
-                rim_r = int(20 if hovered else act * 30)
-                rim_g = int(185 + act * 70)
-                rim_b = int(205 + act * 50)
-                rim_a = 255 if hovered else int(145 + act * 110)
-                p.setPen(QPen(QColor(rim_r, rim_g, rim_b, rim_a),
-                              2.0 if hovered else (1.1 + act * 1.5)))
+                # --- node body (layered fill)
+                body_grad = QRadialGradient(QPointF(nx - rad * 0.3, ny - rad * 0.3), rad * 1.2)
+                if hot:
+                    body_grad.setColorAt(0.0, QColor(255, 240, 160))
+                    body_grad.setColorAt(0.5, QColor( 80,  60,  20, 230))
+                    body_grad.setColorAt(1.0, QColor(  8,   8,  18, 255))
+                else:
+                    body_grad.setColorAt(0.0, QColor(180, 230, 255, 220))
+                    body_grad.setColorAt(0.4, QColor( 20,  60, 100, 210))
+                    body_grad.setColorAt(1.0, QColor(  4,  14,  32, 255))
+                p.setBrush(QBrush(body_grad))
+
+                # rim colour
+                if hovered:
+                    rim_col = QColor(255, 255, 255, 255)
+                    rim_w   = 2.2
+                elif hot:
+                    rim_col = QColor(255, 215, 80, 230)
+                    rim_w   = 1.8 + act * 0.8
+                else:
+                    ri = int(60  + act * 60)
+                    rg = int(170 + act * 85)
+                    rb = int(220 + act * 35)
+                    ra = int(160 + act * 95)
+                    rim_col = QColor(ri, rg, rb, ra)
+                    rim_w   = 1.2 + act * 1.0
+                p.setPen(QPen(rim_col, rim_w))
                 p.drawEllipse(QPointF(nx, ny), rad, rad)
 
-                if act > 0.15:
-                    p.setBrush(QBrush(QColor(190, 245, 255, int(act * 255))))
+                # inner bright core (white dot)
+                core_a = int(max(0.15, act) * 255) if (act > 0.08 or hovered) else int(act * 160)
+                if hovered or act > 0.05:
+                    core_col = QColor(255, 255, 255, core_a) if (hot or hovered) else QColor(180, 240, 255, core_a)
+                    p.setBrush(QBrush(core_col))
                     p.setPen(Qt.PenStyle.NoPen)
-                    p.drawEllipse(QPointF(nx, ny), rad * 0.36, rad * 0.36)
+                    p.drawEllipse(QPointF(nx, ny), rad * 0.3, rad * 0.3)
 
-                # Dynamic tag for live process nodes
+                # ── Node label ──
                 tag = lbl
                 if key == "threads":
                     tag = f"THREADS·{self._thread_cnt}"
@@ -1420,16 +1494,23 @@ class NeuralNetWidget(QWidget):
                 elif key == "telem":
                     tag = f"CPU·{self._cpu_pct:.0f}%"
 
-                p.setFont(QFont("Courier New", 6,
-                                QFont.Weight.Bold if (act > 0.25 or hovered) else QFont.Weight.Normal))
-                txt_a = 245 if (act > 0.25 or hovered) else (150 if not compact else 125)
-                p.setPen(QPen(QColor(150, 235, 255, txt_a) if (act > 0.25 or hovered)
-                              else qcol(C.TEXT_MED, txt_a), 1))
-                p.drawText(QRectF(nx + rad + 4, ny - 7, 74, 14),
-                           Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft,
-                           tag)
+                if not compact or hovered or act > 0.3:
+                    bold = act > 0.3 or hovered
+                    p.setFont(QFont("Courier New", 6,
+                                    QFont.Weight.Bold if bold else QFont.Weight.Normal))
+                    if hot:
+                        lc = QColor(255, 230, 100, 240)
+                    elif hovered:
+                        lc = QColor(255, 255, 255, 255)
+                    else:
+                        lc = QColor(130 + int(act * 80), 210 + int(act * 45),
+                                    255, 170 + int(act * 85))
+                    p.setPen(QPen(lc, 1))
+                    p.drawText(QRectF(nx + rad + 3, ny - 7, 76, 14),
+                               Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft,
+                               tag)
 
-        # ── Travelling signal packets ──
+        # ── Travelling signal packets ────────────────────────────────────
         for li in range(1, len(self._layers)):
             for ni in range(self._layers[li]):
                 cd = self._fwd_cd[li][ni]
@@ -1439,44 +1520,62 @@ class NeuralNetWidget(QWidget):
                                    key=lambda s: self._weights[li - 1][s][ni])
                     sx, sy = self._pos[li - 1][best_src]
                     dx, dy = self._pos[li][ni]
-                    px = sx + (dx - sx) * t
-                    py = sy + (dy - sy) * t
+                    spx = sx + (dx - sx) * t
+                    spy = sy + (dy - sy) * t
                     strength = self._fwd_src[li][ni]
-                    p.setBrush(QBrush(QColor(0, 255, 220, int(215 * strength))))
+                    # outer pulse
+                    pulse_g = QRadialGradient(QPointF(spx, spy), 7.0)
+                    if strength > 0.6:
+                        pulse_g.setColorAt(0.0, QColor(255, 240, 100, int(220 * strength)))
+                        pulse_g.setColorAt(1.0, QColor(255, 180,   0, 0))
+                    else:
+                        pulse_g.setColorAt(0.0, QColor(0, 255, 230, int(200 * strength)))
+                        pulse_g.setColorAt(1.0, QColor(0, 180, 200, 0))
+                    p.setBrush(QBrush(pulse_g))
                     p.setPen(Qt.PenStyle.NoPen)
-                    p.drawEllipse(QPointF(px, py), 3.0, 3.0)
+                    p.drawEllipse(QPointF(spx, spy), 7.0, 7.0)
+                    # bright core dot
+                    p.setBrush(QBrush(QColor(255, 255, 255, int(240 * strength))))
+                    p.drawEllipse(QPointF(spx, spy), 2.5, 2.5)
 
-        # ── Last event indicator (bottom-left) ──
+        # ── Last-event ticker ────────────────────────────────────────────
         age = time.monotonic() - self._last_event_ts
-        if age < 8.0:
-            p.setFont(QFont("Courier New", 6))
-            p.setPen(QPen(qcol(C.PRI, 180), 1))
-            p.drawText(QRectF(8, H - 17, 220, 14),
+        if age < 9.0:
+            fade_a = int(220 * max(0.0, 1.0 - age / 9.0))
+            p.setFont(QFont("Courier New", 6, QFont.Weight.Bold))
+            p.setPen(QPen(QColor(0, 220, 255, fade_a), 1))
+            p.drawText(QRectF(10, H - 17, W - 20, 14),
                        Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
-                       f"⚡ {self._last_event[:32]}")
+                       f"⚡ {self._last_event[:56]}")
 
-        # ── Hover inspection card ──
+        # ── Hover inspection card ────────────────────────────────────────
         if self._hover_node is not None:
             li, ni = self._hover_node
             key, lbl, path = self._LAYER_DEFS[li][1][ni]
             act = self._node_act[li][ni]
             nx, ny = self._pos[li][ni]
-            box_w, box_h = 190, 44
-            bx = min(max(8.0, nx + 14), max(8.0, W - box_w - 8))
-            by = min(max(24.0, ny - box_h - 6), max(24.0, H - box_h - 22))
-            p.setBrush(QBrush(QColor(4, 16, 26, 235)))
-            p.setPen(QPen(qcol(C.PRI, 210), 1.0))
-            p.drawRoundedRect(QRectF(bx, by, box_w, box_h), 4, 4)
+            box_w, box_h = 210, 50
+            bx = float(min(max(8, nx + 18), W - box_w - 8))
+            by = float(min(max(26, ny - box_h - 8), H - box_h - 22))
+            p.setBrush(QBrush(QColor(2, 12, 28, 240)))
+            p.setPen(QPen(QColor(0, 200, 255, 220), 1.0))
+            p.drawRoundedRect(QRectF(bx, by, box_w, box_h), 5, 5)
+            # accent top bar
+            p.setBrush(QBrush(QColor(0, 160, 255, 80)))
+            p.setPen(Qt.PenStyle.NoPen)
+            p.drawRoundedRect(QRectF(bx + 1, by + 1, box_w - 2, 4), 2, 2)
+            # label
             p.setFont(QFont("Courier New", 7, QFont.Weight.Bold))
-            p.setPen(QPen(qcol(C.PRI, 255), 1))
-            p.drawText(QRectF(bx + 7, by + 4, box_w - 14, 16),
+            p.setPen(QPen(QColor(0, 230, 255, 255), 1))
+            p.drawText(QRectF(bx + 8, by + 7, box_w - 16, 16),
                        Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
-                       f"{lbl}  [{int(act * 100)}%]")
+                       f"{lbl}  —  ACT {int(act * 100)}%")
+            # path
             p.setFont(QFont("Courier New", 6))
-            p.setPen(QPen(qcol(C.TEXT_MED, 230), 1))
-            p.drawText(QRectF(bx + 7, by + 22, box_w - 14, 16),
+            p.setPen(QPen(QColor(140, 200, 240, 220), 1))
+            p.drawText(QRectF(bx + 8, by + 26, box_w - 16, 16),
                        Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
-                       path)
+                       path[:36])
 
         p.end()
 
@@ -3453,6 +3552,7 @@ class MainWindow(QMainWindow):
     _quiz_hide_sig  = pyqtSignal()
     _review_sig     = pyqtSignal(str, str, object, object)  # document review payload
     _nn_pulse_sig   = pyqtSignal(str, float)               # (node_or_tool, strength)
+    _nn_fullwin_sig = pyqtSignal(bool)                     # True=expand NN, False=restore
 
     def __init__(self, face_path: str):
         super().__init__()
@@ -3811,6 +3911,7 @@ class MainWindow(QMainWindow):
         self._log_sig.connect(self._on_log_neural)
         self._state_sig.connect(self._apply_state)
         self._nn_pulse_sig.connect(self._neural_net.pulse)
+        self._nn_fullwin_sig.connect(self._on_nn_fullwin)
         self._content_sig.connect(self._show_content)
         self._reconfig_sig.connect(self._show_setup)
         self._camera_sig.connect(self._show_camera_frame)
@@ -4156,6 +4257,28 @@ class MainWindow(QMainWindow):
             self._neural_net.resume()
             self._nn_anim_btn.setText("⏸  NEURAL NET")
         self._nn_anim_running = not self._nn_anim_running
+
+    def _on_nn_fullwin(self, show: bool) -> None:
+        """Slot: expand NN to full window (hide HUD) or restore split view.
+
+        Called thread-safely via _nn_fullwin_sig.  `show=True` → NN fullscreen;
+        `show=False` → restore HUD + NN split layout.
+        """
+        total = self._hud_nn_split.height()
+        if show:
+            # NN gets entire inner splitter; HUD section collapses to zero
+            self._hud_nn_split.setSizes([0, total])
+            self._nn_max_btn.setText("⤡  RESTORE")
+            self._hud_max_btn.setText("⤢  MAXIMIZE")
+            self._nn_maximized  = True
+            self._hud_maximized = False
+            self._neural_net.resume()
+        else:
+            # Restore to default 60/40 split
+            self._hud_nn_split.setSizes([total * 3 // 5, total * 2 // 5])
+            self._nn_max_btn.setText("⤢  MAXIMIZE")
+            self._nn_maximized  = False
+            self._hud_maximized = False
 
     # ------------------------------------------------------------------
     # Icon generation — arc-reactor style, rendered with Pillow
@@ -6502,6 +6625,54 @@ class FridayUI:
             self._win._nn_pulse_sig.emit(str(key_or_tool or ""), float(strength))
         except Exception:
             pass
+
+    def toggle_neural_network(self, show: bool) -> None:
+        """Thread-safe: expand the neural-network panel to fill the HUD area
+        (show=True) or restore the normal HUD + NN split view (show=False).
+        Called by the `neural_network_panel` voice tool.
+        """
+        try:
+            self._win._nn_fullwin_sig.emit(bool(show))
+        except Exception:
+            pass
+
+    def get_neural_net_status(self) -> dict:
+        """Return a snapshot of the live neural-network panel state for FRIDAY
+        to describe to the user when asked about it.
+        """
+        try:
+            nn: "NeuralNetWidget" = self._win._neural_net
+            layers_summary = []
+            for li, (lname, nodes) in enumerate(nn._LAYER_DEFS):
+                node_states = []
+                for ni, (key, lbl, path) in enumerate(nodes):
+                    act = nn._node_act[li][ni] if li < len(nn._node_act) else 0.0
+                    node_states.append({
+                        "key":    key,
+                        "label":  lbl,
+                        "module": path,
+                        "activation_pct": round(act * 100, 1),
+                        "firing": act > 0.4,
+                    })
+                layers_summary.append({"layer": lname, "nodes": node_states})
+            return {
+                "state":          nn._state,
+                "pid":            os.getpid(),
+                "cpu_pct":        round(nn._cpu_pct, 1),
+                "mem_pct":        round(nn._mem_pct, 1),
+                "proc_cpu_pct":   round(nn._proc_cpu, 1),
+                "proc_rss_mb":    round(nn._proc_rss_mb, 1),
+                "thread_count":   nn._thread_cnt,
+                "module_count":   nn._mod_cnt,
+                "last_event":     nn._last_event,
+                "fullscreen":     self._win._nn_maximized,
+                "animation_running": nn._timer.isActive(),
+                "architecture":   "5-layer process graph (INPUT→CORE→MODULES→PROCESSES→OUTPUT)",
+                "total_nodes":    sum(nn._layers),
+                "layers":         layers_summary,
+            }
+        except Exception as exc:
+            return {"error": str(exc)}
 
     def wait_for_api_key(self):
         while not self._win._ready:
