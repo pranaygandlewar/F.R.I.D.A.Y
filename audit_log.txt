@@ -1164,3 +1164,13 @@
 [2026-11-26 14:09:41] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'task_manager'}
 [2026-11-26 14:09:49] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'description': 'Performance tab in Task Manager', 'action': 'screen_click'}
 [2026-11-26 14:10:04] Action: computer_settings, Level: 3, Reason: Irreversible action: restart, Params: {'action': 'restart'}
+[2026-11-26 15:56:33] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-26 16:01:36] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'press_key', 'value': 'space'}
+[2026-11-26 16:01:38] Action: open_app, Level: 1, Reason: Opening application, Params: {'app_name': 'Chrome'}
+[2026-11-26 16:01:42] Action: browser_control, Level: 0, Reason: Information access, Params: {'url': 'https://youtube.com', 'browser': 'chrome', 'action': 'go_to'}
+[2026-11-26 17:18:25] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'screenshot'}
+[2026-11-26 17:19:11] Action: laptop_control, Level: 1, Reason: System control: keyboard_backlight, Params: {'action': 'keyboard_backlight'}
+[2026-11-26 17:19:30] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-26 17:21:00] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'black', 'action': 'keyboard_backlight'}
+[2026-11-26 17:21:25] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'fn+f4', 'action': 'press_key'}
+[2026-11-26 17:21:31] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'Fn+F4', 'action': 'press_key'}
