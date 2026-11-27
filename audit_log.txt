@@ -1190,3 +1190,13 @@
 [2026-11-27 08:37:05] Action: computer_control, Level: 1, Reason: Reversible input, Params: {'action': 'type', 'text': 'YOU ASKED FOR IT!'}
 [2026-11-27 08:37:06] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'action': 'hotkey', 'keys': 'win+d'}
 [2026-11-27 08:37:06] Action: computer_control, Level: 1, Reason: Reversible input or navigation, Params: {'keys': 'alt+f4', 'action': 'hotkey'}
+[2026-11-27 08:52:26] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'press_key', 'value': 'fn+f3'}
+[2026-11-27 08:52:34] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'press_key', 'value': 'fn+f3'}
+[2026-11-27 09:29:26] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'off'}
+[2026-11-27 09:29:32] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'on', 'action': 'keyboard_backlight'}
+[2026-11-27 09:29:38] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'increase'}
+[2026-11-27 09:29:58] Action: laptop_control, Level: 1, Reason: System control: keyboard_backlight, Params: {'action': 'keyboard_backlight', 'value': 'max'}
+[2026-11-27 09:30:28] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'value': 'increase', 'action': 'keyboard_backlight'}
+[2026-11-27 09:31:54] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight'}
+[2026-11-27 09:32:05] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'red'}
+[2026-11-27 09:32:11] Action: computer_settings, Level: 1, Reason: Application or window setting, Params: {'action': 'keyboard_backlight', 'value': 'pink'}

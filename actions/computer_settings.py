@@ -903,7 +903,9 @@ _ALIASES = {
         "keyboard light", "keyboard backlight", "aura", "change aura",
         "keyboard color", "backlit color", "backlight color", "fn f4",
         "fn+f4", "fn f4 key", "aura lighting", "keyboard ki light",
-        "keyboard light change", "keyboard backlit change", "change keyboard light"
+        "keyboard light change", "keyboard backlit change", "change keyboard light",
+        "keyboard brightness", "backlit brightness", "low the backlit",
+        "dim the backlit", "keyboard light dim", "keyboard light low"
     ),
     "shutdown":        ("power off", "turn off the computer", "switch off the pc"),
     "restart":         ("reboot", "restart the pc"),
@@ -940,6 +942,13 @@ def _detect_action(description: str) -> dict:
     num = re.search(r"(\d{1,3})\s*%?", low)
     if num and any(w in low for w in ("volume", "ses", "sound", "lautstark", "громкость")):
         return {"action": "volume_set", "value": max(0, min(100, int(num.group(1))))}
+
+    # 2.5 Keyboard backlight priority: if "backlit" or "keyboard" is mentioned, resolve to keyboard_backlight
+    if any(k in low for k in ("backlit", "backlight", "aura", "keyboard light")):
+        for phrase in _ALIASES.get("keyboard_backlight", ()):
+            if _normalise(phrase) == norm or phrase in low:
+                return {"action": "keyboard_backlight", "value": raw}
+        return {"action": "keyboard_backlight", "value": raw}
 
     # 3. Alias phrases.
     for action, phrases in _ALIASES.items():
@@ -1061,8 +1070,11 @@ def computer_settings(
 
     if action in ("keyboard_backlight", "backlight", "backlit", "aura", "keyboard_light", "change_backlight"):
         from core.asus_aura import cycle_keyboard_backlight
-        target_color = str(value or params.get("color", "")).strip()
-        msg = cycle_keyboard_backlight(target_color or None)
+        target_color = str(value or params.get("color", "") or params.get("value", "") or "").strip()
+        brightness_val = params.get("brightness")
+        mode_val = params.get("mode")
+        speed_val = int(params.get("speed", 1))
+        msg = cycle_keyboard_backlight(target_color or None, brightness=brightness_val, mode=mode_val, speed=speed_val)
         if player:
             player.write_log(f"[Settings] {msg}")
         return msg

@@ -343,10 +343,13 @@ def laptop_control(parameters: dict, **kwargs) -> str:
         return str(wc.toggle_night_light())
     elif action == "gpu_info":
         return str(wc.get_gpu_info())
-    elif action in ("keyboard_backlight", "keyboard_backlit", "backlight", "backlit", "aura", "cycle_backlight", "change_backlight"):
+    elif action in ("keyboard_backlight", "keyboard_backlit", "backlight", "backlit", "aura", "cycle_backlight", "change_backlight", "keyboard_brightness"):
         from core.asus_aura import cycle_keyboard_backlight
-        target = str(value or parameters.get("name", "")).strip()
-        return cycle_keyboard_backlight(target or None)
+        target = str(value or parameters.get("name", "") or parameters.get("color", "") or "").strip()
+        brightness_val = parameters.get("brightness")
+        mode_val = parameters.get("mode")
+        speed_val = int(parameters.get("speed", 1))
+        return cycle_keyboard_backlight(target or None, brightness=brightness_val, mode=mode_val, speed=speed_val)
 
     # Wi-Fi, Bluetooth & Hotspot
     elif action in ("battery_status", "power_status"):

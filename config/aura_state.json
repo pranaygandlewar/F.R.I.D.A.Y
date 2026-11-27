@@ -1,1 +1,9 @@
-{"preset_index": 7}
+{
+  "preset_index": 3,
+  "brightness": 3,
+  "color": "Pink",
+  "mode": 0,
+  "r": 255,
+  "g": 105,
+  "b": 180
+}
